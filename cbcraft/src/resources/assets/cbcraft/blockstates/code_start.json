@@ -1,0 +1,8 @@
+{
+	"variants": {
+		"facing=south": { "model": "cbcraft:code_start" },
+		"facing=west": { "model": "cbcraft:code_start", "y": 90 },
+		"facing=north": { "model": "cbcraft:code_start", "y": 180 },
+		"facing=east": { "model": "cbcraft:code_start", "y": 270 }
+	}
+}
