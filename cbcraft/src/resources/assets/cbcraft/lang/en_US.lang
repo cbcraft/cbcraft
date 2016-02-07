@@ -4,8 +4,8 @@
 #
 # Blocks
 ##############################
-
+tile.code_start.name=Code Block - Start
 #
 # Creative Tabs
 ##############################
-
+itemGroup.blocks=CBCraft - Blocks

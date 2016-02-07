@@ -1,5 +1,6 @@
 package io.github.cbcraft.client;
 
+import io.github.cbcraft.client.render.RenderBlocks;
 import io.github.cbcraft.common.CommonProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -14,6 +15,7 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void init(FMLInitializationEvent e) {
 		super.init(e);
+		RenderBlocks.init();
 	}
 	
 	@Override
