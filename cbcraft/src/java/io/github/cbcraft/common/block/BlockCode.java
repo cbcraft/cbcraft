@@ -1,12 +1,14 @@
 package io.github.cbcraft.common.block;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumWorldBlockLayer;
@@ -14,7 +16,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockCode extends Block {
+public class BlockCode extends BlockContainer {
 	public BlockCode() {
 		super(Material.circuits);
 		this.setCreativeTab(Blocks.tabBlocks);
@@ -45,8 +47,18 @@ public class BlockCode extends Block {
 	}
 	
 	@Override
+	public TileEntity createNewTileEntity(World worldIn, int meta) {
+		return null;
+	}
+	
+	@Override
 	public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
 		return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
+	}
+	
+	@Override
+	public int getRenderType() {
+		return 3;
 	}
 	
 	@Override
