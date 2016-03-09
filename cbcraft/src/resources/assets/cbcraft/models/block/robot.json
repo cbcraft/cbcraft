@@ -1,0 +1,24 @@
+{
+	"ambientocclusion": true,
+	"textures": {
+		"particle": "cbcraft:blocks/robot",
+		"down": "cbcraft:blocks/robot",
+		"top": "cbcraft:blocks/robot",
+		"north": "cbcraft:blocks/robot",
+		"south": "cbcraft:blocks/robot",
+		"west": "cbcraft:blocks/robot",
+		"east": "cbcraft:blocks/robot"
+	},
+	"elements": [ {
+		"from": [ 2, 2, 2 ],
+		"to": [ 14, 14, 14 ],
+		"faces": {
+			"down":  { "uv": [ 2, 2, 14, 14 ], "texture": "#down", "cullface": "down" },
+			"up":    { "uv": [ 2, 2, 14, 14 ], "texture": "#top" },
+			"north": { "uv": [ 2, 2, 14, 14 ], "texture": "#north", "cullface": "north" },
+			"south": { "uv": [ 2, 2, 14, 14 ], "texture": "#south", "cullface": "south" },
+			"west":  { "uv": [ 2, 2, 14, 14 ], "texture": "#west", "cullface": "west" },
+			"east":  { "uv": [ 2, 2, 14, 14 ], "texture": "#east", "cullface": "east" }
+		}
+	} ]
+}

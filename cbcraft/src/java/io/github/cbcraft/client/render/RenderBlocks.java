@@ -9,7 +9,15 @@ import net.minecraft.item.Item;
 
 public class RenderBlocks {
 	public static void init() {
+		registerBlock(Blocks.blockRobot);
 		registerBlock(Blocks.blockCodeStart);
+		registerBlock(Blocks.blockCodeMove);
+		registerBlock(Blocks.blockCodeRotate);
+		registerBlock(Blocks.blockCodeIf);
+		registerBlock(Blocks.blockCodeFor);
+		registerBlock(Blocks.blockCodePlace);
+		registerBlock(Blocks.blockCodeBreak);
+		registerBlock(Blocks.blockCodeEnd);
 	}
 	
 	public static void registerBlock (Block block){

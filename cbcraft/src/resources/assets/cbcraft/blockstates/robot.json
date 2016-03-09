@@ -1,0 +1,8 @@
+{
+	"variants": {
+		"facing=south": { "model": "cbcraft:robot" },
+		"facing=west": { "model": "cbcraft:robot", "y": 90 },
+		"facing=north": { "model": "cbcraft:robot", "y": 180 },
+		"facing=east": { "model": "cbcraft:robot", "y": 270 }
+	}
+}

@@ -1,11 +1,19 @@
 #####################################
 # en_US.lang - Code Block and Craft #
 #####################################
-#
+
 # Blocks
 ##############################
+tile.robot.name=Robot
 tile.code_start.name=Code Block - Start
-#
+tile.code_move.name=Code Block - Move
+tile.code_rotate.name=Code Block - Rotate
+tile.code_if.name=Code Block - If
+tile.code_for.name=Code Block - For
+tile.code_place.name=Code Block - Place
+tile.code_break.name=Code Block - Break
+tile.code_end.name=Code Block - End
+
 # Creative Tabs
 ##############################
 itemGroup.blocks=CBCraft - Blocks

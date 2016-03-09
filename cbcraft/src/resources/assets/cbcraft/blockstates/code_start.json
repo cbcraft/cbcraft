@@ -1,8 +1,20 @@
 {
 	"variants": {
-		"facing=south": { "model": "cbcraft:code_start" },
-		"facing=west": { "model": "cbcraft:code_start", "y": 90 },
-		"facing=north": { "model": "cbcraft:code_start", "y": 180 },
-		"facing=east": { "model": "cbcraft:code_start", "y": 270 }
+		"facing=south,status=disabled": { "model": "cbcraft:code_start" },
+		"facing=south,status=error": { "model": "cbcraft:code_start_error" },
+		"facing=south,status=ready": { "model": "cbcraft:code_start_ready" },
+		"facing=south,status=run": { "model": "cbcraft:code_start_run" },
+		"facing=west,status=disabled": { "model": "cbcraft:code_start", "y": 90 },
+		"facing=west,status=error": { "model": "cbcraft:code_start_error", "y": 90 },
+		"facing=west,status=ready": { "model": "cbcraft:code_start_ready", "y": 90 },
+		"facing=west,status=run": { "model": "cbcraft:code_start_run", "y": 90 },
+		"facing=north,status=disabled": { "model": "cbcraft:code_start", "y": 180 },
+		"facing=north,status=error": { "model": "cbcraft:code_start_error", "y": 180 },
+		"facing=north,status=ready": { "model": "cbcraft:code_start_ready", "y": 180 },
+		"facing=north,status=run": { "model": "cbcraft:code_start_run", "y": 180 },
+		"facing=east,status=disabled": { "model": "cbcraft:code_start", "y": 270 },
+		"facing=east,status=error": { "model": "cbcraft:code_start_error", "y": 270 },
+		"facing=east,status=ready": { "model": "cbcraft:code_start_ready", "y": 270 },
+		"facing=east,status=run": { "model": "cbcraft:code_start_run", "y": 270 }
 	}
 }
