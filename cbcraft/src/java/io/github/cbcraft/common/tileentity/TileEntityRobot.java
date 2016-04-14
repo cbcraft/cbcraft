@@ -4,7 +4,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 
-public class TileEntityCode extends TileEntity {
+public class TileEntityRobot extends TileEntity  {
 	private boolean blockCodeStart = false;
 	private BlockPos blockCodeStartPos = new BlockPos(0, 0, 0);
 	

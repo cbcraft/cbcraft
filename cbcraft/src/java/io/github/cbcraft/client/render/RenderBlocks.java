@@ -9,18 +9,18 @@ import net.minecraft.item.Item;
 
 public class RenderBlocks {
 	public static void init() {
-		registerBlock(Blocks.blockRobot);
-		registerBlock(Blocks.blockCodeStart);
-		registerBlock(Blocks.blockCodeMove);
-		registerBlock(Blocks.blockCodeRotate);
-		registerBlock(Blocks.blockCodeIf);
-		registerBlock(Blocks.blockCodeFor);
-		registerBlock(Blocks.blockCodePlace);
-		registerBlock(Blocks.blockCodeBreak);
-		registerBlock(Blocks.blockCodeEnd);
+		register(Blocks.blockRobot);
+		register(Blocks.blockCodeStart);
+		register(Blocks.blockCodeMove);
+		register(Blocks.blockCodeRotate);
+		/*register(Blocks.blockCodeIf);
+		register(Blocks.blockCodeFor);*/
+		register(Blocks.blockCodePlace);
+		register(Blocks.blockCodeBreak);
+		register(Blocks.blockCodeEnd);
 	}
 	
-	public static void registerBlock (Block block){
+	public static void register (Block block){
 		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(block), 0, new ModelResourceLocation(CBCraft.MODID + ":" + block.getUnlocalizedName().substring(5), "inventory"));
 	}
 }

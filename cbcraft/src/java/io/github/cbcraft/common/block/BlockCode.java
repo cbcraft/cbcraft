@@ -1,5 +1,12 @@
 package io.github.cbcraft.common.block;
 
+import io.github.cbcraft.common.tileentity.TileEntityCode;
+import io.github.cbcraft.common.tileentity.TileEntityCodeBreak;
+import io.github.cbcraft.common.tileentity.TileEntityCodeMove;
+import io.github.cbcraft.common.tileentity.TileEntityCodePlace;
+import io.github.cbcraft.common.tileentity.TileEntityCodeRotate;
+import io.github.cbcraft.common.tileentity.TileEntityCodeStart;
+import io.github.cbcraft.common.tileentity.TileEntityRobot;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -80,7 +87,24 @@ public class BlockCode extends BlockContainer {
 	
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-		BlockCodeStart.isCodeRun = false;
+		Block block = state.getBlock();
+		if(block.getUnlocalizedName().equals(Blocks.blockCodeStart.getUnlocalizedName())) {
+			TileEntityCodeStart tileEntityCodeStart = (TileEntityCodeStart)worldIn.getTileEntity(pos);
+			if(tileEntityCodeStart != null) {
+				tileEntityCodeStart.setBlockCodeRun(false);
+				tileEntityCodeStart.setBlockCodeReady(false);
+			}
+		}
+		else {
+			TileEntityCode tileEntityCode = (TileEntityCode)worldIn.getTileEntity(pos);
+			if(tileEntityCode != null && tileEntityCode.hasBlockCodeStartPos()) {
+				TileEntityCodeStart tileEntityCodeStart = (TileEntityCodeStart)worldIn.getTileEntity(tileEntityCode.getBlockCodeStartPos());
+				if(tileEntityCodeStart != null) {
+					tileEntityCodeStart.setBlockCodeRun(false);
+					tileEntityCodeStart.setBlockCodeReady(false);
+				}
+			}
+		}
 		
 		BlockCode.setBlockStatusDisabled(worldIn, pos, state);
 		
@@ -126,7 +150,7 @@ public class BlockCode extends BlockContainer {
 		Block block = state.getBlock();
 		
 		if(block.getUnlocalizedName().equals(Blocks.blockCodeStart.getUnlocalizedName())) {
-			BlockCode.checkBlockCode(worldIn, pos, state, pos, state);
+			BlockCode.checkBlockCode(worldIn, pos, state);
 			
 			return;
 		}
@@ -141,7 +165,7 @@ public class BlockCode extends BlockContainer {
 				return;
 			}
 			
-			BlockCode.checkBlockCode(worldIn, blockPosBehind, blockStateBehind, blockPosBehind, blockStateBehind);
+			BlockCode.checkBlockCode(worldIn, blockPosBehind, blockStateBehind);
 		}
 		else if(blockBehind.getUnlocalizedName().contains(Blocks.blockCodeUnlocalizedNamePrefix)) {
 			if((EnumFacing)blockStateBehind.getValue(FACING) != enumFacing) {
@@ -152,17 +176,20 @@ public class BlockCode extends BlockContainer {
 		}
 	}
 	
-	public static void checkBlockCode(World worldIn, BlockPos pos, IBlockState state, BlockPos blockCodeStartPos, IBlockState blockCodeStartState) {
+	public static void checkBlockCode(World worldIn, BlockPos pos, IBlockState state) {
 		EnumFacing enumFacing = (EnumFacing)state.getValue(FACING);
 		BlockPos blockPosForward = pos.offset(enumFacing);
 		IBlockState blockStateForward = worldIn.getBlockState(blockPosForward);
 		Block blockForward = blockStateForward.getBlock();
 		
 		if(blockForward.getUnlocalizedName().equals(Blocks.blockCodeStart.getUnlocalizedName())) {
-			BlockCode.setBlockStatusError(worldIn, pos, state);
+			if((EnumFacing)blockStateForward.getValue(FACING) == enumFacing) {
+				BlockCode.setBlockStatusError(worldIn, pos, state);
+			}
 			
 			return;
 		}
+		
 		if(blockForward.getUnlocalizedName().equals(Blocks.blockCodeEnd.getUnlocalizedName())) {
 			if((EnumFacing)blockStateForward.getValue(FACING) != enumFacing) {
 				return;
@@ -173,29 +200,74 @@ public class BlockCode extends BlockContainer {
 				return;
 			}
 			
-			BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, blockCodeStartState, blockCodeStartPos, blockCodeStartState, true);
-		}
-		else if(blockForward.getUnlocalizedName().contains(Blocks.blockCodeUnlocalizedNamePrefix)) {
-			if((EnumFacing)blockStateForward.getValue(FACING) != enumFacing) {
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Check: More than one start found"));
+			TileEntityCode tileEntityCode = (TileEntityCode)worldIn.getTileEntity(pos);
+			TileEntityCode tileEntityCodeForward = (TileEntityCode)worldIn.getTileEntity(blockPosForward);
+			if(tileEntityCode != null && tileEntityCodeForward != null && tileEntityCode.hasBlockCodeStartPos()) {
+				tileEntityCodeForward.setBlockCodeStartPos(tileEntityCode.getBlockCodeStartPos());
+				
+				BlockCode.setBlockStatusReady(worldIn, tileEntityCode.getBlockCodeStartPos(), worldIn.getBlockState(tileEntityCode.getBlockCodeStartPos()));
+			}
+			else {
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
 				
 				return;
 			}
+		}
+		else if(blockForward.getUnlocalizedName().contains(Blocks.blockCodeUnlocalizedNamePrefix)) {
+			if((EnumFacing)blockStateForward.getValue(FACING) != enumFacing) {
+				return;
+			}
 			
-			BlockCode.checkBlockCode(worldIn, blockPosForward, blockStateForward, blockCodeStartPos, blockCodeStartState);
+			Block block = state.getBlock();
+			if(block.getUnlocalizedName().equals(Blocks.blockCodeStart.getUnlocalizedName())) {
+				TileEntityCode tileEntityCodeForward = (TileEntityCode)worldIn.getTileEntity(blockPosForward);
+				if(tileEntityCodeForward != null) {
+					tileEntityCodeForward.setBlockCodeStartPos(pos);
+				}
+				else {
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+					
+					return;
+				}
+			}
+			else {
+				TileEntityCode tileEntityCode = (TileEntityCode)worldIn.getTileEntity(pos);
+				TileEntityCode tileEntityCodeForward = (TileEntityCode)worldIn.getTileEntity(blockPosForward);
+				if(tileEntityCode != null && tileEntityCodeForward != null && tileEntityCode.hasBlockCodeStartPos()) {
+					tileEntityCodeForward.setBlockCodeStartPos(tileEntityCode.getBlockCodeStartPos());
+				}
+				else {
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+					
+					return;
+				}
+			}
+			
+			BlockCode.checkBlockCode(worldIn, blockPosForward, blockStateForward);
 		}
 	}
 	
-	public static void setBlockStatusReady(World worldIn, BlockPos pos, IBlockState state, BlockPos blockCodeStartPos, IBlockState blockCodeStartState, boolean runCode) {
+	public static void setBlockStatusReady(World worldIn, BlockPos pos, IBlockState state) {		
 		EnumFacing enumFacing = (EnumFacing)state.getValue(FACING);
 		Block block = state.getBlock();
+		
+		TileEntityBackupData.saveData(worldIn, block, pos, state);
 		
 		IBlockState blockCodeState = block.getDefaultState().withProperty(FACING, enumFacing).withProperty(STATUS, EnumStatus.READY);
 		worldIn.setBlockState(pos, blockCodeState);
 		
+		TileEntityBackupData.loadData(worldIn, block, pos, state);
+		
 		if(block.getUnlocalizedName().equals(Blocks.blockCodeEnd.getUnlocalizedName())) {
-			if(runCode == true) {
-				BlockCode.setBlockStatusRun(worldIn, blockCodeStartPos, blockCodeStartState, blockCodeStartPos, blockCodeStartState);
+			TileEntityCode tileEntityCode = (TileEntityCode)worldIn.getTileEntity(pos);
+			if(tileEntityCode != null && tileEntityCode.hasBlockCodeStartPos()) {
+				TileEntityCodeStart tileEntityCodeStart = (TileEntityCodeStart)worldIn.getTileEntity(tileEntityCode.getBlockCodeStartPos());
+				tileEntityCodeStart.setBlockCodeReady(true);
+			}
+			else {
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while setting status code to ready"));
+				
+				return;
 			}
 			
 			return;
@@ -204,27 +276,30 @@ public class BlockCode extends BlockContainer {
 		BlockPos blockPosForward = pos.offset(enumFacing);
 		IBlockState blockStateForward = worldIn.getBlockState(blockPosForward);
 		
-		BlockCode.setBlockStatusReady(worldIn, blockPosForward, blockStateForward, blockCodeStartPos, blockCodeStartState, runCode);
+		BlockCode.setBlockStatusReady(worldIn, blockPosForward, blockStateForward);
 	}
 	
-	public static void setBlockStatusRun(World worldIn, BlockPos pos, IBlockState state, BlockPos blockCodeStartPos, IBlockState blockCodeStartState) {
-		if(BlockRobot.robotPos == null) {
-			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Exec: There is no Robot block"));
-			
-			BlockCodeStart.isCodeRun = false;
-			BlockCode.setBlockStatusReady(worldIn, BlockCodeStart.codeRunBlockStartPos, BlockCodeStart.codeRunBlockStartState, BlockCodeStart.codeRunBlockStartPos, BlockCodeStart.codeRunBlockStartState, false);
-			
-			return;
-		}
-		
+	public static void setBlockStatusRun(World worldIn, BlockPos pos, IBlockState state) {
 		EnumFacing enumFacing = (EnumFacing)state.getValue(FACING);
 		Block block = state.getBlock();
+		
+		TileEntityBackupData.saveData(worldIn, block, pos, state);
 		
 		IBlockState blockCodeState = block.getDefaultState().withProperty(FACING, enumFacing).withProperty(STATUS, EnumStatus.RUN);
 		worldIn.setBlockState(pos, blockCodeState);
 		
+		TileEntityBackupData.loadData(worldIn, block, pos, state);
+		
 		if(block.getUnlocalizedName().equals(Blocks.blockCodeEnd.getUnlocalizedName())) {
-			BlockCode.prepareCodeCodeRun(worldIn, blockCodeStartPos, blockCodeStartState);
+			TileEntityCode tileEntityCode = (TileEntityCode)worldIn.getTileEntity(pos);
+			if(tileEntityCode != null && tileEntityCode.hasBlockCodeStartPos()) {
+				BlockCode.prepareCodeToRun(worldIn, tileEntityCode.getBlockCodeStartPos(), worldIn.getBlockState(tileEntityCode.getBlockCodeStartPos()));
+			}
+			else {
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while setting status code to running"));
+				
+				return;
+			}
 			
 			return;
 		}
@@ -232,28 +307,38 @@ public class BlockCode extends BlockContainer {
 		BlockPos blockPosForward = pos.offset(enumFacing);
 		IBlockState blockStateForward = worldIn.getBlockState(blockPosForward);
 		
-		BlockCode.setBlockStatusRun(worldIn, blockPosForward, blockStateForward, blockCodeStartPos, blockCodeStartState);
+		BlockCode.setBlockStatusRun(worldIn, blockPosForward, blockStateForward);
 	}
 	
-	public static void prepareCodeCodeRun(World worldIn, BlockPos pos, IBlockState state) {
+	public static void prepareCodeToRun(World worldIn, BlockPos pos, IBlockState state) {
 		EnumFacing enumFacing = (EnumFacing)state.getValue(FACING);
 		BlockPos blockPosForward = pos.offset(enumFacing);
 		IBlockState blockStateForward = worldIn.getBlockState(blockPosForward);
 		
-		BlockCodeStart.codeRunTick = 0;
-		BlockCodeStart.codeRunBlockPos = blockPosForward;
-		BlockCodeStart.codeRunBlockState = blockStateForward;
-		BlockCodeStart.codeRunBlockStartPos = pos;
-		BlockCodeStart.codeRunBlockStartState = state;
-		BlockCodeStart.isCodeRun = true;
+		TileEntityCodeStart tileEntityCodeStart = (TileEntityCodeStart)worldIn.getTileEntity(pos);
+		if(tileEntityCodeStart != null) {
+			tileEntityCodeStart.setBlockCodeRunNextPos(blockPosForward);
+			tileEntityCodeStart.setBlockCodeRunNextState(blockStateForward);
+			tileEntityCodeStart.setBlockCodeRunTick(0);
+			tileEntityCodeStart.setBlockCodeRun(true);
+		}
+		else {
+			BlockCode.setBlockStatusReady(worldIn, pos, state);
+			
+			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while attempting to run the code"));
+		}
 	}
 	
 	public static void setBlockStatusError(World worldIn, BlockPos pos, IBlockState state) {
 		EnumFacing enumFacing = (EnumFacing)state.getValue(FACING);
 		Block block = state.getBlock();
 		
+		TileEntityBackupData.saveData(worldIn, block, pos, state);
+		
 		IBlockState blockCodeState = block.getDefaultState().withProperty(FACING, enumFacing).withProperty(STATUS, EnumStatus.ERROR);
 		worldIn.setBlockState(pos, blockCodeState);
+		
+		TileEntityBackupData.loadData(worldIn, block, pos, state);
 		
 		if(block.getUnlocalizedName().equals(Blocks.blockCodeStart.getUnlocalizedName())) {
 			return;
@@ -270,31 +355,52 @@ public class BlockCode extends BlockContainer {
 		
 		BlockPos blockPosBehind = pos.offset(enumFacing.getOpposite());
 		IBlockState blockStateBehind = worldIn.getBlockState(blockPosBehind);
-		setBlockStatusDisabledBehind(worldIn, blockPosBehind, blockStateBehind);
+		Block blockBehind = blockStateBehind.getBlock();
+		if(blockBehind.getUnlocalizedName().contains(Blocks.blockCodeUnlocalizedNamePrefix) && (EnumFacing)blockStateBehind.getValue(FACING) == enumFacing) {
+			setBlockStatusDisabledBehind(worldIn, blockPosBehind, blockStateBehind);
+		}
 		
 		BlockPos blockPosForward = pos.offset(enumFacing);
 		IBlockState blockStateForward = worldIn.getBlockState(blockPosForward);
-		setBlockStatusDisabledForward(worldIn, blockPosForward, blockStateForward);
+		Block blockForward = blockStateForward.getBlock();
+		if(blockForward.getUnlocalizedName().contains(Blocks.blockCodeUnlocalizedNamePrefix) && (EnumFacing)blockStateForward.getValue(FACING) == enumFacing) {
+			setBlockStatusDisabledForward(worldIn, blockPosForward, blockStateForward);
+		}
 	}
 	
 	public static void setBlockStatusDisabledBehind(World worldIn, BlockPos pos, IBlockState state) {
 		Block block = state.getBlock();
 		
-		if(!block.getUnlocalizedName().contains(Blocks.blockCodeUnlocalizedNamePrefix)) {
+		if(block.getUnlocalizedName().equals(Blocks.blockCodeEnd.getUnlocalizedName())) {
 			return;
 		}
 		
 		EnumFacing enumFacing = (EnumFacing)state.getValue(FACING);
 		
+		TileEntityBackupData.saveData(worldIn, block, pos, state);
+		
 		IBlockState blockCodeState = block.getDefaultState().withProperty(FACING, enumFacing).withProperty(STATUS, EnumStatus.DISABLED);
 		worldIn.setBlockState(pos, blockCodeState);
+		
+		TileEntityBackupData.loadData(worldIn, block, pos, state);
 		
 		if(block.getUnlocalizedName().equals(Blocks.blockCodeStart.getUnlocalizedName())) {
 			return;
 		}
+		else {
+			TileEntityCode tileEntityCode = (TileEntityCode)worldIn.getTileEntity(pos);
+			if(tileEntityCode != null) {
+				tileEntityCode.clearBlockCodeStartPos();
+			}
+		}
 		
 		BlockPos blockPosBehind = pos.offset(enumFacing.getOpposite());
 		IBlockState blockStateBehind = worldIn.getBlockState(blockPosBehind);
+		Block blockBehind = blockStateBehind.getBlock();
+		
+		if(!blockBehind.getUnlocalizedName().contains(Blocks.blockCodeUnlocalizedNamePrefix) || (EnumFacing)blockStateBehind.getValue(FACING) != enumFacing) {
+			return;
+		}
 		
 		BlockCode.setBlockStatusDisabledBehind(worldIn, blockPosBehind, blockStateBehind);
 	}
@@ -302,39 +408,57 @@ public class BlockCode extends BlockContainer {
 	public static void setBlockStatusDisabledForward(World worldIn, BlockPos pos, IBlockState state) {
 		Block block = state.getBlock();
 		
-		if(!block.getUnlocalizedName().contains(Blocks.blockCodeUnlocalizedNamePrefix)) {
-			return;
-		}
-		else if(block.getUnlocalizedName().equals(Blocks.blockCodeStart.getUnlocalizedName())) {
+		if(block.getUnlocalizedName().equals(Blocks.blockCodeStart.getUnlocalizedName())) {
 			return;
 		}
 		
 		EnumFacing enumFacing = (EnumFacing)state.getValue(FACING);
 		
+		TileEntityBackupData.saveData(worldIn, block, pos, state);
+		
 		IBlockState blockCodeState = block.getDefaultState().withProperty(FACING, enumFacing).withProperty(STATUS, EnumStatus.DISABLED);
 		worldIn.setBlockState(pos, blockCodeState);
+		
+		TileEntityBackupData.loadData(worldIn, block, pos, state);
 		
 		if(block.getUnlocalizedName().equals(Blocks.blockCodeEnd.getUnlocalizedName())) {
 			return;
 		}
+		else {
+			TileEntityCode tileEntityCode = (TileEntityCode)worldIn.getTileEntity(pos);
+			if(tileEntityCode != null) {
+				tileEntityCode.clearBlockCodeStartPos();
+			}
+		}
 		
 		BlockPos blockPosForward = pos.offset(enumFacing);
 		IBlockState blockStateForward = worldIn.getBlockState(blockPosForward);
+		Block blockForward = blockStateForward.getBlock();
+		
+		if(!blockForward.getUnlocalizedName().contains(Blocks.blockCodeUnlocalizedNamePrefix) || (EnumFacing)blockStateForward.getValue(FACING) != enumFacing) {
+			return;
+		}
 		
 		BlockCode.setBlockStatusDisabledForward(worldIn, blockPosForward, blockStateForward);
 	}
 	
 	public static void execBlockCode(World worldIn, BlockPos pos, IBlockState state) {
-		if(BlockRobot.robotPos == null) {
-			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Exec: There is no Robot block"));
-			
-			BlockCodeStart.isCodeRun = false;
-			BlockCode.setBlockStatusReady(worldIn, BlockCodeStart.codeRunBlockStartPos, BlockCodeStart.codeRunBlockStartState, BlockCodeStart.codeRunBlockStartPos, BlockCodeStart.codeRunBlockStartState, false);
-			
+		Block block = state.getBlock();
+		
+		BlockPos blockCodeStartPos = null;
+		if(block.getUnlocalizedName().equals(Blocks.blockCodeStart.getUnlocalizedName())) {
+			blockCodeStartPos = pos;
+		}
+		else {
+			TileEntityCode tileEntityCode = (TileEntityCode)worldIn.getTileEntity(pos);
+			if(tileEntityCode != null && tileEntityCode.hasBlockCodeStartPos()) {
+				blockCodeStartPos = tileEntityCode.getBlockCodeStartPos();
+			}
+		}
+		TileEntityCodeStart tileEntityCodeStart = (TileEntityCodeStart)worldIn.getTileEntity(blockCodeStartPos);
+		if(tileEntityCodeStart == null || !tileEntityCodeStart.getBlockLinked()) {
 			return;
 		}
-		
-		Block block = state.getBlock();
 		
 		EnumFacing enumFacing = (EnumFacing)state.getValue(FACING);
 		BlockPos blockPosForward = pos.offset(enumFacing);
@@ -342,65 +466,194 @@ public class BlockCode extends BlockContainer {
 		Block blockForward = blockStateForward.getBlock();
 		
 		if(block.getUnlocalizedName().equals(Blocks.blockCodeMove.getUnlocalizedName())) {
-			IBlockState blockRobotState = worldIn.getBlockState(BlockRobot.robotPos);
+			IBlockState blockRobotState = worldIn.getBlockState(tileEntityCodeStart.getBlockRobotPos());
 			Block blockRobot = blockRobotState.getBlock();
 			EnumFacing enumRobotFacing = (EnumFacing)blockRobotState.getValue(FACING);
-			BlockPos blockRobotPosForward = BlockRobot.robotPos.offset(enumRobotFacing);
-			//BlockPos blockRobotPosForward = BlockRobot.robotPos.up();
-			//BlockPos blockRobotPosForward = BlockRobot.robotPos.down();
 			
-			if(!worldIn.isAirBlock(blockRobotPosForward)) {
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Exec: Move - There is a block in front"));
-				
-				BlockCodeStart.isCodeRun = false;
-				BlockCode.setBlockStatusReady(worldIn, BlockCodeStart.codeRunBlockStartPos, BlockCodeStart.codeRunBlockStartState, BlockCodeStart.codeRunBlockStartPos, BlockCodeStart.codeRunBlockStartState, false);
+			TileEntityCodeMove tileEntityCodeMove = (TileEntityCodeMove)worldIn.getTileEntity(pos);
+			if(tileEntityCodeMove == null) {
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
 				
 				return;
 			}
 			
-			worldIn.setBlockToAir(BlockRobot.robotPos);
+			BlockPos blockRobotPosMove;
+			switch(tileEntityCodeMove.getBlockParamter()) {
+				case "front":
+					blockRobotPosMove = tileEntityCodeStart.getBlockRobotPos().offset(enumRobotFacing);
+					break;
+				case "up":
+					blockRobotPosMove = tileEntityCodeStart.getBlockRobotPos().up();
+					break;
+				case "down":
+					blockRobotPosMove = tileEntityCodeStart.getBlockRobotPos().down();
+					break;
+				default:
+					tileEntityCodeStart.setBlockCodeRun(false);
+					BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
+					
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Move - An error has occurred"));
+					
+					return;
+			}
+			
+			if(!worldIn.isAirBlock(blockRobotPosMove)) {
+				tileEntityCodeStart.setBlockCodeRun(false);
+				BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
+				
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Move - There is a block on the defined direction ('" + tileEntityCodeMove.getBlockParamter() + "')"));
+				
+				return;
+			}
+			
+			//TileEntityBackupData.saveData(worldIn, worldIn.getBlockState(tileEntityCodeStart.getBlockRobotPos()).getBlock(), tileEntityCodeStart.getBlockRobotPos(), worldIn.getBlockState(tileEntityCodeStart.getBlockRobotPos()));
+			
+			worldIn.setBlockToAir(tileEntityCodeStart.getBlockRobotPos());
 			IBlockState blockNewRobotState = blockRobot.getDefaultState().withProperty(FACING, enumRobotFacing);
-			worldIn.setBlockState(blockRobotPosForward, blockNewRobotState);
-			BlockRobot.robotPos = blockRobotPosForward;
+			worldIn.setBlockState(blockRobotPosMove, blockNewRobotState);
+			
+			//TileEntityBackupData.loadData(worldIn, blockNewRobotState.getBlock(), blockRobotPosMove, blockNewRobotState);
+			
+			tileEntityCodeStart.setBlockRobotPos(blockRobotPosMove);
 		}
 		else if(block.getUnlocalizedName().equals(Blocks.blockCodeRotate.getUnlocalizedName())) {
-			IBlockState blockRobotState = worldIn.getBlockState(BlockRobot.robotPos);
-			Block blockRobot = worldIn.getBlockState(BlockRobot.robotPos).getBlock();
+			IBlockState blockRobotState = worldIn.getBlockState(tileEntityCodeStart.getBlockRobotPos());
+			Block blockRobot = worldIn.getBlockState(tileEntityCodeStart.getBlockRobotPos()).getBlock();
 			EnumFacing enumRobotFacing = (EnumFacing)blockRobotState.getValue(FACING);
 			
-			EnumFacing enumNewRobotFacing = enumRobotFacing.rotateY();
-			//EnumFacing enumNewRobotFacing = enumRobotFacing.rotateYCCW();
-			IBlockState blockNewRobotState = blockRobot.getDefaultState().withProperty(FACING, enumNewRobotFacing);
-			worldIn.setBlockState(BlockRobot.robotPos, blockNewRobotState);
-		}
-		else if(block.getUnlocalizedName().equals(Blocks.blockCodeBreak.getUnlocalizedName())) {
-			IBlockState blockRobotState = worldIn.getBlockState(BlockRobot.robotPos);
-			EnumFacing enumRobotFacing = (EnumFacing)blockRobotState.getValue(FACING);
-			BlockPos blockRobotPosForward = BlockRobot.robotPos.offset(enumRobotFacing);
-			
-			if(worldIn.isAirBlock(blockRobotPosForward)) {
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Exec: Break - There is no block to break in front"));
-				
-				BlockCodeStart.isCodeRun = false;
-				BlockCode.setBlockStatusReady(worldIn, BlockCodeStart.codeRunBlockStartPos, BlockCodeStart.codeRunBlockStartState, BlockCodeStart.codeRunBlockStartPos, BlockCodeStart.codeRunBlockStartState, false);
+			TileEntityCodeRotate tileEntityCodeRotate = (TileEntityCodeRotate)worldIn.getTileEntity(pos);
+			if(tileEntityCodeRotate == null) {
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
 				
 				return;
 			}
 			
-			worldIn.destroyBlock(blockRobotPosForward, true);
+			EnumFacing enumNewRobotFacing;
+			switch(tileEntityCodeRotate.getBlockParamter()) {
+				case "right":
+					enumNewRobotFacing = enumRobotFacing.rotateY();
+					break;
+				case "left":
+					enumNewRobotFacing = enumRobotFacing.rotateYCCW();
+					break;
+				default:
+					tileEntityCodeStart.setBlockCodeRun(false);
+					BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
+					
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Rotate - An error has occurred"));
+					
+					return;
+			}
+			
+			IBlockState blockNewRobotState = blockRobot.getDefaultState().withProperty(FACING, enumNewRobotFacing);
+			worldIn.setBlockState(tileEntityCodeStart.getBlockRobotPos(), blockNewRobotState);
+		}
+		else if(block.getUnlocalizedName().equals(Blocks.blockCodeBreak.getUnlocalizedName())) {
+			IBlockState blockRobotState = worldIn.getBlockState(tileEntityCodeStart.getBlockRobotPos());
+			EnumFacing enumRobotFacing = (EnumFacing)blockRobotState.getValue(FACING);
+			
+			TileEntityCodeBreak tileEntityCodeBreak = (TileEntityCodeBreak)worldIn.getTileEntity(pos);
+			if(tileEntityCodeBreak == null) {
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+				
+				return;
+			}
+			
+			BlockPos blockRobotPosBreak;
+			switch(tileEntityCodeBreak.getBlockParamter()) {
+				case "front":
+					blockRobotPosBreak = tileEntityCodeStart.getBlockRobotPos().offset(enumRobotFacing);
+					break;
+				case "up":
+					blockRobotPosBreak = tileEntityCodeStart.getBlockRobotPos().up();
+					break;
+				case "down":
+					blockRobotPosBreak = tileEntityCodeStart.getBlockRobotPos().down();
+					break;
+				default:
+					tileEntityCodeStart.setBlockCodeRun(false);
+					BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
+					
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCRaft Exec: Break - An error has occurred"));
+					
+					return;
+			}
+			
+			if(worldIn.isAirBlock(blockRobotPosBreak)) {
+				tileEntityCodeStart.setBlockCodeRun(false);
+				BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
+				
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Break - There is no block on the defined direction ('" + tileEntityCodeBreak.getBlockParamter() + "')"));
+				
+				return;
+			}
+			
+			worldIn.destroyBlock(blockRobotPosBreak, true);
+		}
+		else if(block.getUnlocalizedName().equals(Blocks.blockCodePlace.getUnlocalizedName())) {
+			TileEntityCodePlace tileEntityCodePlace = (TileEntityCodePlace)worldIn.getTileEntity(pos);
+			if(tileEntityCodePlace == null) {
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+				
+				return;
+			}
+			
+			if(tileEntityCodePlace.getBlockParamter("block") == "minecraft:air") {
+				tileEntityCodeStart.setBlockCodeRun(false);
+				BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
+				
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Place - No defined block to place"));
+				
+				return;
+			}
+			
+			IBlockState blockRobotState = worldIn.getBlockState(tileEntityCodeStart.getBlockRobotPos());
+			EnumFacing enumRobotFacing = (EnumFacing)blockRobotState.getValue(FACING);
+			
+			BlockPos blockRobotPosPlace;
+			switch(tileEntityCodePlace.getBlockParamter("direction")) {
+				case "front":
+					blockRobotPosPlace = tileEntityCodeStart.getBlockRobotPos().offset(enumRobotFacing);
+					break;
+				case "up":
+					blockRobotPosPlace = tileEntityCodeStart.getBlockRobotPos().up();
+					break;
+				case "down":
+					blockRobotPosPlace = tileEntityCodeStart.getBlockRobotPos().down();
+					break;
+				default:
+					tileEntityCodeStart.setBlockCodeRun(false);
+					BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
+					
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Place - An error has occurred"));
+					
+					return;
+			}
+			
+			if(!worldIn.isAirBlock(blockRobotPosPlace)) {
+				tileEntityCodeStart.setBlockCodeRun(false);
+				BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
+				
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Place - There is already a block on the defined direction ('" + tileEntityCodePlace.getBlockParamter("direction") + "')"));
+				
+				return;
+			}
+			
+			IBlockState blockPlaceState = Block.getBlockFromName(tileEntityCodePlace.getBlockParamter("block")).getDefaultState();
+			worldIn.setBlockState(blockRobotPosPlace, blockPlaceState);
 		}
 		
 		if(blockForward.getUnlocalizedName().equals(Blocks.blockCodeEnd.getUnlocalizedName())) {
-			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Exec: End"));
+			tileEntityCodeStart.setBlockCodeRun(false);
+			BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 			
-			BlockCodeStart.isCodeRun = false;
-			BlockCode.setBlockStatusReady(worldIn, BlockCodeStart.codeRunBlockStartPos, BlockCodeStart.codeRunBlockStartState, BlockCodeStart.codeRunBlockStartPos, BlockCodeStart.codeRunBlockStartState, false);
+			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: End"));
 			
 			return;
 		}
 		
-		BlockCodeStart.codeRunBlockPos = blockPosForward;
-		BlockCodeStart.codeRunBlockState = blockStateForward;
+		tileEntityCodeStart.setBlockCodeRunNextPos(blockPosForward);
+		tileEntityCodeStart.setBlockCodeRunNextState(blockStateForward);
 	}
 	
 	public static enum EnumStatus implements IStringSerializable {
@@ -442,6 +695,137 @@ public class BlockCode extends BlockContainer {
 		static {
 			for(EnumStatus colour : values()) {
 				META_LOOKUP[colour.getMetadata()] = colour;
+			}
+		}
+	}
+	
+	static class TileEntityBackupData {
+		// Tile Entity Block Code Start Variables
+		static int blockCodeRunTick = 0;
+		static BlockPos blockCodeRunNextPos = null;
+		static IBlockState blockCodeRunNextState = null;
+		static boolean blockCodeReady = false;
+		static boolean blockCodeRun = false;
+		static boolean blockLinked = false;
+		static BlockPos blockRobotPos = null;
+		
+		// Tile Entity Block Code Variables
+		static String blockParamter1 = null;
+		static String blockParamter2 = null;
+		
+		// Tile Entity Block Code and Robot Variables
+		static boolean blockCodeStart = false;
+		static BlockPos blockCodeStartPos = null;
+		
+		static void saveData(World worldIn, Block block, BlockPos pos, IBlockState state) {
+			if(block.getUnlocalizedName().equals(Blocks.blockRobot.getUnlocalizedName())) {
+				TileEntityRobot tileEntityRobot = (TileEntityRobot)worldIn.getTileEntity(pos);
+				if(tileEntityRobot != null) {
+					blockCodeStart = tileEntityRobot.hasBlockCodeStartPos();
+					blockCodeStartPos = tileEntityRobot.getBlockCodeStartPos();
+				}
+			}
+			else if(block.getUnlocalizedName().equals(Blocks.blockCodeStart.getUnlocalizedName())) {
+				TileEntityCodeStart tileEntityCode = (TileEntityCodeStart)worldIn.getTileEntity(pos);
+				if(tileEntityCode != null) {
+					blockCodeRunTick = tileEntityCode.getBlockCodeRunTick();
+					blockCodeRunNextPos = tileEntityCode.getBlockCodeRunNextPos();
+					blockCodeRunNextState = tileEntityCode.getBlockCodeRunNextState();
+					blockCodeReady = tileEntityCode.getBlockCodeReady();
+					blockCodeRun = tileEntityCode.getBlockCodeRun();
+					blockLinked = tileEntityCode.getBlockLinked();
+					blockRobotPos = tileEntityCode.getBlockRobotPos();
+				}
+			}
+			else {
+				if(block.getUnlocalizedName().equals(Blocks.blockCodeBreak.getUnlocalizedName())) {
+					TileEntityCodeBreak tileEntityCode = (TileEntityCodeBreak)worldIn.getTileEntity(pos);
+					if(tileEntityCode != null) {
+						blockParamter1 = tileEntityCode.getBlockParamter();
+					}
+				}
+				else if(block.getUnlocalizedName().equals(Blocks.blockCodeMove.getUnlocalizedName())) {
+					TileEntityCodeMove tileEntityCode = (TileEntityCodeMove)worldIn.getTileEntity(pos);
+					if(tileEntityCode != null) {
+						blockParamter1 = tileEntityCode.getBlockParamter();
+					}
+				}
+				else if(block.getUnlocalizedName().equals(Blocks.blockCodePlace.getUnlocalizedName())) {
+					TileEntityCodePlace tileEntityCode = (TileEntityCodePlace)worldIn.getTileEntity(pos);
+					if(tileEntityCode != null) {
+						blockParamter1 = tileEntityCode.getBlockParamter("direction");
+						blockParamter2 = tileEntityCode.getBlockParamter("block");
+					}
+				}
+				else if(block.getUnlocalizedName().equals(Blocks.blockCodeRotate.getUnlocalizedName())) {
+					TileEntityCodeRotate tileEntityCode = (TileEntityCodeRotate)worldIn.getTileEntity(pos);
+					if(tileEntityCode != null) {
+						blockParamter1 = tileEntityCode.getBlockParamter();
+					}
+				}
+				
+				TileEntityCode tileEntityCode = (TileEntityCode)worldIn.getTileEntity(pos);
+				if(tileEntityCode != null) {
+					blockCodeStart = tileEntityCode.hasBlockCodeStartPos();
+					blockCodeStartPos = tileEntityCode.getBlockCodeStartPos();
+				}
+			}
+		}
+		
+		static void loadData(World worldIn, Block block, BlockPos pos, IBlockState state) {
+			if(block.getUnlocalizedName().equals(Blocks.blockRobot.getUnlocalizedName())) {
+				TileEntityRobot tileEntityRobot = (TileEntityRobot)worldIn.getTileEntity(pos);
+				if(tileEntityRobot != null) {
+					if(blockCodeStart) {
+						tileEntityRobot.setBlockCodeStartPos(blockCodeStartPos);
+					}
+				}
+			}
+			else if(block.getUnlocalizedName().equals(Blocks.blockCodeStart.getUnlocalizedName())) {
+				TileEntityCodeStart tileEntityCode = (TileEntityCodeStart)worldIn.getTileEntity(pos);
+				if(tileEntityCode != null) {
+					tileEntityCode.setBlockCodeRunTick(blockCodeRunTick);
+					tileEntityCode.setBlockCodeRunNextPos(blockCodeRunNextPos);
+					tileEntityCode.setBlockCodeRunNextState(blockCodeRunNextState);
+					tileEntityCode.setBlockCodeReady(blockCodeReady);
+					tileEntityCode.setBlockCodeRun(blockCodeRun);
+					tileEntityCode.setBlockLinked(blockLinked);
+					tileEntityCode.setBlockRobotPos(blockRobotPos);
+				}
+			}
+			else {
+				if(block.getUnlocalizedName().equals(Blocks.blockCodeBreak.getUnlocalizedName())) {
+					TileEntityCodeBreak tileEntityCode = (TileEntityCodeBreak)worldIn.getTileEntity(pos);
+					if(tileEntityCode != null) {
+						tileEntityCode.setBlockParamter(blockParamter1);
+					}
+				}
+				else if(block.getUnlocalizedName().equals(Blocks.blockCodeMove.getUnlocalizedName())) {
+					TileEntityCodeMove tileEntityCode = (TileEntityCodeMove)worldIn.getTileEntity(pos);
+					if(tileEntityCode != null) {
+						tileEntityCode.setBlockParamter(blockParamter1);
+					}
+				}
+				else if(block.getUnlocalizedName().equals(Blocks.blockCodePlace.getUnlocalizedName())) {
+					TileEntityCodePlace tileEntityCode = (TileEntityCodePlace)worldIn.getTileEntity(pos);
+					if(tileEntityCode != null) {
+						tileEntityCode.setBlockParamter("direction", blockParamter1);
+						tileEntityCode.setBlockParamter("block", blockParamter2);
+					}
+				}
+				else if(block.getUnlocalizedName().equals(Blocks.blockCodeRotate.getUnlocalizedName())) {
+					TileEntityCodeRotate tileEntityCode = (TileEntityCodeRotate)worldIn.getTileEntity(pos);
+					if(tileEntityCode != null) {
+						tileEntityCode.setBlockParamter(blockParamter1);
+					}
+				}
+				
+				TileEntityCode tileEntityCode = (TileEntityCode)worldIn.getTileEntity(pos);
+				if(tileEntityCode != null) {
+					if(blockCodeStart) {
+						tileEntityCode.setBlockCodeStartPos(blockCodeStartPos);
+					}
+				}
 			}
 		}
 	}

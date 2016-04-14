@@ -1,13 +1,18 @@
 package io.github.cbcraft.common.block;
 
 import io.github.cbcraft.common.block.material.MaterialRobot;
-import net.minecraft.block.Block;
+import io.github.cbcraft.common.item.Items;
+import io.github.cbcraft.common.tileentity.TileEntityCodeStart;
+import io.github.cbcraft.common.tileentity.TileEntityRobot;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumWorldBlockLayer;
@@ -15,7 +20,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockRobot extends Block {
+public class BlockRobot extends BlockContainer {
 	public BlockRobot(String unlocalizedName) {
 		super(MaterialRobot.robot);
 		this.setUnlocalizedName(unlocalizedName);
@@ -27,7 +32,6 @@ public class BlockRobot extends Block {
 	}
 	
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
-	public static BlockPos robotPos = null;
 	
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
@@ -48,20 +52,30 @@ public class BlockRobot extends Block {
 	}
 	
 	@Override
+	public TileEntity createNewTileEntity(World worldIn, int meta) {
+		return new TileEntityRobot();
+	}
+	
+	@Override
 	public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
 		return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing());
 	}
 	
 	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-		BlockRobot.robotPos = pos;
-	}
-	
-	@Override
-	public void breakBlock(World world, BlockPos pos, IBlockState blockstate) {
-		BlockRobot.robotPos = null;
+	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+		TileEntityRobot tileEntityRobot = (TileEntityRobot)worldIn.getTileEntity(pos);
+		if(tileEntityRobot != null && tileEntityRobot.hasBlockCodeStartPos()) {
+			TileEntityCodeStart tileEntityCodeStart = (TileEntityCodeStart)worldIn.getTileEntity(tileEntityRobot.getBlockCodeStartPos());
+			if(tileEntityCodeStart != null) {
+				tileEntityCodeStart.setBlockLinked(false);
+				if(tileEntityCodeStart.getBlockCodeRun()) {
+					tileEntityCodeStart.setBlockCodeRun(false);
+					BlockCode.setBlockStatusReady(worldIn, tileEntityRobot.getBlockCodeStartPos(), worldIn.getBlockState(tileEntityRobot.getBlockCodeStartPos()));
+				}
+			}
+		}
 		
-		super.breakBlock(world, pos, blockstate);
+		super.breakBlock(worldIn, pos, state);
 	}
 	
 	@Override
@@ -82,6 +96,28 @@ public class BlockRobot extends Block {
 	
 	@Override
 	public boolean isFullCube() {
+		return false;
+	}
+	
+	@Override
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX, float hitY, float hitZ) {
+		if(playerIn.inventory.getCurrentItem() != null) {
+			if(playerIn.inventory.getCurrentItem().getItem() == Items.itemRemote) {
+				NBTTagCompound nbtTagCompound = playerIn.inventory.getCurrentItem().getTagCompound();
+				if(nbtTagCompound == null) {
+					nbtTagCompound = new NBTTagCompound();
+					playerIn.inventory.getCurrentItem().setTagCompound(nbtTagCompound);
+				}
+				nbtTagCompound.setBoolean("linked", false);
+				
+				NBTTagCompound blockPos = new NBTTagCompound();
+				blockPos.setInteger("x", pos.getX());
+				blockPos.setInteger("y", pos.getY());
+				blockPos.setInteger("z", pos.getZ());
+				nbtTagCompound.setTag("pos", blockPos);
+			}
+		}
+		
 		return false;
 	}
 }
