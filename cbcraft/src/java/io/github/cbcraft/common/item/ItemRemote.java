@@ -48,7 +48,6 @@ public class ItemRemote extends Item {
 						}
 						else {
 							if(tileEntityCodeStart.getBlockCodeReady()) {
-								Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("1 " + Boolean.toString(tileEntityCodeStart.getBlockLinked())));
 								if(tileEntityCodeStart.getBlockLinked()) {
 									BlockCode.setBlockStatusRun(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 									

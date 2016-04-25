@@ -477,16 +477,16 @@ public class BlockCode extends BlockContainer {
 				return;
 			}
 			
-			BlockPos blockRobotPosMove;
+			BlockPos blockNewRobotPos;
 			switch(tileEntityCodeMove.getBlockParamter()) {
 				case "front":
-					blockRobotPosMove = tileEntityCodeStart.getBlockRobotPos().offset(enumRobotFacing);
+					blockNewRobotPos = tileEntityCodeStart.getBlockRobotPos().offset(enumRobotFacing);
 					break;
 				case "up":
-					blockRobotPosMove = tileEntityCodeStart.getBlockRobotPos().up();
+					blockNewRobotPos = tileEntityCodeStart.getBlockRobotPos().up();
 					break;
 				case "down":
-					blockRobotPosMove = tileEntityCodeStart.getBlockRobotPos().down();
+					blockNewRobotPos = tileEntityCodeStart.getBlockRobotPos().down();
 					break;
 				default:
 					tileEntityCodeStart.setBlockCodeRun(false);
@@ -497,7 +497,7 @@ public class BlockCode extends BlockContainer {
 					return;
 			}
 			
-			if(!worldIn.isAirBlock(blockRobotPosMove)) {
+			if(!worldIn.isAirBlock(blockNewRobotPos)) {
 				tileEntityCodeStart.setBlockCodeRun(false);
 				BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 				
@@ -506,19 +506,19 @@ public class BlockCode extends BlockContainer {
 				return;
 			}
 			
-			//TileEntityBackupData.saveData(worldIn, worldIn.getBlockState(tileEntityCodeStart.getBlockRobotPos()).getBlock(), tileEntityCodeStart.getBlockRobotPos(), worldIn.getBlockState(tileEntityCodeStart.getBlockRobotPos()));
+			TileEntityBackupData.saveData(worldIn, blockRobot, tileEntityCodeStart.getBlockRobotPos(), blockRobotState);
 			
 			worldIn.setBlockToAir(tileEntityCodeStart.getBlockRobotPos());
 			IBlockState blockNewRobotState = blockRobot.getDefaultState().withProperty(FACING, enumRobotFacing);
-			worldIn.setBlockState(blockRobotPosMove, blockNewRobotState);
+			worldIn.setBlockState(blockNewRobotPos, blockNewRobotState);
 			
-			//TileEntityBackupData.loadData(worldIn, blockNewRobotState.getBlock(), blockRobotPosMove, blockNewRobotState);
+			TileEntityBackupData.loadData(worldIn, blockNewRobotState.getBlock(), blockNewRobotPos, blockNewRobotState);
 			
-			tileEntityCodeStart.setBlockRobotPos(blockRobotPosMove);
+			tileEntityCodeStart.setBlockRobotPos(blockNewRobotPos);
 		}
 		else if(block.getUnlocalizedName().equals(Blocks.blockCodeRotate.getUnlocalizedName())) {
 			IBlockState blockRobotState = worldIn.getBlockState(tileEntityCodeStart.getBlockRobotPos());
-			Block blockRobot = worldIn.getBlockState(tileEntityCodeStart.getBlockRobotPos()).getBlock();
+			Block blockRobot = blockRobotState.getBlock();
 			EnumFacing enumRobotFacing = (EnumFacing)blockRobotState.getValue(FACING);
 			
 			TileEntityCodeRotate tileEntityCodeRotate = (TileEntityCodeRotate)worldIn.getTileEntity(pos);

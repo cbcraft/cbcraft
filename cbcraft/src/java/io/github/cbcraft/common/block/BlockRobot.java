@@ -26,7 +26,7 @@ public class BlockRobot extends BlockContainer {
 		this.setUnlocalizedName(unlocalizedName);
 		this.setCreativeTab(Blocks.tabBlocks);
 		this.setBlockBounds(0.125F, 0.125F, 0.125F, 0.875F, 0.875F, 0.875F);
-		this.setHardness(0.5F);
+		this.setBlockUnbreakable();
 		this.setStepSound(soundTypeWood);
 		this.disableStats();
 	}
@@ -59,23 +59,6 @@ public class BlockRobot extends BlockContainer {
 	@Override
 	public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
 		return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing());
-	}
-	
-	@Override
-	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-		TileEntityRobot tileEntityRobot = (TileEntityRobot)worldIn.getTileEntity(pos);
-		if(tileEntityRobot != null && tileEntityRobot.hasBlockCodeStartPos()) {
-			TileEntityCodeStart tileEntityCodeStart = (TileEntityCodeStart)worldIn.getTileEntity(tileEntityRobot.getBlockCodeStartPos());
-			if(tileEntityCodeStart != null) {
-				tileEntityCodeStart.setBlockLinked(false);
-				if(tileEntityCodeStart.getBlockCodeRun()) {
-					tileEntityCodeStart.setBlockCodeRun(false);
-					BlockCode.setBlockStatusReady(worldIn, tileEntityRobot.getBlockCodeStartPos(), worldIn.getBlockState(tileEntityRobot.getBlockCodeStartPos()));
-				}
-			}
-		}
-		
-		super.breakBlock(worldIn, pos, state);
 	}
 	
 	@Override
@@ -115,6 +98,22 @@ public class BlockRobot extends BlockContainer {
 				blockPos.setInteger("y", pos.getY());
 				blockPos.setInteger("z", pos.getZ());
 				nbtTagCompound.setTag("pos", blockPos);
+			}
+			else if(playerIn.inventory.getCurrentItem().getItem() == Items.itemWrench) {
+				TileEntityRobot tileEntityRobot = (TileEntityRobot)worldIn.getTileEntity(pos);
+				if(tileEntityRobot != null && tileEntityRobot.hasBlockCodeStartPos()) {
+					TileEntityCodeStart tileEntityCodeStart = (TileEntityCodeStart)worldIn.getTileEntity(tileEntityRobot.getBlockCodeStartPos());
+					if(tileEntityCodeStart != null) {
+						tileEntityCodeStart.setBlockLinked(false);
+						if(tileEntityCodeStart.getBlockCodeRun()) {
+							tileEntityCodeStart.setBlockCodeRun(false);
+							BlockCode.setBlockStatusReady(worldIn, tileEntityRobot.getBlockCodeStartPos(), worldIn.getBlockState(tileEntityRobot.getBlockCodeStartPos()));
+						}
+					}
+				}
+				
+				this.dropBlockAsItem(worldIn, pos, state, 0);
+				worldIn.setBlockToAir(pos);
 			}
 		}
 		
