@@ -10,6 +10,8 @@ public class TileEntities {
 		GameRegistry.registerTileEntity(TileEntityCodeMove.class, "code_move");
 		GameRegistry.registerTileEntity(TileEntityCodePlace.class, "code_place");
 		GameRegistry.registerTileEntity(TileEntityCodeRotate.class, "code_rotate");
+		GameRegistry.registerTileEntity(TileEntityCodeFor.class, "code_for");
+		GameRegistry.registerTileEntity(TileEntityCodeForEnd.class, "code_for_end");
 		GameRegistry.registerTileEntity(TileEntityCode.class, "code_end");
 	}
 }

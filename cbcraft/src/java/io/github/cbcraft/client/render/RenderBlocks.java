@@ -13,8 +13,9 @@ public class RenderBlocks {
 		register(Blocks.blockCodeStart);
 		register(Blocks.blockCodeMove);
 		register(Blocks.blockCodeRotate);
-		/*register(Blocks.blockCodeIf);
-		register(Blocks.blockCodeFor);*/
+		/*register(Blocks.blockCodeIf);*/
+		register(Blocks.blockCodeFor);
+		register(Blocks.blockCodeForEnd);
 		register(Blocks.blockCodePlace);
 		register(Blocks.blockCodeBreak);
 		register(Blocks.blockCodeEnd);

@@ -10,6 +10,7 @@ tile.code_move.name=Code Block - Move
 tile.code_rotate.name=Code Block - Rotate
 tile.code_if.name=Code Block - Check
 tile.code_for.name=Code Block - Loop
+tile.code_for_end.name=Code Block - Loop End
 tile.code_place.name=Code Block - Place Block
 tile.code_break.name=Code Block - Break Block
 tile.code_end.name=Code Block - End

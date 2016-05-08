@@ -1,5 +1,8 @@
 package io.github.cbcraft.common.tileentity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.github.cbcraft.common.block.BlockCode;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
@@ -13,6 +16,8 @@ public class TileEntityCodeStart extends TileEntity implements ITickable {
 	private IBlockState blockCodeRunNextState;
 	private boolean blockCodeReady = false;
 	private boolean blockCodeRun = false;
+	
+	private List<BlockPos> blockCodeForList = new ArrayList<BlockPos>();
 	
 	private boolean blockLinked = false;
 	private BlockPos blockRobotPos = new BlockPos(0, 0, 0);
@@ -71,6 +76,26 @@ public class TileEntityCodeStart extends TileEntity implements ITickable {
 	
 	public boolean getBlockCodeRun() {
 		return blockCodeRun;
+	}
+	
+	public void resetBlockCodeForList() {
+		blockCodeForList.clear();
+	}
+	
+	public void addBlockCodeForList(BlockPos pos) {
+		blockCodeForList.add(pos);
+	}
+	
+	public void removeBlockCodeForListLast() {
+		blockCodeForList.remove(blockCodeForList.size() - 1);
+	}
+	
+	public BlockPos getBlockCodeForListLast() {
+		return blockCodeForList.get(blockCodeForList.size() - 1);
+	}
+	
+	public int getBlockCodeForListCount() {
+		return blockCodeForList.size();
 	}
 	
 	@Override
