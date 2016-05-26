@@ -5,6 +5,7 @@ import java.util.List;
 import io.github.cbcraft.common.block.BlockCode;
 import io.github.cbcraft.common.tileentity.TileEntityCodeStart;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -66,11 +67,6 @@ public class ItemRemote extends Item {
 			}
 		}
 		
-		/*if(Keyboard.isKeyDown(Keyboard.KEY_C)) {
-			NBTTagCompound nbtTagCompound = new NBTTagCompound();
-			itemStackIn.setTagCompound(nbtTagCompound);
-		}*/
-		
 		return itemStackIn;
 	}
 	
@@ -81,7 +77,41 @@ public class ItemRemote extends Item {
 		final int NBT_TAG_ID = 10; // Values can be found on NBTBase.createNewByType()
 		if(stack.hasTagCompound() && stack.getTagCompound().hasKey("linked", NBT_BOOLEAN_ID) && stack.getTagCompound().hasKey("pos", NBT_TAG_ID)) {
 			if(stack.getTagCompound().getBoolean("linked")) {
+				/*tooltip.add(EnumChatFormatting.GREEN + "Linked");*/
+				
+				BlockPos blockCodeStartPos = null;
+				
+				final int NBT_INT_ID = 3; // Values can be found on NBTBase.createNewByType()
+				NBTTagCompound blockPos = stack.getTagCompound().getCompoundTag("pos");
+				if(blockPos.hasKey("x", NBT_INT_ID) && blockPos.hasKey("y", NBT_INT_ID) && blockPos.hasKey("z", NBT_INT_ID)) {
+					blockCodeStartPos = new BlockPos(blockPos.getInteger("x"), blockPos.getInteger("y"), blockPos.getInteger("z"));
+				}
+				
 				tooltip.add(EnumChatFormatting.GREEN + "Linked");
+				
+				if(GuiScreen.isShiftKeyDown()) {
+					tooltip.add("Link Coordinates:");
+					tooltip.add("  X = " + blockCodeStartPos.getX());
+					tooltip.add("  Y = " + blockCodeStartPos.getY());
+					tooltip.add("  Z = " + blockCodeStartPos.getZ());
+				}
+				else {
+					tooltip.add(EnumChatFormatting.UNDERLINE + "<<Press SHIFT For Link Coordinates>>");
+				}
+				
+				TileEntityCodeStart tileEntityCodeStart = (TileEntityCodeStart)playerIn.getEntityWorld().getTileEntity(blockCodeStartPos);
+				if(tileEntityCodeStart == null) {
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while displaying remote info"));
+					
+					return;
+				}
+				
+				if(tileEntityCodeStart.getBlockCodeRun()) {
+					tooltip.add(EnumChatFormatting.GREEN + "Running");
+				}
+				else {
+					tooltip.add(EnumChatFormatting.RED + "Stopped");
+				}
 			}
 			else {
 				tooltip.add(EnumChatFormatting.YELLOW + "Waiting Link");
@@ -92,44 +122,5 @@ public class ItemRemote extends Item {
 			tooltip.add(EnumChatFormatting.RED + "Unlinked");
 			tooltip.add(EnumChatFormatting.UNDERLINE + "Right click on Robot block to start link");
 		}
-		
-		/*final int NBT_BOOLEAN_ID = 1; // Values can be found on NBTBase.createNewByType()
-		final int NBT_TAG_ID = 10; // Values can be found on NBTBase.createNewByType()
-		if(stack.hasTagCompound() && stack.getTagCompound().hasKey("linked", NBT_BOOLEAN_ID) && stack.getTagCompound().hasKey("pos", NBT_TAG_ID)) {
-			if(stack.getTagCompound().getBoolean("linked")) {
-				BlockPos blockCodeStartPos = null;
-				
-				tooltip.add(EnumChatFormatting.GREEN + "Linked");
-				
-				if(GuiScreen.isShiftKeyDown()) {
-					final int NBT_INT_ID = 3; // Values can be found on NBTBase.createNewByType()
-					NBTTagCompound blockPos = stack.getTagCompound().getCompoundTag("pos");
-					if(blockPos.hasKey("x", NBT_INT_ID) && blockPos.hasKey("y", NBT_INT_ID) && blockPos.hasKey("z", NBT_INT_ID)) {
-						tooltip.add("X = " + blockPos.getInteger("x"));
-						tooltip.add("Y = " + blockPos.getInteger("y"));
-						tooltip.add("Z = " + blockPos.getInteger("z"));
-						
-						blockCodeStartPos = new BlockPos(blockPos.getInteger("x"), blockPos.getInteger("y"), blockPos.getInteger("z"));
-					}
-				}
-				else {
-					tooltip.add(EnumChatFormatting.UNDERLINE + "<<Press SHIFT For Link Coordinates>>");
-				}
-				
-				TileEntityCodeStart tileEntityCodeStart = (TileEntityCodeStart)playerIn.getEntityWorld().getTileEntity(blockCodeStartPos);
-				if(tileEntityCodeStart.getBlockCodeRun()) {
-					tooltip.add(EnumChatFormatting.GREEN + "Running");
-				}
-				else {
-					tooltip.add(EnumChatFormatting.RED + "Stopped");
-				}
-			}
-			else {
-				tooltip.add(EnumChatFormatting.YELLOW + "Ready to Link");
-			}
-		}
-		else {
-			tooltip.add(EnumChatFormatting.RED + "Unlinked");
-		}*/
 	}
 }

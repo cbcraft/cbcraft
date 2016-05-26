@@ -927,19 +927,19 @@ public class BlockCode extends BlockContainer {
 			
 			switch(tileEntityCodeIf.getBlockParamter("condition")) {
 				case "block":
-					IBlockState blockRobotState = worldIn.getBlockState(tileEntityCodeStart.getBlockRobotPos());
-					EnumFacing enumRobotFacing = (EnumFacing)blockRobotState.getValue(FACING);
+					IBlockState blockRobotStateBlock = worldIn.getBlockState(tileEntityCodeStart.getBlockRobotPos());
+					EnumFacing enumRobotFacingBlock = (EnumFacing)blockRobotStateBlock.getValue(FACING);
 					
-					BlockPos blockRobotPosIf;
+					BlockPos blockRobotPosIfBlock;
 					switch(tileEntityCodeIf.getBlockParamter("direction")) {
 						case "front":
-							blockRobotPosIf = tileEntityCodeStart.getBlockRobotPos().offset(enumRobotFacing);
+							blockRobotPosIfBlock = tileEntityCodeStart.getBlockRobotPos().offset(enumRobotFacingBlock);
 							break;
 						case "up":
-							blockRobotPosIf = tileEntityCodeStart.getBlockRobotPos().up();
+							blockRobotPosIfBlock = tileEntityCodeStart.getBlockRobotPos().up();
 							break;
 						case "down":
-							blockRobotPosIf = tileEntityCodeStart.getBlockRobotPos().down();
+							blockRobotPosIfBlock = tileEntityCodeStart.getBlockRobotPos().down();
 							break;
 						default:
 							tileEntityCodeStart.setBlockCodeRun(false);
@@ -950,8 +950,45 @@ public class BlockCode extends BlockContainer {
 							return;
 					}
 					
-					Block blockRobotIf = worldIn.getBlockState(blockRobotPosIf).getBlock();
-					if(worldIn.isAirBlock(blockRobotPosIf) || blockRobotIf == Block.getBlockFromName("minecraft:bedrock") || blockRobotIf == Block.getBlockFromName("minecraft:water") || blockRobotIf == Block.getBlockFromName("minecraft:lava")) {
+					Block blockRobotIfBlock = worldIn.getBlockState(blockRobotPosIfBlock).getBlock();
+					if(worldIn.isAirBlock(blockRobotPosIfBlock) || blockRobotIfBlock == Block.getBlockFromName("minecraft:bedrock") || blockRobotIfBlock == Block.getBlockFromName("minecraft:water") || blockRobotIfBlock == Block.getBlockFromName("minecraft:lava")) {
+						BlockPos blockIfElseEndPos = tileEntityCodeIf.getBlockCodeIfElseEndPos();
+						IBlockState blockIfElseEndState = worldIn.getBlockState(blockIfElseEndPos);
+						
+						tileEntityCodeStart.setBlockCodeRunNextPos(blockIfElseEndPos);
+						tileEntityCodeStart.setBlockCodeRunNextState(blockIfElseEndState);
+						
+						return;
+					}
+					
+					tileEntityCodeStart.setBlockCodeIfExecEnd(tileEntityCodeStart.getBlockCodeIfExecCount() - 1);
+					
+					break;
+				case "air":
+					IBlockState blockRobotStateAir = worldIn.getBlockState(tileEntityCodeStart.getBlockRobotPos());
+					EnumFacing enumRobotFacingAir = (EnumFacing)blockRobotStateAir.getValue(FACING);
+					
+					BlockPos blockRobotPosIfAir;
+					switch(tileEntityCodeIf.getBlockParamter("direction")) {
+						case "front":
+							blockRobotPosIfAir = tileEntityCodeStart.getBlockRobotPos().offset(enumRobotFacingAir);
+							break;
+						case "up":
+							blockRobotPosIfAir = tileEntityCodeStart.getBlockRobotPos().up();
+							break;
+						case "down":
+							blockRobotPosIfAir = tileEntityCodeStart.getBlockRobotPos().down();
+							break;
+						default:
+							tileEntityCodeStart.setBlockCodeRun(false);
+							BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
+							
+							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+							
+							return;
+					}
+					
+					if(!worldIn.isAirBlock(blockRobotPosIfAir)) {
 						BlockPos blockIfElseEndPos = tileEntityCodeIf.getBlockCodeIfElseEndPos();
 						IBlockState blockIfElseEndState = worldIn.getBlockState(blockIfElseEndPos);
 						
@@ -996,19 +1033,19 @@ public class BlockCode extends BlockContainer {
 			
 			switch(tileEntityCodeIfElse.getBlockParamter("condition")) {
 				case "block":
-					IBlockState blockRobotState = worldIn.getBlockState(tileEntityCodeStart.getBlockRobotPos());
-					EnumFacing enumRobotFacing = (EnumFacing)blockRobotState.getValue(FACING);
+					IBlockState blockRobotStateBlock = worldIn.getBlockState(tileEntityCodeStart.getBlockRobotPos());
+					EnumFacing enumRobotFacingBlock = (EnumFacing)blockRobotStateBlock.getValue(FACING);
 					
-					BlockPos blockRobotPosIf;
+					BlockPos blockRobotPosIfBlock;
 					switch(tileEntityCodeIfElse.getBlockParamter("direction")) {
 						case "front":
-							blockRobotPosIf = tileEntityCodeStart.getBlockRobotPos().offset(enumRobotFacing);
+							blockRobotPosIfBlock = tileEntityCodeStart.getBlockRobotPos().offset(enumRobotFacingBlock);
 							break;
 						case "up":
-							blockRobotPosIf = tileEntityCodeStart.getBlockRobotPos().up();
+							blockRobotPosIfBlock = tileEntityCodeStart.getBlockRobotPos().up();
 							break;
 						case "down":
-							blockRobotPosIf = tileEntityCodeStart.getBlockRobotPos().down();
+							blockRobotPosIfBlock = tileEntityCodeStart.getBlockRobotPos().down();
 							break;
 						default:
 							tileEntityCodeStart.setBlockCodeRun(false);
@@ -1019,8 +1056,45 @@ public class BlockCode extends BlockContainer {
 							return;
 					}
 					
-					Block blockRobotIf = worldIn.getBlockState(blockRobotPosIf).getBlock();
-					if(worldIn.isAirBlock(blockRobotPosIf) || blockRobotIf == Block.getBlockFromName("minecraft:bedrock") || blockRobotIf == Block.getBlockFromName("minecraft:water") || blockRobotIf == Block.getBlockFromName("minecraft:lava")) {
+					Block blockRobotIfBlock = worldIn.getBlockState(blockRobotPosIfBlock).getBlock();
+					if(worldIn.isAirBlock(blockRobotPosIfBlock) || blockRobotIfBlock == Block.getBlockFromName("minecraft:bedrock") || blockRobotIfBlock == Block.getBlockFromName("minecraft:water") || blockRobotIfBlock == Block.getBlockFromName("minecraft:lava")) {
+						BlockPos blockIfElseEndPos = tileEntityCodeIfElse.getBlockCodeIfElseEndPos();
+						IBlockState blockIfElseEndState = worldIn.getBlockState(blockIfElseEndPos);
+						
+						tileEntityCodeStart.setBlockCodeRunNextPos(blockIfElseEndPos);
+						tileEntityCodeStart.setBlockCodeRunNextState(blockIfElseEndState);
+						
+						return;
+					}
+					
+					tileEntityCodeStart.setBlockCodeIfExecEnd(tileEntityCodeStart.getBlockCodeIfExecCount() - 1);
+					
+					break;
+				case "air":
+					IBlockState blockRobotStateAir = worldIn.getBlockState(tileEntityCodeStart.getBlockRobotPos());
+					EnumFacing enumRobotFacingAir = (EnumFacing)blockRobotStateAir.getValue(FACING);
+					
+					BlockPos blockRobotPosIfAir;
+					switch(tileEntityCodeIfElse.getBlockParamter("direction")) {
+						case "front":
+							blockRobotPosIfAir = tileEntityCodeStart.getBlockRobotPos().offset(enumRobotFacingAir);
+							break;
+						case "up":
+							blockRobotPosIfAir = tileEntityCodeStart.getBlockRobotPos().up();
+							break;
+						case "down":
+							blockRobotPosIfAir = tileEntityCodeStart.getBlockRobotPos().down();
+							break;
+						default:
+							tileEntityCodeStart.setBlockCodeRun(false);
+							BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
+							
+							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+							
+							return;
+					}
+					
+					if(!worldIn.isAirBlock(blockRobotPosIfAir)) {
 						BlockPos blockIfElseEndPos = tileEntityCodeIfElse.getBlockCodeIfElseEndPos();
 						IBlockState blockIfElseEndState = worldIn.getBlockState(blockIfElseEndPos);
 						

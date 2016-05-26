@@ -34,6 +34,9 @@ public class BlockCodeIfElse extends BlockCode {
 					case "block":
 						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("IfElse Paramter: IfElse direction is set to '" + tileEntityCodeIfElse.getBlockParamter("direction") + "'"));
 						break;
+					case "air":
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("IfElse Paramter: IfElse direction is set to '" + tileEntityCodeIfElse.getBlockParamter("direction") + "'"));
+						break;
 				}
 			}
 			else if(playerIn.inventory.getCurrentItem().getItem() == Items.itemWrench) {
@@ -55,13 +58,33 @@ public class BlockCodeIfElse extends BlockCode {
 									break;
 							}
 							break;
+						case "air":
+							switch(tileEntityCodeIfElse.getBlockParamter("direction")) {
+								case "front":
+									tileEntityCodeIfElse.setBlockParamter("direction", "up");
+									Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("IfElse Paramter: IfElse direction has been set to 'up'"));
+									break;
+								case "up":
+									tileEntityCodeIfElse.setBlockParamter("direction", "down");
+									Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("IfElse Paramter: IfElse direction has been set to 'down'"));
+									break;
+								case "down":
+									tileEntityCodeIfElse.setBlockParamter("direction", "front");
+									Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("IfElse Paramter: IfElse direction has been set to 'front'"));
+									break;
+							}
+							break;
 					}
 				}
 				else {
 					switch(tileEntityCodeIfElse.getBlockParamter("condition")) {
 						case "block":
-							tileEntityCodeIfElse.setBlockParamter("condition", "block");
+							tileEntityCodeIfElse.setBlockParamter("condition", "air");
 							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("IfElse Paramter: IfElse condition has been set to 'block'"));
+							break;
+						case "air":
+							tileEntityCodeIfElse.setBlockParamter("condition", "block");
+							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("IfElse Paramter: IfElse condition has been set to 'air'"));
 							break;
 					}
 				}

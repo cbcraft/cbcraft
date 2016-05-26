@@ -34,6 +34,9 @@ public class BlockCodeIf extends BlockCode {
 					case "block":
 						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("If Paramter: If direction is set to '" + tileEntityCodeIf.getBlockParamter("direction") + "'"));
 						break;
+					case "air":
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("If Paramter: If direction is set to '" + tileEntityCodeIf.getBlockParamter("direction") + "'"));
+						break;
 				}
 			}
 			else if(playerIn.inventory.getCurrentItem().getItem() == Items.itemWrench) {
@@ -55,13 +58,33 @@ public class BlockCodeIf extends BlockCode {
 									break;
 							}
 							break;
+						case "air":
+							switch(tileEntityCodeIf.getBlockParamter("direction")) {
+								case "front":
+									tileEntityCodeIf.setBlockParamter("direction", "up");
+									Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("If Paramter: If direction has been set to 'up'"));
+									break;
+								case "up":
+									tileEntityCodeIf.setBlockParamter("direction", "down");
+									Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("If Paramter: If direction has been set to 'down'"));
+									break;
+								case "down":
+									tileEntityCodeIf.setBlockParamter("direction", "front");
+									Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("If Paramter: If direction has been set to 'front'"));
+									break;
+							}
+							break;
 					}
 				}
 				else {
 					switch(tileEntityCodeIf.getBlockParamter("condition")) {
 						case "block":
-							tileEntityCodeIf.setBlockParamter("condition", "block");
+							tileEntityCodeIf.setBlockParamter("condition", "air");
 							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("If Paramter: If condition has been set to 'block'"));
+							break;
+						case "air":
+							tileEntityCodeIf.setBlockParamter("condition", "block");
+							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("If Paramter: If condition has been set to 'air'"));
 							break;
 					}
 				}
