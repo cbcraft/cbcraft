@@ -13,7 +13,10 @@ public class RenderBlocks {
 		register(Blocks.blockCodeStart);
 		register(Blocks.blockCodeMove);
 		register(Blocks.blockCodeRotate);
-		/*register(Blocks.blockCodeIf);*/
+		register(Blocks.blockCodeIf);
+		register(Blocks.blockCodeIfElse);
+		register(Blocks.blockCodeElse);
+		register(Blocks.blockCodeIfEnd);
 		register(Blocks.blockCodeFor);
 		register(Blocks.blockCodeForEnd);
 		register(Blocks.blockCodePlace);

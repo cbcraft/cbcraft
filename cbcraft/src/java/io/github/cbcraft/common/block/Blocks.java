@@ -12,7 +12,10 @@ public class Blocks {
 	public static Block blockCodeStart;
 	public static Block blockCodeMove;
 	public static Block blockCodeRotate;
-	/*public static Block blockCodeIf;*/
+	public static Block blockCodeIf;
+	public static Block blockCodeIfElse;
+	public static Block blockCodeElse;
+	public static Block blockCodeIfEnd;
 	public static Block blockCodeFor;
 	public static Block blockCodeForEnd;
 	public static Block blockCodePlace;
@@ -24,7 +27,10 @@ public class Blocks {
 		GameRegistry.registerBlock(blockCodeStart = new BlockCodeStart(blockCodeUnlocalizedNamePrefix + "start"), blockCodeStart.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(blockCodeMove = new BlockCodeMove(blockCodeUnlocalizedNamePrefix + "move"), blockCodeMove.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(blockCodeRotate = new BlockCodeRotate(blockCodeUnlocalizedNamePrefix + "rotate"), blockCodeRotate.getUnlocalizedName().substring(5));
-		/*GameRegistry.registerBlock(blockCodeIf = new BlockCode(blockCodeUnlocalizedNamePrefix + "if"), blockCodeIf.getUnlocalizedName().substring(5));*/
+		GameRegistry.registerBlock(blockCodeIf = new BlockCodeIf(blockCodeUnlocalizedNamePrefix + "if"), blockCodeIf.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(blockCodeIfElse = new BlockCodeIfElse(blockCodeUnlocalizedNamePrefix + "if_else"), blockCodeIfElse.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(blockCodeElse = new BlockCodeElse(blockCodeUnlocalizedNamePrefix + "else"), blockCodeElse.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(blockCodeIfEnd = new BlockCodeIfEnd(blockCodeUnlocalizedNamePrefix + "if_end"), blockCodeIfEnd.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(blockCodeFor = new BlockCodeFor(blockCodeUnlocalizedNamePrefix + "for"), blockCodeFor.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(blockCodeForEnd = new BlockCodeForEnd(blockCodeUnlocalizedNamePrefix + "for_end"), blockCodeForEnd.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(blockCodePlace = new BlockCodePlace(blockCodeUnlocalizedNamePrefix + "place"), blockCodePlace.getUnlocalizedName().substring(5));

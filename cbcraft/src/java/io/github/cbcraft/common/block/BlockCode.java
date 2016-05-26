@@ -2,8 +2,11 @@ package io.github.cbcraft.common.block;
 
 import io.github.cbcraft.common.tileentity.TileEntityCode;
 import io.github.cbcraft.common.tileentity.TileEntityCodeBreak;
+import io.github.cbcraft.common.tileentity.TileEntityCodeElse;
 import io.github.cbcraft.common.tileentity.TileEntityCodeFor;
 import io.github.cbcraft.common.tileentity.TileEntityCodeForEnd;
+import io.github.cbcraft.common.tileentity.TileEntityCodeIf;
+import io.github.cbcraft.common.tileentity.TileEntityCodeIfElse;
 import io.github.cbcraft.common.tileentity.TileEntityCodeMove;
 import io.github.cbcraft.common.tileentity.TileEntityCodePlace;
 import io.github.cbcraft.common.tileentity.TileEntityCodeRotate;
@@ -244,6 +247,143 @@ public class BlockCode extends BlockContainer {
 			tileEntityCodeStart.removeBlockCodeForListLast();
 		}
 		
+		if(block.getUnlocalizedName().equals(Blocks.blockCodeIf.getUnlocalizedName())) {
+			tileEntityCodeStart.addBlockCodeIfList(pos);
+		}
+		else if(block.getUnlocalizedName().equals(Blocks.blockCodeIfElse.getUnlocalizedName())) {
+			if(tileEntityCodeStart.getBlockCodeIfListCount() == 0) {
+				BlockCode.setBlockStatusError(worldIn, pos, state);
+				
+				return;
+			}
+			
+			if(tileEntityCodeStart.getBlockCodeElseListCount(tileEntityCodeStart.getBlockCodeIfListCount() - 1) > 0) {
+				BlockCode.setBlockStatusError(worldIn, pos, state);
+				
+				return;
+			}
+			
+			tileEntityCodeStart.addBlockCodeIfElseList(tileEntityCodeStart.getBlockCodeIfListCount() - 1, pos);
+			
+			if(tileEntityCodeStart.getBlockCodeIfElseListCount(tileEntityCodeStart.getBlockCodeIfListCount() - 1) == 1) {
+				TileEntityCodeIf tileEntityCodeIf = (TileEntityCodeIf)worldIn.getTileEntity(tileEntityCodeStart.getBlockCodeIfListLast());
+				if(tileEntityCodeIf == null) {
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+					
+					return;
+				}
+				
+				tileEntityCodeIf.setBlockCodeIfElseEndPos(pos);
+			}
+			else if(tileEntityCodeStart.getBlockCodeIfElseListCount(tileEntityCodeStart.getBlockCodeIfListCount() - 1) > 1) {
+				TileEntityCodeIfElse tileEntityCodeIfElse = (TileEntityCodeIfElse)worldIn.getTileEntity(tileEntityCodeStart.getBlockCodeIfElseListLast(tileEntityCodeStart.getBlockCodeIfListCount() - 1));
+				if(tileEntityCodeIfElse == null) {
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+					
+					return;
+				}
+				
+				tileEntityCodeIfElse.setBlockCodeIfElseEndPos(pos);
+			}
+			else {
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+				
+				return;
+			}
+		}
+		else if(block.getUnlocalizedName().equals(Blocks.blockCodeElse.getUnlocalizedName())) {
+			if(tileEntityCodeStart.getBlockCodeIfListCount() == 0) {
+				BlockCode.setBlockStatusError(worldIn, pos, state);
+				
+				return;
+			}
+			
+			if(tileEntityCodeStart.getBlockCodeElseListCount(tileEntityCodeStart.getBlockCodeIfListCount() - 1) > 0) {
+				BlockCode.setBlockStatusError(worldIn, pos, state);
+				
+				return;
+			}
+			
+			tileEntityCodeStart.addBlockCodeElseList(tileEntityCodeStart.getBlockCodeIfListCount() - 1, pos);
+			
+			if(tileEntityCodeStart.getBlockCodeIfElseListCount(tileEntityCodeStart.getBlockCodeIfListCount() - 1) == 0) {
+				TileEntityCodeIf tileEntityCodeIf = (TileEntityCodeIf)worldIn.getTileEntity(tileEntityCodeStart.getBlockCodeIfListLast());
+				if(tileEntityCodeIf == null) {
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+					
+					return;
+				}
+				
+				tileEntityCodeIf.setBlockCodeIfElseEndPos(pos);
+			}
+			else if(tileEntityCodeStart.getBlockCodeIfElseListCount(tileEntityCodeStart.getBlockCodeIfListCount() - 1) > 0) {
+				TileEntityCodeIfElse tileEntityCodeIfElse = (TileEntityCodeIfElse)worldIn.getTileEntity(tileEntityCodeStart.getBlockCodeIfElseListLast(tileEntityCodeStart.getBlockCodeIfListCount() - 1));
+				if(tileEntityCodeIfElse == null) {
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+					
+					return;
+				}
+				
+				tileEntityCodeIfElse.setBlockCodeIfElseEndPos(pos);
+			}
+			else {
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+				
+				return;
+			}
+		}
+		else if(block.getUnlocalizedName().equals(Blocks.blockCodeIfEnd.getUnlocalizedName())) {
+			if(tileEntityCodeStart.getBlockCodeIfListCount() == 0) {
+				BlockCode.setBlockStatusError(worldIn, pos, state);
+				
+				return;
+			}
+			
+			if(tileEntityCodeStart.getBlockCodeElseListCount(tileEntityCodeStart.getBlockCodeIfListCount() - 1) > 1) {
+				BlockCode.setBlockStatusError(worldIn, pos, state);
+				
+				return;
+			}
+			
+			if(tileEntityCodeStart.getBlockCodeElseListCount(tileEntityCodeStart.getBlockCodeIfListCount() - 1) > 0) {
+				TileEntityCodeElse tileEntityCodeElse = (TileEntityCodeElse)worldIn.getTileEntity(tileEntityCodeStart.getBlockCodeElseListLast(tileEntityCodeStart.getBlockCodeIfListCount() - 1));
+				if(tileEntityCodeElse == null) {
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+					
+					return;
+				}
+				
+				tileEntityCodeElse.setBlockCodeIfEndPos(pos);
+			}
+			else if(tileEntityCodeStart.getBlockCodeIfElseListCount(tileEntityCodeStart.getBlockCodeIfListCount() - 1) == 0) {
+				TileEntityCodeIf tileEntityCodeIf = (TileEntityCodeIf)worldIn.getTileEntity(tileEntityCodeStart.getBlockCodeIfListLast());
+				if(tileEntityCodeIf == null) {
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+					
+					return;
+				}
+				
+				tileEntityCodeIf.setBlockCodeIfElseEndPos(pos);
+			}
+			else if(tileEntityCodeStart.getBlockCodeIfElseListCount(tileEntityCodeStart.getBlockCodeIfListCount() - 1) > 0) {
+				TileEntityCodeIfElse tileEntityCodeIfElse = (TileEntityCodeIfElse)worldIn.getTileEntity(tileEntityCodeStart.getBlockCodeIfElseListLast(tileEntityCodeStart.getBlockCodeIfListCount() - 1));
+				if(tileEntityCodeIfElse == null) {
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+					
+					return;
+				}
+				
+				tileEntityCodeIfElse.setBlockCodeIfElseEndPos(pos);
+			}
+			else {
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+				
+				return;
+			}
+			
+			tileEntityCodeStart.removeBlockCodeIfListLast();
+		}
+		
 		if(blockForward.getUnlocalizedName().equals(Blocks.blockCodeEnd.getUnlocalizedName())) {
 			if((EnumFacing)blockStateForward.getValue(FACING) != enumFacing) {
 				return;
@@ -266,6 +406,12 @@ public class BlockCode extends BlockContainer {
 				return;
 			}
 			
+			if(tileEntityCodeStart.getBlockCodeIfListCount() != 0) {
+				BlockCode.setBlockStatusError(worldIn, blockPosForward, blockStateForward);
+				
+				return;
+			}
+			
 			tileEntityCodeForward.setBlockCodeStartPos(tileEntityCode.getBlockCodeStartPos());
 			BlockCode.setBlockStatusReady(worldIn, tileEntityCode.getBlockCodeStartPos(), worldIn.getBlockState(tileEntityCode.getBlockCodeStartPos()));
 		}
@@ -283,6 +429,9 @@ public class BlockCode extends BlockContainer {
 			
 			if(block.getUnlocalizedName().equals(Blocks.blockCodeStart.getUnlocalizedName())) {
 				tileEntityCodeStart.resetBlockCodeForList();
+				tileEntityCodeStart.resetBlockCodeIfList();
+				tileEntityCodeStart.resetBlockCodeIfElseList();
+				tileEntityCodeStart.resetBlockCodeElseList();
 				
 				tileEntityCodeForward.setBlockCodeStartPos(pos);
 			}
@@ -495,6 +644,14 @@ public class BlockCode extends BlockContainer {
 		BlockPos blockCodeStartPos = null;
 		if(block.getUnlocalizedName().equals(Blocks.blockCodeStart.getUnlocalizedName())) {
 			blockCodeStartPos = pos;
+			
+			TileEntityCodeStart tileEntityCodeStart = (TileEntityCodeStart)worldIn.getTileEntity(blockCodeStartPos);
+			if(tileEntityCodeStart == null) {
+				return;
+			}
+			
+			tileEntityCodeStart.clearBlockCodeIfExecEnd();
+			tileEntityCodeStart.clearBlockCodeIfExecCount();
 		}
 		else {
 			TileEntityCode tileEntityCode = (TileEntityCode)worldIn.getTileEntity(pos);
@@ -542,7 +699,7 @@ public class BlockCode extends BlockContainer {
 					tileEntityCodeStart.setBlockCodeRun(false);
 					BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 					
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Move - An error has occurred"));
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
 					
 					return;
 			}
@@ -593,7 +750,7 @@ public class BlockCode extends BlockContainer {
 					tileEntityCodeStart.setBlockCodeRun(false);
 					BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 					
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Rotate - An error has occurred"));
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
 					
 					return;
 			}
@@ -630,13 +787,13 @@ public class BlockCode extends BlockContainer {
 					tileEntityCodeStart.setBlockCodeRun(false);
 					BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 					
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCRaft Exec: Break - An error has occurred"));
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
 					
 					return;
 			}
 			
-			if(worldIn.isAirBlock(blockRobotPosBreak)) {
-				tileEntityCodeStart.setBlockCodeRun(false);
+			Block blockRobotBreak = worldIn.getBlockState(blockRobotPosBreak).getBlock();
+			if(worldIn.isAirBlock(blockRobotPosBreak) || blockRobotBreak == Block.getBlockFromName("minecraft:bedrock") || blockRobotBreak == Block.getBlockFromName("minecraft:water") || blockRobotBreak == Block.getBlockFromName("minecraft:lava")) {
 				BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 				
 				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Break - There is no block on the defined direction ('" + tileEntityCodeBreak.getBlockParamter() + "')"));
@@ -684,7 +841,7 @@ public class BlockCode extends BlockContainer {
 					tileEntityCodeStart.setBlockCodeRun(false);
 					BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 					
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Place - An error has occurred"));
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
 					
 					return;
 			}
@@ -754,6 +911,160 @@ public class BlockCode extends BlockContainer {
 				
 				return ;
 			}
+		}
+		else if(block.getUnlocalizedName().equals(Blocks.blockCodeIf.getUnlocalizedName())) {
+			TileEntityCodeIf tileEntityCodeIf = (TileEntityCodeIf)worldIn.getTileEntity(pos);
+			if(tileEntityCodeIf == null) {
+				tileEntityCodeStart.setBlockCodeRun(false);
+				BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
+				
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+				
+				return;
+			}
+			
+			tileEntityCodeStart.incrementBlockCodeIfExecCount();
+			
+			switch(tileEntityCodeIf.getBlockParamter("condition")) {
+				case "block":
+					IBlockState blockRobotState = worldIn.getBlockState(tileEntityCodeStart.getBlockRobotPos());
+					EnumFacing enumRobotFacing = (EnumFacing)blockRobotState.getValue(FACING);
+					
+					BlockPos blockRobotPosIf;
+					switch(tileEntityCodeIf.getBlockParamter("direction")) {
+						case "front":
+							blockRobotPosIf = tileEntityCodeStart.getBlockRobotPos().offset(enumRobotFacing);
+							break;
+						case "up":
+							blockRobotPosIf = tileEntityCodeStart.getBlockRobotPos().up();
+							break;
+						case "down":
+							blockRobotPosIf = tileEntityCodeStart.getBlockRobotPos().down();
+							break;
+						default:
+							tileEntityCodeStart.setBlockCodeRun(false);
+							BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
+							
+							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+							
+							return;
+					}
+					
+					Block blockRobotIf = worldIn.getBlockState(blockRobotPosIf).getBlock();
+					if(worldIn.isAirBlock(blockRobotPosIf) || blockRobotIf == Block.getBlockFromName("minecraft:bedrock") || blockRobotIf == Block.getBlockFromName("minecraft:water") || blockRobotIf == Block.getBlockFromName("minecraft:lava")) {
+						BlockPos blockIfElseEndPos = tileEntityCodeIf.getBlockCodeIfElseEndPos();
+						IBlockState blockIfElseEndState = worldIn.getBlockState(blockIfElseEndPos);
+						
+						tileEntityCodeStart.setBlockCodeRunNextPos(blockIfElseEndPos);
+						tileEntityCodeStart.setBlockCodeRunNextState(blockIfElseEndState);
+						
+						return;
+					}
+					
+					tileEntityCodeStart.setBlockCodeIfExecEnd(tileEntityCodeStart.getBlockCodeIfExecCount() - 1);
+					
+					break;
+				default:
+					tileEntityCodeStart.setBlockCodeRun(false);
+					BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
+					
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+					
+					return;
+			}
+		}
+		else if(block.getUnlocalizedName().equals(Blocks.blockCodeIfElse.getUnlocalizedName())) {
+			TileEntityCodeIfElse tileEntityCodeIfElse = (TileEntityCodeIfElse)worldIn.getTileEntity(pos);
+			if(tileEntityCodeIfElse == null) {
+				tileEntityCodeStart.setBlockCodeRun(false);
+				BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
+				
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+				
+				return;
+			}
+			
+			if(tileEntityCodeStart.getBlockCodeIfExecEnd(tileEntityCodeStart.getBlockCodeIfExecCount() - 1)) {
+				BlockPos blockIfElseEndPos = tileEntityCodeIfElse.getBlockCodeIfElseEndPos();
+				IBlockState blockIfElseEndState = worldIn.getBlockState(blockIfElseEndPos);
+				
+				tileEntityCodeStart.setBlockCodeRunNextPos(blockIfElseEndPos);
+				tileEntityCodeStart.setBlockCodeRunNextState(blockIfElseEndState);
+				
+				return;
+			}
+			
+			switch(tileEntityCodeIfElse.getBlockParamter("condition")) {
+				case "block":
+					IBlockState blockRobotState = worldIn.getBlockState(tileEntityCodeStart.getBlockRobotPos());
+					EnumFacing enumRobotFacing = (EnumFacing)blockRobotState.getValue(FACING);
+					
+					BlockPos blockRobotPosIf;
+					switch(tileEntityCodeIfElse.getBlockParamter("direction")) {
+						case "front":
+							blockRobotPosIf = tileEntityCodeStart.getBlockRobotPos().offset(enumRobotFacing);
+							break;
+						case "up":
+							blockRobotPosIf = tileEntityCodeStart.getBlockRobotPos().up();
+							break;
+						case "down":
+							blockRobotPosIf = tileEntityCodeStart.getBlockRobotPos().down();
+							break;
+						default:
+							tileEntityCodeStart.setBlockCodeRun(false);
+							BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
+							
+							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+							
+							return;
+					}
+					
+					Block blockRobotIf = worldIn.getBlockState(blockRobotPosIf).getBlock();
+					if(worldIn.isAirBlock(blockRobotPosIf) || blockRobotIf == Block.getBlockFromName("minecraft:bedrock") || blockRobotIf == Block.getBlockFromName("minecraft:water") || blockRobotIf == Block.getBlockFromName("minecraft:lava")) {
+						BlockPos blockIfElseEndPos = tileEntityCodeIfElse.getBlockCodeIfElseEndPos();
+						IBlockState blockIfElseEndState = worldIn.getBlockState(blockIfElseEndPos);
+						
+						tileEntityCodeStart.setBlockCodeRunNextPos(blockIfElseEndPos);
+						tileEntityCodeStart.setBlockCodeRunNextState(blockIfElseEndState);
+						
+						return;
+					}
+					
+					tileEntityCodeStart.setBlockCodeIfExecEnd(tileEntityCodeStart.getBlockCodeIfExecCount() - 1);
+					
+					break;
+				default:
+					tileEntityCodeStart.setBlockCodeRun(false);
+					BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
+					
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+					
+					return;
+			}
+		}
+		else if(block.getUnlocalizedName().equals(Blocks.blockCodeElse.getUnlocalizedName())) {
+			TileEntityCodeElse tileEntityCodeElse = (TileEntityCodeElse)worldIn.getTileEntity(pos);
+			if(tileEntityCodeElse == null) {
+				tileEntityCodeStart.setBlockCodeRun(false);
+				BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
+				
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+				
+				return;
+			}
+			
+			if(tileEntityCodeStart.getBlockCodeIfExecEnd(tileEntityCodeStart.getBlockCodeIfExecCount() - 1)) {
+				BlockPos blockIfEndPos = tileEntityCodeElse.getBlockCodeIfEndPos();
+				IBlockState blockIfEndState = worldIn.getBlockState(blockIfEndPos);
+				
+				tileEntityCodeStart.setBlockCodeRunNextPos(blockIfEndPos);
+				tileEntityCodeStart.setBlockCodeRunNextState(blockIfEndState);
+				
+				return;
+			}
+		}
+		else if(block.getUnlocalizedName().equals(Blocks.blockCodeIfEnd.getUnlocalizedName())) {
+			tileEntityCodeStart.decrementBlockCodeIfExecCount();
 		}
 		
 		if(blockForward.getUnlocalizedName().equals(Blocks.blockCodeEnd.getUnlocalizedName())) {
@@ -827,6 +1138,10 @@ public class BlockCode extends BlockContainer {
 		static boolean blockCodeFor = false;
 		static BlockPos blockCodeForPos = null;
 		
+		// Tile Entity Block Code If/If Else/Else Variables
+		static boolean blockCodeIfElseEnd = false;
+		static BlockPos blockCodeIfElseEndPos = null;
+		
 		// Tile Entity Block Code Variables
 		static String blockParamterStr1 = null;
 		static String blockParamterStr2 = null;
@@ -898,6 +1213,31 @@ public class BlockCode extends BlockContainer {
 						blockCodeForPos = tileEntityCodeForEnd.getBlockCodeForPos();
 					}
 				}
+				else if(block.getUnlocalizedName().equals(Blocks.blockCodeIf.getUnlocalizedName())) {
+					TileEntityCodeIf tileEntityCodeIf = (TileEntityCodeIf)worldIn.getTileEntity(pos);
+					if(tileEntityCodeIf != null) {
+						blockParamterStr1 = tileEntityCodeIf.getBlockParamter("condition");
+						blockParamterStr2 = tileEntityCodeIf.getBlockParamter("direction");
+						blockCodeIfElseEnd = tileEntityCodeIf.hasBlockCodeIfElseEndPos();
+						blockCodeIfElseEndPos = tileEntityCodeIf.getBlockCodeIfElseEndPos();
+					}
+				}
+				else if(block.getUnlocalizedName().equals(Blocks.blockCodeIfElse.getUnlocalizedName())) {
+					TileEntityCodeIfElse tileEntityCodeIfElse = (TileEntityCodeIfElse)worldIn.getTileEntity(pos);
+					if(tileEntityCodeIfElse != null) {
+						blockParamterStr1 = tileEntityCodeIfElse.getBlockParamter("condition");
+						blockParamterStr2 = tileEntityCodeIfElse.getBlockParamter("direction");
+						blockCodeIfElseEnd = tileEntityCodeIfElse.hasBlockCodeIfElseEndPos();
+						blockCodeIfElseEndPos = tileEntityCodeIfElse.getBlockCodeIfElseEndPos();
+					}
+				}
+				else if(block.getUnlocalizedName().equals(Blocks.blockCodeElse.getUnlocalizedName())) {
+					TileEntityCodeElse tileEntityCodeElse = (TileEntityCodeElse)worldIn.getTileEntity(pos);
+					if(tileEntityCodeElse != null) {
+						blockCodeIfElseEnd = tileEntityCodeElse.hasBlockCodeIfEndPos();
+						blockCodeIfElseEndPos = tileEntityCodeElse.getBlockCodeIfEndPos();
+					}
+				}
 				
 				TileEntityCode tileEntityCode = (TileEntityCode)worldIn.getTileEntity(pos);
 				if(tileEntityCode != null) {
@@ -945,7 +1285,7 @@ public class BlockCode extends BlockContainer {
 					TileEntityCodePlace tileEntityCode = (TileEntityCodePlace)worldIn.getTileEntity(pos);
 					if(tileEntityCode != null) {
 						tileEntityCode.setBlockParamter("direction", blockParamterStr1);
-						tileEntityCode.setBlockParamter("block", blockParamterStr1);
+						tileEntityCode.setBlockParamter("block", blockParamterStr2);
 					}
 				}
 				else if(block.getUnlocalizedName().equals(Blocks.blockCodeRotate.getUnlocalizedName())) {
@@ -969,6 +1309,34 @@ public class BlockCode extends BlockContainer {
 					if(tileEntityCodeForEnd != null) {
 						if(blockCodeFor) {
 							tileEntityCodeForEnd.setBlockCodeForPos(blockCodeForPos);
+						}
+					}
+				}
+				else if(block.getUnlocalizedName().equals(Blocks.blockCodeIf.getUnlocalizedName())) {
+					TileEntityCodeIf tileEntityCodeIf = (TileEntityCodeIf)worldIn.getTileEntity(pos);
+					if(tileEntityCodeIf != null) {
+						tileEntityCodeIf.setBlockParamter("condition", blockParamterStr1);
+						tileEntityCodeIf.setBlockParamter("direction", blockParamterStr2);
+						if(blockCodeIfElseEnd) {
+							tileEntityCodeIf.setBlockCodeIfElseEndPos(blockCodeIfElseEndPos);
+						}
+					}
+				}
+				else if(block.getUnlocalizedName().equals(Blocks.blockCodeIfElse.getUnlocalizedName())) {
+					TileEntityCodeIfElse tileEntityCodeIfElse = (TileEntityCodeIfElse)worldIn.getTileEntity(pos);
+					if(tileEntityCodeIfElse != null) {
+						tileEntityCodeIfElse.setBlockParamter("condition", blockParamterStr1);
+						tileEntityCodeIfElse.setBlockParamter("direction", blockParamterStr2);
+						if(blockCodeIfElseEnd) {
+							tileEntityCodeIfElse.setBlockCodeIfElseEndPos(blockCodeIfElseEndPos);
+						}
+					}
+				}
+				else if(block.getUnlocalizedName().equals(Blocks.blockCodeElse.getUnlocalizedName())) {
+					TileEntityCodeElse tileEntityCodeElse = (TileEntityCodeElse)worldIn.getTileEntity(pos);
+					if(tileEntityCodeElse != null) {
+						if(blockCodeIfElseEnd) {
+							tileEntityCodeElse.setBlockCodeIfEndPos(blockCodeIfElseEndPos);
 						}
 					}
 				}

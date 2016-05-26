@@ -17,7 +17,13 @@ public class TileEntityCodeStart extends TileEntity implements ITickable {
 	private boolean blockCodeReady = false;
 	private boolean blockCodeRun = false;
 	
+	private int blockCodeIfExecCount;
+	private List<Boolean> blockCodeIfExecEnd = new ArrayList<Boolean>();
+	
 	private List<BlockPos> blockCodeForList = new ArrayList<BlockPos>();
+	private List<BlockPos> blockCodeIfList = new ArrayList<BlockPos>();
+	private List<List<BlockPos>> blockCodeIfElseList = new ArrayList<List<BlockPos>>();
+	private List<List<BlockPos>> blockCodeElseList = new ArrayList<List<BlockPos>>();
 	
 	private boolean blockLinked = false;
 	private BlockPos blockRobotPos = new BlockPos(0, 0, 0);
@@ -96,6 +102,116 @@ public class TileEntityCodeStart extends TileEntity implements ITickable {
 	
 	public int getBlockCodeForListCount() {
 		return blockCodeForList.size();
+	}
+	
+	public void resetBlockCodeIfList() {
+		blockCodeIfList.clear();
+	}
+	
+	public void addBlockCodeIfList(BlockPos pos) {
+		blockCodeIfList.add(pos);
+	}
+	
+	public void removeBlockCodeIfListLast() {
+		blockCodeIfList.remove(blockCodeIfList.size() - 1);
+	}
+	
+	public BlockPos getBlockCodeIfListLast() {
+		return blockCodeIfList.get(blockCodeIfList.size() - 1);
+	}
+	
+	public int getBlockCodeIfListCount() {
+		return blockCodeIfList.size();
+	}
+	
+	public void resetBlockCodeIfElseList() {
+		blockCodeIfElseList.clear();
+	}
+	
+	public void addBlockCodeIfElseList(int index, BlockPos pos) {
+		List<BlockPos> temp = new ArrayList<BlockPos>();
+		temp.add(pos);
+		
+		while(blockCodeIfElseList.size() <= index) {
+			blockCodeIfElseList.add(null);
+		}
+		
+		blockCodeIfElseList.set(index, temp);
+	}
+	
+	public BlockPos getBlockCodeIfElseListLast(int index) {
+		return blockCodeIfElseList.get(index).get(blockCodeIfElseList.get(index).size() - 1);
+	}
+	
+	public int getBlockCodeIfElseListCount(int index) {
+		if(blockCodeIfElseList.size() > index) {
+			return blockCodeIfElseList.get(index).size();
+		}
+		
+		return 0;
+	}
+	
+	public void resetBlockCodeElseList() {
+		blockCodeElseList.clear();
+	}
+	
+	public void addBlockCodeElseList(int index, BlockPos pos) {
+		List<BlockPos> temp = new ArrayList<BlockPos>();
+		temp.add(pos);
+		
+		while(blockCodeElseList.size() <= index) {
+			blockCodeElseList.add(null);
+		}
+		
+		blockCodeElseList.set(index, temp);
+	}
+	
+	public BlockPos getBlockCodeElseListLast(int index) {
+		return blockCodeElseList.get(index).get(blockCodeElseList.get(index).size() - 1);
+	}
+	
+	public int getBlockCodeElseListCount(int index) {
+		if(blockCodeElseList.size() > index) {
+			return blockCodeElseList.get(index).size();
+		}
+		
+		return 0;
+	}
+	
+	public void clearBlockCodeIfExecEnd() {
+		blockCodeIfExecEnd.clear();
+	}
+	
+	public void setBlockCodeIfExecEnd(int index) {
+		while(blockCodeIfExecEnd.size() <= index) {
+			blockCodeIfExecEnd.add(null);
+		}
+		
+		blockCodeIfExecEnd.set(index, true);
+	}
+	
+	public boolean getBlockCodeIfExecEnd(int index) {
+		if(blockCodeIfExecEnd.size() > index) {
+			return blockCodeIfExecEnd.get(index);
+		}
+		
+		return false;
+	}
+	
+	public void clearBlockCodeIfExecCount() {
+		blockCodeIfExecCount = 0;
+	}
+	
+	public void incrementBlockCodeIfExecCount() {
+		++blockCodeIfExecCount;
+	}
+	
+	public void decrementBlockCodeIfExecCount() {
+		--blockCodeIfExecCount;
+	}
+	
+	public int getBlockCodeIfExecCount() {
+		return blockCodeIfExecCount;
 	}
 	
 	@Override
