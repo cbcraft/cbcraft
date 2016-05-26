@@ -16,7 +16,7 @@ public class Items {
 	public static final CreativeTabs tabItems = new CreativeTabs("items") {
 		@Override
 		public Item getTabIconItem() {
-			return itemWrench;
+			return itemRemote;
 		}
 	};
 }

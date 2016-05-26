@@ -80,11 +80,11 @@ public class BlockCodeIf extends BlockCode {
 					switch(tileEntityCodeIf.getBlockParamter("condition")) {
 						case "block":
 							tileEntityCodeIf.setBlockParamter("condition", "air");
-							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("If Paramter: If condition has been set to 'block'"));
+							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("If Paramter: If condition has been set to 'air'"));
 							break;
 						case "air":
 							tileEntityCodeIf.setBlockParamter("condition", "block");
-							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("If Paramter: If condition has been set to 'air'"));
+							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("If Paramter: If condition has been set to 'block'"));
 							break;
 					}
 				}
