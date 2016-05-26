@@ -2,9 +2,19 @@
 	"parent":"cbcraft:block/robot",
 	"display": {
 		"thirdperson": {
-			"rotation": [ 10, -45, 170 ],
-			"translation": [ 0, 1.5, -2.75 ],
-			"scale": [ 0.375, 0.375, 0.375 ]
+			"rotation": [ 340, 179, 184 ],
+			"translation": [ 0.25, 3.00, -2.50 ],
+			"scale": [ 0.70, 0.70, 0.70 ]
+		},
+		"firstperson": {
+			"rotation": [ 352, 126, 354 ],
+			"translation": [ -2.25, 2.00, 1.25 ],
+			"scale": [ 1.00, 1.00, 1.00 ]
+		},
+		"gui": {
+			"rotation": [ 0, 180, 0 ],
+			"translation": [ 0.00, 0.00, 0.00 ],
+			"scale": [ 1.25, 1.25, 1.25 ]
 		}
 	}
 }

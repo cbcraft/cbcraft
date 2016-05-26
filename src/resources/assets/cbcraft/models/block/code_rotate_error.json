@@ -2,7 +2,7 @@
 	"ambientocclusion": false,
 	"textures": {
 		"particle": "cbcraft:blocks/code_rotate_error",
-		"slab": "cbcraft:blocks/code_rotate_error",
+		"slab": "cbcraft:blocks/code_slab_error",
 		"top": "cbcraft:blocks/code_rotate_error"
 	},
 	"elements": [ {

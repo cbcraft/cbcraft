@@ -2,9 +2,19 @@
 	"parent":"cbcraft:block/code_for_end",
 	"display": {
 		"thirdperson": {
-			"rotation": [ 10, -45, 170 ],
-			"translation": [ 0, 1.5, -2.75 ],
-			"scale": [ 0.375, 0.375, 0.375 ]
+			"rotation": [ 0, 5, 180 ],
+			"translation": [ -0.25, -0.50, -3.00 ],
+			"scale": [ 0.60, 0.60, 0.60 ]
+		},
+		"firstperson": {
+			"rotation": [ 18, 302, 8 ],
+			"translation": [ -1.25, 3.75, 0.75 ],
+			"scale": [ 1.00, 1.00, 1.00 ]
+		},
+		"gui": {
+			"rotation": [ 60, 134, 0 ],
+			"translation": [ 0.00, 0.00, 0.00 ],
+			"scale": [ 1.50, 1.50, 1.50 ]
 		}
 	}
 }

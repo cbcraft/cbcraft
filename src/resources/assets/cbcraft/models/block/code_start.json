@@ -2,7 +2,7 @@
 	"ambientocclusion": false,
 	"textures": {
 		"particle": "cbcraft:blocks/code_start",
-		"slab": "cbcraft:blocks/code_start",
+		"slab": "cbcraft:blocks/code_slab",
 		"top": "cbcraft:blocks/code_start"
 	},
 	"elements": [ {

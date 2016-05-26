@@ -8,7 +8,10 @@ tile.robot.name=Robot
 tile.code_start.name=Code Block - Start
 tile.code_move.name=Code Block - Move
 tile.code_rotate.name=Code Block - Rotate
-tile.code_if.name=Code Block - Check
+tile.code_if.name=Code Block - If
+tile.code_if_else.name=Code Block - If Else
+tile.code_else.name=Code Block - Else
+tile.code_if_end.name=Code Block - If End
 tile.code_for.name=Code Block - Loop
 tile.code_for_end.name=Code Block - Loop End
 tile.code_place.name=Code Block - Place Block
@@ -18,7 +21,7 @@ tile.code_end.name=Code Block - End
 # Items
 ##############################
 item.wrench.name=Wrench
-item.remote.name=Remote
+item.remote.name=Remote Control
 
 # Creative Tabs
 ##############################

@@ -12,7 +12,7 @@ public class RenderItems {
 		register(Items.itemRemote);
 	}
 	
-	public static void register (Item item){
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Items.itemWrench, 0, new ModelResourceLocation(CBCraft.MODID + ":" + item.getUnlocalizedName().substring(5), "inventory"));
+	public static void register (Item item) {
+		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, 0, new ModelResourceLocation(CBCraft.MODID + ":" + item.getUnlocalizedName().substring(5), "inventory"));
 	}
 }
