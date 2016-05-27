@@ -16,14 +16,6 @@ public class BlockCodeStart extends BlockCode {
 		super(unlocalizedName);
 	}
 	
-	/*public static boolean isCodeRun = false;
-	public static Block codeRunBlock;
-	public static BlockPos codeRunBlockPos;
-	public static IBlockState codeRunBlockState;
-	public static int codeRunTick;
-	public static BlockPos codeRunBlockStartPos;
-	public static IBlockState codeRunBlockStartState;*/
-	
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		return new TileEntityCodeStart();
@@ -46,11 +38,11 @@ public class BlockCodeStart extends BlockCode {
 							if(tileEntityCodeStart != null) {
 								BlockPos blockRobotPos = new BlockPos(blockPos.getInteger("x"), blockPos.getInteger("y"), blockPos.getInteger("z"));
 								
-								tileEntityCodeStart.setBlockRobotPos(blockRobotPos);
-								tileEntityCodeStart.setBlockLinked(true);
-								
 								TileEntityRobot tileEntityRobot = (TileEntityRobot)worldIn.getTileEntity(blockRobotPos);
 								if(tileEntityRobot != null) {
+									tileEntityCodeStart.setBlockRobotPos(blockRobotPos);
+									tileEntityCodeStart.setBlockLinked(true);
+									
 									tileEntityRobot.setBlockCodeStartPos(pos);
 									
 									nbtTagCompound.setBoolean("linked", true);

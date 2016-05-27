@@ -107,6 +107,7 @@ public class BlockRobot extends BlockContainer {
 					TileEntityCodeStart tileEntityCodeStart = (TileEntityCodeStart)worldIn.getTileEntity(tileEntityRobot.getBlockCodeStartPos());
 					if(tileEntityCodeStart != null) {
 						tileEntityCodeStart.setBlockLinked(false);
+						
 						if(tileEntityCodeStart.getBlockCodeRun()) {
 							tileEntityCodeStart.setBlockCodeRun(false);
 							BlockCode.setBlockStatusReady(worldIn, tileEntityRobot.getBlockCodeStartPos(), worldIn.getBlockState(tileEntityRobot.getBlockCodeStartPos()));

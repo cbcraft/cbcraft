@@ -31,13 +31,15 @@ public class ItemRemote extends Item {
 			final int NBT_TAG_ID = 10; // Values can be found on NBTBase.createNewByType()
 			if(itemStackIn.hasTagCompound() && itemStackIn.getTagCompound().hasKey("linked", NBT_BOOLEAN_ID) && itemStackIn.getTagCompound().hasKey("pos", NBT_TAG_ID)) {
 				if(itemStackIn.getTagCompound().getBoolean("linked")) {
-					BlockPos blockCodeStartPos = null;
-					
 					final int NBT_INT_ID = 3; // Values can be found on NBTBase.createNewByType()
 					NBTTagCompound blockPos = itemStackIn.getTagCompound().getCompoundTag("pos");
-					if(blockPos.hasKey("x", NBT_INT_ID) && blockPos.hasKey("y", NBT_INT_ID) && blockPos.hasKey("z", NBT_INT_ID)) {
-						blockCodeStartPos = new BlockPos(blockPos.getInteger("x"), blockPos.getInteger("y"), blockPos.getInteger("z"));
+					if(!blockPos.hasKey("x", NBT_INT_ID) || !blockPos.hasKey("y", NBT_INT_ID) || !blockPos.hasKey("z", NBT_INT_ID)) {
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while attempting to execute the code"));
+						
+						return itemStackIn;
 					}
+					
+					BlockPos blockCodeStartPos = new BlockPos(blockPos.getInteger("x"), blockPos.getInteger("y"), blockPos.getInteger("z"));
 					
 					TileEntityCodeStart tileEntityCodeStart = (TileEntityCodeStart)worldIn.getTileEntity(blockCodeStartPos);
 					if(tileEntityCodeStart != null) {
@@ -61,7 +63,9 @@ public class ItemRemote extends Item {
 						}
 					}
 					else {
-						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while attempting to execute the code"));
+						if(!worldIn.isRemote) {
+							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: There is no linked Robot block"));
+						}
 					}
 				}
 			}
@@ -77,15 +81,29 @@ public class ItemRemote extends Item {
 		final int NBT_TAG_ID = 10; // Values can be found on NBTBase.createNewByType()
 		if(stack.hasTagCompound() && stack.getTagCompound().hasKey("linked", NBT_BOOLEAN_ID) && stack.getTagCompound().hasKey("pos", NBT_TAG_ID)) {
 			if(stack.getTagCompound().getBoolean("linked")) {
-				/*tooltip.add(EnumChatFormatting.GREEN + "Linked");*/
-				
-				BlockPos blockCodeStartPos = null;
-				
 				final int NBT_INT_ID = 3; // Values can be found on NBTBase.createNewByType()
 				NBTTagCompound blockPos = stack.getTagCompound().getCompoundTag("pos");
-				if(blockPos.hasKey("x", NBT_INT_ID) && blockPos.hasKey("y", NBT_INT_ID) && blockPos.hasKey("z", NBT_INT_ID)) {
-					blockCodeStartPos = new BlockPos(blockPos.getInteger("x"), blockPos.getInteger("y"), blockPos.getInteger("z"));
+				if(!blockPos.hasKey("x", NBT_INT_ID) || !blockPos.hasKey("y", NBT_INT_ID) || !blockPos.hasKey("z", NBT_INT_ID)) {
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while displaying remote info"));
+					
+					return;
 				}
+				
+				BlockPos blockCodeStartPos = new BlockPos(blockPos.getInteger("x"), blockPos.getInteger("y"), blockPos.getInteger("z"));
+				
+				TileEntityCodeStart tileEntityCodeStart = (TileEntityCodeStart)playerIn.getEntityWorld().getTileEntity(blockCodeStartPos);
+				if(tileEntityCodeStart == null) {
+					tooltip.add(EnumChatFormatting.RED + "Unlinked");
+					tooltip.add(EnumChatFormatting.UNDERLINE + "Right click on Robot block to start link");
+					
+					return;
+				}
+				/*else if(!tileEntityCodeStart.getBlockLinked()) {
+					tooltip.add(EnumChatFormatting.RED + "Unlinked");
+					tooltip.add(EnumChatFormatting.UNDERLINE + "Right click on Robot block to start link");
+					
+					return;
+				}*/
 				
 				tooltip.add(EnumChatFormatting.GREEN + "Linked");
 				
@@ -99,19 +117,12 @@ public class ItemRemote extends Item {
 					tooltip.add(EnumChatFormatting.UNDERLINE + "<<Press SHIFT For Link Coordinates>>");
 				}
 				
-				TileEntityCodeStart tileEntityCodeStart = (TileEntityCodeStart)playerIn.getEntityWorld().getTileEntity(blockCodeStartPos);
-				if(tileEntityCodeStart == null) {
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while displaying remote info"));
-					
-					return;
-				}
-				
-				if(tileEntityCodeStart.getBlockCodeRun()) {
+				/*if(tileEntityCodeStart.getBlockCodeRun()) {
 					tooltip.add(EnumChatFormatting.GREEN + "Running");
 				}
 				else {
 					tooltip.add(EnumChatFormatting.RED + "Stopped");
-				}
+				}*/
 			}
 			else {
 				tooltip.add(EnumChatFormatting.YELLOW + "Waiting Link");
