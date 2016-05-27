@@ -112,7 +112,8 @@ public class BlockRobot extends BlockContainer {
 							tileEntityCodeStart.setBlockCodeRun(false);
 							BlockCode.setBlockStatusReady(worldIn, tileEntityRobot.getBlockCodeStartPos(), worldIn.getBlockState(tileEntityRobot.getBlockCodeStartPos()));
 							
-							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Execution interrupted"));
+							//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Execution interrupted"));
+							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Execução interrompida"));
 						}
 					}
 				}

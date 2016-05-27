@@ -4,14 +4,14 @@
 
 # Blocks
 ##############################
-tile.robot.name=Robot
-tile.code_start.name=Code Block - In�cio
+tile.robot.name=Robô
+tile.code_start.name=Code Block - Início
 tile.code_move.name=Code Block - Mover
 tile.code_rotate.name=Code Block - Rodar
-tile.code_if.name=Code Block - Verficar
-tile.code_if_else.name=Code Block - Verficar Else
+tile.code_if.name=Code Block - Verificar
+tile.code_if_else.name=Code Block - Verificar Else
 tile.code_else.name=Code Block - Else
-tile.code_if_end.name=Code Block - Verficar Fim
+tile.code_if_end.name=Code Block - Verificar Fim
 tile.code_for.name=Code Block - Ciclo
 tile.code_for_end.name=Code Block - Ciclo Fim
 tile.code_place.name=Code Block - Colocar Bloco

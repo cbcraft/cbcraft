@@ -27,17 +27,20 @@ public class BlockCodeRotate extends BlockCode {
 		
 		if(!worldIn.isRemote) {
 			if(playerIn.inventory.getCurrentItem() == null) {
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Rotate Paramter: Rotate direction is set to '" + tileEntityCodeRotate.getBlockParamter() + "'"));
+				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Rotate Paramter: Rotate direction is set to '" + tileEntityCodeRotate.getBlockParamter() + "'"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Rodar Parâmetro: Rodar direção está definida para '" + tileEntityCodeRotate.getBlockParamter() + "'"));
 			}
 			else if(playerIn.inventory.getCurrentItem().getItem() == Items.itemWrench) {
 				switch(tileEntityCodeRotate.getBlockParamter()) {
 					case "right":
 						tileEntityCodeRotate.setBlockParamter("left");
-						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Rotate Paramter: Rotate direction has been set to 'left'"));
+						//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Rotate Paramter: Rotate direction has been set to 'left'"));
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Rodar Parâmetro: Rodar direção foi definida para 'left'"));
 						break;
 					case "left":
 						tileEntityCodeRotate.setBlockParamter("right");
-						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Rotate Paramter: Rotate direction has been set to 'right'"));
+						//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Rotate Paramter: Rotate direction has been set to 'right'"));
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Rodar Parâmetro: Rodar direção foi definida para 'right'"));
 						break;
 				}
 			}

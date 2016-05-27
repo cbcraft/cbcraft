@@ -202,7 +202,8 @@ public class BlockCode extends BlockContainer {
 		if(block.getUnlocalizedName().equals(Blocks.blockCodeStart.getUnlocalizedName())) {
 			tileEntityCodeStart = (TileEntityCodeStart)worldIn.getTileEntity(pos);
 			if(tileEntityCodeStart == null) {
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao verificar o código"));
 				
 				return;
 			}
@@ -210,14 +211,16 @@ public class BlockCode extends BlockContainer {
 		else {
 			tileEntityCode = (TileEntityCode)worldIn.getTileEntity(pos);
 			if(tileEntityCode == null || !tileEntityCode.hasBlockCodeStartPos()) {
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao verificar o código"));
 				
 				return;
 			}
 			
 			tileEntityCodeStart = (TileEntityCodeStart)worldIn.getTileEntity(tileEntityCode.getBlockCodeStartPos());
 			if(tileEntityCodeStart == null) {
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao verificar o código"));
 				
 				return;
 			}
@@ -236,7 +239,8 @@ public class BlockCode extends BlockContainer {
 			TileEntityCodeFor tileEntityCodeFor = (TileEntityCodeFor)worldIn.getTileEntity(tileEntityCodeStart.getBlockCodeForListLast());
 			TileEntityCodeForEnd tileEntityCodeForEnd = (TileEntityCodeForEnd)worldIn.getTileEntity(pos);
 			if(tileEntityCodeFor == null || tileEntityCodeForEnd == null) {
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao verificar o código"));
 				
 				return;
 			}
@@ -268,7 +272,8 @@ public class BlockCode extends BlockContainer {
 			if(tileEntityCodeStart.getBlockCodeIfElseListCount(tileEntityCodeStart.getBlockCodeIfListCount() - 1) == 1) {
 				TileEntityCodeIf tileEntityCodeIf = (TileEntityCodeIf)worldIn.getTileEntity(tileEntityCodeStart.getBlockCodeIfListLast());
 				if(tileEntityCodeIf == null) {
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+					//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao verificar o código"));
 					
 					return;
 				}
@@ -278,7 +283,8 @@ public class BlockCode extends BlockContainer {
 			else if(tileEntityCodeStart.getBlockCodeIfElseListCount(tileEntityCodeStart.getBlockCodeIfListCount() - 1) > 1) {
 				TileEntityCodeIfElse tileEntityCodeIfElse = (TileEntityCodeIfElse)worldIn.getTileEntity(tileEntityCodeStart.getBlockCodeIfElseListLast(tileEntityCodeStart.getBlockCodeIfListCount() - 1));
 				if(tileEntityCodeIfElse == null) {
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+					//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao verificar o código"));
 					
 					return;
 				}
@@ -286,7 +292,8 @@ public class BlockCode extends BlockContainer {
 				tileEntityCodeIfElse.setBlockCodeIfElseEndPos(pos);
 			}
 			else {
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao verificar o código"));
 				
 				return;
 			}
@@ -309,7 +316,8 @@ public class BlockCode extends BlockContainer {
 			if(tileEntityCodeStart.getBlockCodeIfElseListCount(tileEntityCodeStart.getBlockCodeIfListCount() - 1) == 0) {
 				TileEntityCodeIf tileEntityCodeIf = (TileEntityCodeIf)worldIn.getTileEntity(tileEntityCodeStart.getBlockCodeIfListLast());
 				if(tileEntityCodeIf == null) {
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+					//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao verificar o código"));
 					
 					return;
 				}
@@ -319,7 +327,8 @@ public class BlockCode extends BlockContainer {
 			else if(tileEntityCodeStart.getBlockCodeIfElseListCount(tileEntityCodeStart.getBlockCodeIfListCount() - 1) > 0) {
 				TileEntityCodeIfElse tileEntityCodeIfElse = (TileEntityCodeIfElse)worldIn.getTileEntity(tileEntityCodeStart.getBlockCodeIfElseListLast(tileEntityCodeStart.getBlockCodeIfListCount() - 1));
 				if(tileEntityCodeIfElse == null) {
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+					//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao verificar o código"));
 					
 					return;
 				}
@@ -327,7 +336,8 @@ public class BlockCode extends BlockContainer {
 				tileEntityCodeIfElse.setBlockCodeIfElseEndPos(pos);
 			}
 			else {
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao verificar o código"));
 				
 				return;
 			}
@@ -348,7 +358,8 @@ public class BlockCode extends BlockContainer {
 			if(tileEntityCodeStart.getBlockCodeElseListCount(tileEntityCodeStart.getBlockCodeIfListCount() - 1) > 0) {
 				TileEntityCodeElse tileEntityCodeElse = (TileEntityCodeElse)worldIn.getTileEntity(tileEntityCodeStart.getBlockCodeElseListLast(tileEntityCodeStart.getBlockCodeIfListCount() - 1));
 				if(tileEntityCodeElse == null) {
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+					//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao verificar o código"));
 					
 					return;
 				}
@@ -358,7 +369,8 @@ public class BlockCode extends BlockContainer {
 			else if(tileEntityCodeStart.getBlockCodeIfElseListCount(tileEntityCodeStart.getBlockCodeIfListCount() - 1) == 0) {
 				TileEntityCodeIf tileEntityCodeIf = (TileEntityCodeIf)worldIn.getTileEntity(tileEntityCodeStart.getBlockCodeIfListLast());
 				if(tileEntityCodeIf == null) {
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+					//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao verificar o código"));
 					
 					return;
 				}
@@ -368,7 +380,8 @@ public class BlockCode extends BlockContainer {
 			else if(tileEntityCodeStart.getBlockCodeIfElseListCount(tileEntityCodeStart.getBlockCodeIfListCount() - 1) > 0) {
 				TileEntityCodeIfElse tileEntityCodeIfElse = (TileEntityCodeIfElse)worldIn.getTileEntity(tileEntityCodeStart.getBlockCodeIfElseListLast(tileEntityCodeStart.getBlockCodeIfListCount() - 1));
 				if(tileEntityCodeIfElse == null) {
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+					//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao verificar o código"));
 					
 					return;
 				}
@@ -376,7 +389,8 @@ public class BlockCode extends BlockContainer {
 				tileEntityCodeIfElse.setBlockCodeIfElseEndPos(pos);
 			}
 			else {
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao verificar o código"));
 				
 				return;
 			}
@@ -395,7 +409,8 @@ public class BlockCode extends BlockContainer {
 			
 			TileEntityCode tileEntityCodeForward = (TileEntityCode)worldIn.getTileEntity(blockPosForward);
 			if(tileEntityCodeForward == null) {
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao verificar o código"));
 				
 				return;
 			}
@@ -422,7 +437,8 @@ public class BlockCode extends BlockContainer {
 			
 			TileEntityCode tileEntityCodeForward = (TileEntityCode)worldIn.getTileEntity(blockPosForward);
 			if(tileEntityCodeForward == null) {
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while checking the code"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao verificar o código"));
 				
 				return;
 			}
@@ -461,7 +477,8 @@ public class BlockCode extends BlockContainer {
 				tileEntityCodeStart.setBlockCodeReady(true);
 			}
 			else {
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while setting status code to ready"));
+				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while setting status code to ready"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao definir o estado do código para pronto"));
 				
 				return;
 			}
@@ -492,7 +509,8 @@ public class BlockCode extends BlockContainer {
 				BlockCode.prepareCodeToRun(worldIn, tileEntityCode.getBlockCodeStartPos(), worldIn.getBlockState(tileEntityCode.getBlockCodeStartPos()));
 			}
 			else {
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while setting status code to running"));
+				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while setting status code to running"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao definir o estado do código para executando"));
 				
 				return;
 			}
@@ -521,7 +539,8 @@ public class BlockCode extends BlockContainer {
 		else {
 			BlockCode.setBlockStatusReady(worldIn, pos, state);
 			
-			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while attempting to run the code"));
+			//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while attempting to run the code"));
+			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao tentar executar o código"));
 		}
 	}
 	
@@ -679,7 +698,8 @@ public class BlockCode extends BlockContainer {
 				tileEntityCodeStart.setBlockCodeRun(false);
 				BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 				
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao executar o código"));
 				
 				return;
 			}
@@ -699,7 +719,8 @@ public class BlockCode extends BlockContainer {
 					tileEntityCodeStart.setBlockCodeRun(false);
 					BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 					
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+					//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao executar o código"));
 					
 					return;
 			}
@@ -708,7 +729,8 @@ public class BlockCode extends BlockContainer {
 				tileEntityCodeStart.setBlockCodeRun(false);
 				BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 				
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Move - There is a block on the defined direction ('" + tileEntityCodeMove.getBlockParamter() + "')"));
+				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Move - There is a block on the defined direction ('" + tileEntityCodeMove.getBlockParamter() + "')"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Mover - Existe um bloco na direção definida ('" + tileEntityCodeMove.getBlockParamter() + "')"));
 				
 				return;
 			}
@@ -733,7 +755,8 @@ public class BlockCode extends BlockContainer {
 				tileEntityCodeStart.setBlockCodeRun(false);
 				BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 				
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao executar o código"));
 				
 				return;
 			}
@@ -750,7 +773,8 @@ public class BlockCode extends BlockContainer {
 					tileEntityCodeStart.setBlockCodeRun(false);
 					BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 					
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+					//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao executar o código"));
 					
 					return;
 			}
@@ -767,7 +791,8 @@ public class BlockCode extends BlockContainer {
 				tileEntityCodeStart.setBlockCodeRun(false);
 				BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 				
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao executar o código"));
 				
 				return;
 			}
@@ -787,7 +812,8 @@ public class BlockCode extends BlockContainer {
 					tileEntityCodeStart.setBlockCodeRun(false);
 					BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 					
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+					//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao executar o código"));
 					
 					return;
 			}
@@ -796,7 +822,8 @@ public class BlockCode extends BlockContainer {
 			if(worldIn.isAirBlock(blockRobotPosBreak) || blockRobotBreak == Block.getBlockFromName("minecraft:bedrock") || blockRobotBreak == Block.getBlockFromName("minecraft:water") || blockRobotBreak == Block.getBlockFromName("minecraft:lava")) {
 				BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 				
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Break - There is no block on the defined direction ('" + tileEntityCodeBreak.getBlockParamter() + "')"));
+				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Break - There is no block on the defined direction ('" + tileEntityCodeBreak.getBlockParamter() + "')"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Partir Bloco - Não existe nenhum bloco na direção definida ('" + tileEntityCodeBreak.getBlockParamter() + "')"));
 				
 				return;
 			}
@@ -809,7 +836,8 @@ public class BlockCode extends BlockContainer {
 				tileEntityCodeStart.setBlockCodeRun(false);
 				BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 				
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao executar o código"));
 				
 				return;
 			}
@@ -818,7 +846,8 @@ public class BlockCode extends BlockContainer {
 				tileEntityCodeStart.setBlockCodeRun(false);
 				BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 				
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Place - No defined block to place"));
+				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Place - No defined block to place"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Colocar Bloco - Nenhum bloco definido para colocar"));
 				
 				return;
 			}
@@ -841,7 +870,8 @@ public class BlockCode extends BlockContainer {
 					tileEntityCodeStart.setBlockCodeRun(false);
 					BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 					
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+					//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao executar o código"));
 					
 					return;
 			}
@@ -850,7 +880,8 @@ public class BlockCode extends BlockContainer {
 				tileEntityCodeStart.setBlockCodeRun(false);
 				BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 				
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Place - There is already a block on the defined direction ('" + tileEntityCodePlace.getBlockParamter("direction") + "')"));
+				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Place - There is a block on the defined direction ('" + tileEntityCodePlace.getBlockParamter("direction") + "')"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Colocar Bloco - Existe um bloco na direção definida ('" + tileEntityCodePlace.getBlockParamter("direction") + "')"));
 				
 				return;
 			}
@@ -864,7 +895,8 @@ public class BlockCode extends BlockContainer {
 				tileEntityCodeStart.setBlockCodeRun(false);
 				BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 				
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao executar o código"));
 				
 				return;
 			}
@@ -883,7 +915,8 @@ public class BlockCode extends BlockContainer {
 				tileEntityCodeStart.setBlockCodeRun(false);
 				BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 				
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao executar o código"));
 				
 				return;
 			}
@@ -893,7 +926,8 @@ public class BlockCode extends BlockContainer {
 				tileEntityCodeStart.setBlockCodeRun(false);
 				BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 				
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao executar o código"));
 				
 				return;
 			}
@@ -918,7 +952,8 @@ public class BlockCode extends BlockContainer {
 				tileEntityCodeStart.setBlockCodeRun(false);
 				BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 				
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao executar o código"));
 				
 				return;
 			}
@@ -945,7 +980,8 @@ public class BlockCode extends BlockContainer {
 							tileEntityCodeStart.setBlockCodeRun(false);
 							BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 							
-							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+							//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao executar o código"));
 							
 							return;
 					}
@@ -983,7 +1019,8 @@ public class BlockCode extends BlockContainer {
 							tileEntityCodeStart.setBlockCodeRun(false);
 							BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 							
-							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+							//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao executar o código"));
 							
 							return;
 					}
@@ -1005,7 +1042,8 @@ public class BlockCode extends BlockContainer {
 					tileEntityCodeStart.setBlockCodeRun(false);
 					BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 					
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+					//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao executar o código"));
 					
 					return;
 			}
@@ -1016,7 +1054,8 @@ public class BlockCode extends BlockContainer {
 				tileEntityCodeStart.setBlockCodeRun(false);
 				BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 				
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao executar o código"));
 				
 				return;
 			}
@@ -1051,7 +1090,8 @@ public class BlockCode extends BlockContainer {
 							tileEntityCodeStart.setBlockCodeRun(false);
 							BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 							
-							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+							//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao executar o código"));
 							
 							return;
 					}
@@ -1089,7 +1129,8 @@ public class BlockCode extends BlockContainer {
 							tileEntityCodeStart.setBlockCodeRun(false);
 							BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 							
-							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+							//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao executar o código"));
 							
 							return;
 					}
@@ -1111,7 +1152,8 @@ public class BlockCode extends BlockContainer {
 					tileEntityCodeStart.setBlockCodeRun(false);
 					BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 					
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+					//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao executar o código"));
 					
 					return;
 			}
@@ -1122,7 +1164,8 @@ public class BlockCode extends BlockContainer {
 				tileEntityCodeStart.setBlockCodeRun(false);
 				BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 				
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while executing the code"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao executar o código"));
 				
 				return;
 			}
@@ -1145,7 +1188,8 @@ public class BlockCode extends BlockContainer {
 			tileEntityCodeStart.setBlockCodeRun(false);
 			BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 			
-			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: End"));
+			//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: End"));
+			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Terminado"));
 			
 			return;
 		}

@@ -27,21 +27,25 @@ public class BlockCodeBreak extends BlockCode {
 		
 		if(!worldIn.isRemote) {
 			if(playerIn.inventory.getCurrentItem() == null) {
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Break Paramter: Break direction is set to '" + tileEntityCodeBreak.getBlockParamter() + "'"));
+				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Break Paramter: Break direction is set to '" + tileEntityCodeBreak.getBlockParamter() + "'"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Partir Bloco Parâmetro: Partir direção está definida para '" + tileEntityCodeBreak.getBlockParamter() + "'"));
 			}
 			else if(playerIn.inventory.getCurrentItem().getItem() == Items.itemWrench) {
 				switch(tileEntityCodeBreak.getBlockParamter()) {
 					case "front":
 						tileEntityCodeBreak.setBlockParamter("up");
-						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Break Paramter: Break direction has been set to 'up'"));
+						//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Break Paramter: Break direction has been set to 'up'"));
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Partir Bloco Parâmetro: Partir direção foi definida para 'up'"));
 						break;
 					case "up":
 						tileEntityCodeBreak.setBlockParamter("down");
-						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Break Paramter: Break direction has been set to 'down'"));
+						//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Break Paramter: Break direction has been set to 'down'"));
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Partir Bloco Parâmetro: Partir direção foi definida para 'down'"));
 						break;
 					case "down":
 						tileEntityCodeBreak.setBlockParamter("front");
-						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Break Paramter: Break direction has been set to 'front'"));
+						//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Break Paramter: Break direction has been set to 'front'"));
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Partir Bloco Parâmetro: Partir direção foi definida para 'front'"));
 						break;
 				}
 			}
