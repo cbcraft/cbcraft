@@ -30,14 +30,14 @@ public class BlockCodePlace extends BlockCode {
 		if(!worldIn.isRemote) {
 			if(playerIn.inventory.getCurrentItem() == null) {
 				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Place Block Paramter: Place direction is set to '" + tileEntityCodePlace.getBlockParamter("direction") + "'"));
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Colocar Bloco Parâmetro: Colocar direção está definida para '" + tileEntityCodePlace.getBlockParamter("direction") + "'"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Colocar Bloco Parametro: Colocar direcao esta definida para '" + tileEntityCodePlace.getBlockParamter("direction") + "'"));
 				if(tileEntityCodePlace.getBlockParamter("block") == "minecraft:air") {
 					//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Place Block Paramter: Place block is not set"));
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Colocar Bloco Parâmetro: Colocar bloco não está definido"));
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Colocar Bloco Parametro: Colocar bloco nao esta definido"));
 				}
 				else {
 					//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Place Paramter: Place block is set to '" + Block.getBlockFromName(tileEntityCodePlace.getBlockParamter("block")).getLocalizedName() + "'"));
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Colocar Bloco Parâmetro: Colocar bloco está definido para '" + Block.getBlockFromName(tileEntityCodePlace.getBlockParamter("block")).getLocalizedName() + "'"));
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Colocar Bloco Parametro: Colocar bloco esta definido para '" + Block.getBlockFromName(tileEntityCodePlace.getBlockParamter("block")).getLocalizedName() + "'"));
 				}
 			}
 			else if(playerIn.inventory.getCurrentItem().getItem() == Items.itemWrench) {
@@ -45,24 +45,24 @@ public class BlockCodePlace extends BlockCode {
 					case "front":
 						tileEntityCodePlace.setBlockParamter("direction", "up");
 						//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Place Paramter: Place direction has been set to 'up'"));
-						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Colocar Bloco Parâmetro: Colocar direção foi definida para 'up'"));
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Colocar Bloco Parametro: Colocar direcao foi definida para 'up'"));
 						break;
 					case "up":
 						tileEntityCodePlace.setBlockParamter("direction", "down");
 						//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Place Paramter: Place direction has been set to 'down'"));
-						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Colocar Bloco Parâmetro: Colocar direção foi definida para 'down'"));
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Colocar Bloco Parametro: Colocar direcao foi definida para 'down'"));
 						break;
 					case "down":
 						tileEntityCodePlace.setBlockParamter("direction", "front");
 						//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Place Paramter: Place direction has been set to 'front'"));
-						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Colocar Bloco Parâmetro: Colocar direção foi definida para 'front'"));
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Colocar Bloco Parametro: Colocar direcao foi definida para 'front'"));
 						break;
 				}
 			}
 			else if(playerIn.inventory.getCurrentItem().getItem() instanceof ItemBlock) {
 				tileEntityCodePlace.setBlockParamter("block", Block.getBlockFromItem(playerIn.inventory.getCurrentItem().getItem()).getRegistryName());
 				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Place Paramter: Place block has been set to '" + Block.getBlockFromName(tileEntityCodePlace.getBlockParamter("block")).getLocalizedName() + "'"));
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Colocar Bloco Parâmetro:  Colocar bloco foi definido para '" + Block.getBlockFromName(tileEntityCodePlace.getBlockParamter("block")).getLocalizedName() + "'"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Colocar Bloco Parametro: Colocar bloco foi definido para '" + Block.getBlockFromName(tileEntityCodePlace.getBlockParamter("block")).getLocalizedName() + "'"));
 			}
 		}
 		

@@ -28,24 +28,24 @@ public class BlockCodeMove extends BlockCode {
 		if(!worldIn.isRemote) {
 			if(playerIn.inventory.getCurrentItem() == null) {
 				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Move Paramter: Move direction is set to '" + tileEntityCodeMove.getBlockParamter() + "'"));
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Mover Parâmetro: Mover direção está definida para '" + tileEntityCodeMove.getBlockParamter() + "'"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Mover Parametro: Mover direcao esta definida para '" + tileEntityCodeMove.getBlockParamter() + "'"));
 			}
 			else if(playerIn.inventory.getCurrentItem().getItem() == Items.itemWrench) {
 				switch(tileEntityCodeMove.getBlockParamter()) {
 					case "front":
 						tileEntityCodeMove.setBlockParamter("up");
 						//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Move Paramter: Move direction has been set to 'up'"));
-						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Mover Parâmetro: Mover direção foi definida para 'up'"));
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Mover Parametro: Mover direcao foi definida para 'up'"));
 						break;
 					case "up":
 						tileEntityCodeMove.setBlockParamter("down");
 						//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Move Paramter: Move direction has been set to 'down'"));
-						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Mover Parâmetro: Mover direção foi definida para 'down'"));
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Mover Parametro: Mover direcao foi definida para 'down'"));
 						break;
 					case "down":
 						tileEntityCodeMove.setBlockParamter("front");
 						//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Move Paramter: Move direction has been set to 'front'"));
-						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Mover Parâmetro: Mover direção foi definida para 'front'"));
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Mover Parametro: Mover direcao foi definida para 'front'"));
 						break;
 				}
 			}

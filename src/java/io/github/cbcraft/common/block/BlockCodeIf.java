@@ -30,15 +30,15 @@ public class BlockCodeIf extends BlockCode {
 		if(!worldIn.isRemote) {
 			if(playerIn.inventory.getCurrentItem() == null) {
 				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("If Paramter: If condition is set to '" + tileEntityCodeIf.getBlockParamter("condition") + "'"));
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Verificar Parâmetro: Verificar condição está definida para '" + tileEntityCodeIf.getBlockParamter("condition") + "'"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Verificar Parametro: Verificar condicao esta definida para '" + tileEntityCodeIf.getBlockParamter("condition") + "'"));
 				switch(tileEntityCodeIf.getBlockParamter("condition")) {
 					case "block":
 						//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("If Paramter: If direction is set to '" + tileEntityCodeIf.getBlockParamter("direction") + "'"));
-						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Verificar Parâmetro: Verificar direção está definida para '" + tileEntityCodeIf.getBlockParamter("direction") + "'"));
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Verificar Parametro: Verificar direcao esta definida para '" + tileEntityCodeIf.getBlockParamter("direction") + "'"));
 						break;
 					case "air":
 						//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("If Paramter: If direction is set to '" + tileEntityCodeIf.getBlockParamter("direction") + "'"));
-						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Verificar Parâmetro: Verificar direção está definida para '" + tileEntityCodeIf.getBlockParamter("direction") + "'"));
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Verificar Parametro: Verificar direcao esta definida para '" + tileEntityCodeIf.getBlockParamter("direction") + "'"));
 						break;
 				}
 			}
@@ -50,17 +50,17 @@ public class BlockCodeIf extends BlockCode {
 								case "front":
 									tileEntityCodeIf.setBlockParamter("direction", "up");
 									//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("If Paramter: If direction has been set to 'up'"));
-									Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Verificar Parâmetro: Verificar direção foi definida para 'up'"));
+									Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Verificar Parametro: Verificar direcao foi definida para 'up'"));
 									break;
 								case "up":
 									tileEntityCodeIf.setBlockParamter("direction", "down");
 									//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("If Paramter: If direction has been set to 'down'"));
-									Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Verificar Parâmetro: Verificar direção foi definida para 'down'"));
+									Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Verificar Parametro: Verificar direcao foi definida para 'down'"));
 									break;
 								case "down":
 									tileEntityCodeIf.setBlockParamter("direction", "front");
 									//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("If Paramter: If direction has been set to 'front'"));
-									Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Verificar Parâmetro: Verificar direção foi definida para 'front'"));
+									Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Verificar Parametro: Verificar direcao foi definida para 'front'"));
 									break;
 							}
 							break;
@@ -69,17 +69,17 @@ public class BlockCodeIf extends BlockCode {
 								case "front":
 									tileEntityCodeIf.setBlockParamter("direction", "up");
 									//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("If Paramter: If direction has been set to 'up'"));
-									Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Verificar Parâmetro: Verificar direção foi definida para 'up'"));
+									Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Verificar Parametro: Verificar direcao foi definida para 'up'"));
 									break;
 								case "up":
 									tileEntityCodeIf.setBlockParamter("direction", "down");
 									//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("If Paramter: If direction has been set to 'down'"));
-									Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Verificar Parâmetro: Verificar direção foi definida para 'down'"));
+									Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Verificar Parametro: Verificar direcao foi definida para 'down'"));
 									break;
 								case "down":
 									tileEntityCodeIf.setBlockParamter("direction", "front");
 									//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("If Paramter: If direction has been set to 'front'"));
-									Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Verificar Parâmetro: Verificar direção foi definida para 'front'"));
+									Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Verificar Parametro: Verificar direcao foi definida para 'front'"));
 									break;
 							}
 							break;
@@ -90,12 +90,12 @@ public class BlockCodeIf extends BlockCode {
 						case "block":
 							tileEntityCodeIf.setBlockParamter("condition", "air");
 							//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("If Paramter: If condition has been set to 'air'"));
-							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Verificar Paramter: Verificar condição foi definida para 'air'"));
+							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Verificar Parametro: Verificar condicao foi definida para 'air'"));
 							break;
 						case "air":
 							tileEntityCodeIf.setBlockParamter("condition", "block");
 							//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("If Paramter: If condition has been set to 'block'"));
-							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Verificar Paramter: Verificar condição foi definida para 'block'"));
+							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Verificar Parametro: Verificar condicao foi definida para 'block'"));
 							break;
 					}
 				}

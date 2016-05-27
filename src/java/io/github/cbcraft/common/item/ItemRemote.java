@@ -35,7 +35,7 @@ public class ItemRemote extends Item {
 					NBTTagCompound blockPos = itemStackIn.getTagCompound().getCompoundTag("pos");
 					if(!blockPos.hasKey("x", NBT_INT_ID) || !blockPos.hasKey("y", NBT_INT_ID) || !blockPos.hasKey("z", NBT_INT_ID)) {
 						//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while attempting to execute the code"));
-						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao tentar executar o código"));
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao tentar executar o codigo"));
 						
 						return itemStackIn;
 					}
@@ -49,7 +49,7 @@ public class ItemRemote extends Item {
 							BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
 							
 							//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Forced end"));
-							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Finalização forçada"));
+							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Finalizacao forcada"));
 						}
 						else {
 							if(tileEntityCodeStart.getBlockCodeReady()) {
@@ -61,7 +61,7 @@ public class ItemRemote extends Item {
 								}
 								else {
 									//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: There is no linked Robot block"));
-									Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Não esta conetado nenhum bloco de robo"));
+									Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Nao esta conetado nenhum bloco de robo"));
 								}
 							}
 						}
@@ -69,7 +69,7 @@ public class ItemRemote extends Item {
 					else {
 						if(!worldIn.isRemote) {
 							//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: There is no linked Robot block"));
-							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Não esta conetado nenhum bloco de robo"));
+							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Nao esta conetado nenhum bloco de robo"));
 						}
 					}
 				}
@@ -90,7 +90,7 @@ public class ItemRemote extends Item {
 				NBTTagCompound blockPos = stack.getTagCompound().getCompoundTag("pos");
 				if(!blockPos.hasKey("x", NBT_INT_ID) || !blockPos.hasKey("y", NBT_INT_ID) || !blockPos.hasKey("z", NBT_INT_ID)) {
 					//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while displaying remote info"));
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao mostrar informação do controle remoto"));
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao mostrar informacao do controle remoto"));
 					
 					return;
 				}
@@ -102,7 +102,7 @@ public class ItemRemote extends Item {
 					//tooltip.add(EnumChatFormatting.RED + "Unlinked");
 					//tooltip.add(EnumChatFormatting.UNDERLINE + "Right click on Robot block to start link");
 					tooltip.add(EnumChatFormatting.RED + "Desconetado");
-					tooltip.add(EnumChatFormatting.UNDERLINE + "Clique com o botão direito no bloco do Robo para iniciar a conexão");
+					tooltip.add(EnumChatFormatting.UNDERLINE + "Clique com o botao direito no bloco do Robo para iniciar a conexao");
 					
 					return;
 				}
@@ -118,7 +118,7 @@ public class ItemRemote extends Item {
 				
 				if(GuiScreen.isShiftKeyDown()) {
 					//tooltip.add("Link Coordinates:");
-					tooltip.add("Conexão Coordenadas:");
+					tooltip.add("Conexao Coordenadas:");
 					tooltip.add("  X = " + blockCodeStartPos.getX());
 					tooltip.add("  Y = " + blockCodeStartPos.getY());
 					tooltip.add("  Z = " + blockCodeStartPos.getZ());
@@ -138,15 +138,15 @@ public class ItemRemote extends Item {
 			else {
 				//tooltip.add(EnumChatFormatting.YELLOW + "Waiting Link");
 				//tooltip.add(EnumChatFormatting.UNDERLINE + "Right click on Code Start block to link");
-				tooltip.add(EnumChatFormatting.YELLOW + "Aguardando Conexão");
-				tooltip.add(EnumChatFormatting.UNDERLINE + "Clique com o botão direito no bloco de código de Início para conetar");
+				tooltip.add(EnumChatFormatting.YELLOW + "Aguardando Conexao");
+				tooltip.add(EnumChatFormatting.UNDERLINE + "Clique com o botao direito no bloco de codigo de Inicio para conetar");
 			}
 		}
 		else {
 			//tooltip.add(EnumChatFormatting.RED + "Unlinked");
 			//tooltip.add(EnumChatFormatting.UNDERLINE + "Right click on Robot block to start link");
 			tooltip.add(EnumChatFormatting.RED + "Desconetado");
-			tooltip.add(EnumChatFormatting.UNDERLINE + "Clique com o botão direito no bloco do Robo para iniciar a conexão");
+			tooltip.add(EnumChatFormatting.UNDERLINE + "Clique com o botao direito no bloco do Robo para iniciar a conexao");
 		}
 	}
 }
