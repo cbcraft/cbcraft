@@ -1,6 +1,9 @@
 # Files
 Thumbs.db
+build.gradle
 
 # Folders
+.gradle/
 .settings/
 bin/
+build/
