@@ -23,7 +23,92 @@ tile.code_end.name=Code Block - Fim
 item.wrench.name=Chave Inglesa
 item.remote.name=Controle Remoto
 
+# Paramters
+##############################
+cbcraft.paramter.direction.front=a frente
+cbcraft.paramter.direction.up=cima
+cbcraft.paramter.direction.down=baixo
+cbcraft.paramter.direction.right=a direita
+cbcraft.paramter.condition.block=bloco
+cbcraft.paramter.condition.air=ar
+
 # Creative Tabs
 ##############################
 itemGroup.blocks=CBCraft - Blocos
 itemGroup.items=CBCraft - Itens
+
+# Chat Messages
+##############################
+cbcraft.blockCode.move.paramter.direction=Mover Parâmetro: Mover direção está definida para %s
+cbcraft.blockCode.move.paramter.direction.front=Mover Parâmetro: Mover direção foi definida para a frente
+cbcraft.blockCode.move.paramter.direction.up=Mover Parâmetro: Mover direção foi definida para cima
+cbcraft.blockCode.move.paramter.direction.down=Mover Parâmetro: Mover direção foi definida para baixo
+cbcraft.blockCode.rotate.paramter.direction=Rodar Parâmetro: Rodar direção está definida para %s
+cbcraft.blockCode.rotate.paramter.direction.left=Rodar Parâmetro: Rodar direção foi definida para a esquerda
+cbcraft.blockCode.rotate.paramter.direction.right=Rodar Parâmetro: Rodar direção foi definida para a direita
+cbcraft.blockCode.place.paramter.direction=Colocar Bloco Parâmetro: Colocar direção está definida para %s
+cbcraft.blockCode.place.paramter.direction.front=Colocar Bloco Parâmetro: Colocar direção foi definida para a frente
+cbcraft.blockCode.place.paramter.direction.up=Colocar Bloco Parâmetro: Colocar direção foi definida para cima
+cbcraft.blockCode.place.paramter.direction.down=Colocar Bloco Parâmetro: Colocar direção foi definida para baixo
+cbcraft.blockCode.place.paramter.block=Colocar Bloco Parâmetro: Colocar bloco está definido para %s
+cbcraft.blockCode.place.paramter.block.unset=Colocar Bloco Parâmetro: Colocar bloco não está definido
+cbcraft.blockCode.place.paramter.block.set=Colocar Bloco Parâmetro: Colocar bloco foi definido para %s
+cbcraft.blockCode.break.paramter.direction=Partir Bloco Parâmetro: Partir direção está definida para %s
+cbcraft.blockCode.break.paramter.direction.front=Partir Bloco Parâmetro: Partir direção foi definida para a frente
+cbcraft.blockCode.break.paramter.direction.up=Partir Bloco Parâmetro: Partir direção foi definida para cima
+cbcraft.blockCode.break.paramter.direction.down=Partir Bloco Parâmetro: Partir direção foi definida para baixo
+cbcraft.blockCode.for.paramter.loop=Ciclo Parâmetro: Ciclo está definido para %s
+cbcraft.blockCode.for.paramter.loop.set=Ciclo Parâmetro: Ciclo foi definido para %s
+cbcraft.blockCode.for.paramter.loop.underOne=Ciclo Parâmetro: Ciclo não pode ser definido inferior a 1
+cbcraft.blockCode.for.paramter.loop.infinite=Ciclo Parâmetro: Ciclo está definido para infinito
+cbcraft.blockCode.for.paramter.loop.infinite.set=Ciclo Parâmetro: Ciclo foi definido para infinito
+cbcraft.blockCode.if.paramter.direction=Verificar Parâmetro: Verificar direção está definida para %s
+cbcraft.blockCode.if.paramter.direction.front=Verificar Parâmetro: Verificar direção foi definida para a frente
+cbcraft.blockCode.if.paramter.direction.up=Verificar Parâmetro: Verificar direção foi definida para cima
+cbcraft.blockCode.if.paramter.direction.down=Verificar Parâmetro: Verificar direção foi definida para baixo
+cbcraft.blockCode.if.paramter.condition=Verificar Parâmetro: Verificar condição está definida para %s
+cbcraft.blockCode.if.paramter.condition.block=Verificar Parâmetro: Verificar condição foi definida para bloco
+cbcraft.blockCode.if.paramter.condition.air=Verificar Parâmetro: Verificar condição foi definida para ar
+cbcraft.blockCode.ifelse.paramter.direction=Verificar Else Parâmetro: Verificar direção está definida para %s
+cbcraft.blockCode.ifelse.paramter.direction.front=Verificar Else Parâmetro: Verificar direção foi definida para a frente
+cbcraft.blockCode.ifelse.paramter.direction.up=Verificar Else Parâmetro: Verificar direção foi definida para cima
+cbcraft.blockCode.ifelse.paramter.direction.down=Verificar Else Parâmetro: Verificar direção foi definida para baixo
+cbcraft.blockCode.ifelse.paramter.condition=Verificar Else Parâmetro: Verificar condição está definida para %s
+cbcraft.blockCode.ifelse.paramter.condition.block=Verificar Else Parâmetro: Verificar condição foi definida para bloco
+cbcraft.blockCode.ifelse.paramter.condition.air=Verificar Else Parâmetro: Verificar condição foi definida para ar
+cbcraft.exec.start=CBCraft Exec: Iniciado
+cbcraft.exec.end=CBCraft Exec: Terminado
+cbcraft.exec.missingLink=CBCraft Exec: Não está conetado nenhum bloco de Robô
+cbcraft.exec.forcedEnd=CBCraft Exec: Finalização forçada
+cbcraft.exec.interrupted=CBCraft Exec: Execução interrompida
+cbcraft.exec.move.direction=CBCraft Exec: Mover - Existe um bloco na direção definida (%s)
+cbcraft.exec.break.direction=CBCraft Exec: Partir Bloco - Não existe nenhum bloco na direção definida (%s)
+cbcraft.exec.place.direction=CBCraft Exec: Colocar Bloco - Existe um bloco na direção definida (%s)
+cbcraft.exec.place.block=CBCraft Exec: Colocar Bloco - Nenhum bloco definido para colocar
+cbcraft.error.checkCode=CBCraft Erro: Ocorreu um erro ao verificar o código
+cbcraft.error.statusReady=CBCraft Erro: Ocorreu um erro ao definir o estado do código para pronto
+cbcraft.error.statusRun=CBCraft Erro: Ocorreu um erro ao definir o estado do código para a executar
+cbcraft.error.execCode=CBCraft Erro: Ocorreu um erro ao executar o código
+cbcraft.error.attemptExecCode=CBCraft Erro: Ocorreu um erro ao tentar executar o código
+cbcraft.error.remoteTooltip=CBCraft Erro: Ocorreu um erro ao mostrar informacao do controle remoto
+cbcraft.remote.link.ready=CBCraft Controle Remoto: Clique com o botão direito no bloco de código de Início para conetar
+cbcraft.remote.link.complete=CBCraft Controle Remoto: O Robô está agora conetado
+
+# Remote Tooltip
+##############################
+cbcraft.remote.tooltip.running=Executando
+cbcraft.remote.tooltip.stopped=Parado
+cbcraft.remote.tooltip.linked=Conetado
+cbcraft.remote.tooltip.waitingLink=Aguardando Conexão
+cbcraft.remote.tooltip.unlinked=Desconetado
+cbcraft.remote.tooltip.linkCoordinates=Conexão Coordenadas:
+cbcraft.remote.tooltip.startLinkHelp=Clique com o botão direito no bloco do Robô para iniciar a conexão
+cbcraft.remote.tooltip.finishLinkHelp=Clique com o botão direito no bloco de código de Início para conetar
+cbcraft.remote.tooltip.linkCoordinatesHelp=<<Pressione %key% para ver as coordenadas>>
+
+# Keys
+##############################
+cbcraft.key.categories.cbcraft=CBCraft
+cbcraft.key.add=Acrescentar
+cbcraft.key.subtract=Subtrair
+cbcraft.key.secondParamter=Segundo Parâmetro

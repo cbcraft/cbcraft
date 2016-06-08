@@ -1,5 +1,6 @@
 package io.github.cbcraft.common.block;
 
+import io.github.cbcraft.CBCraft;
 import io.github.cbcraft.common.item.Items;
 import io.github.cbcraft.common.tileentity.TileEntityCodeMove;
 import net.minecraft.block.state.IBlockState;
@@ -9,6 +10,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 public class BlockCodeMove extends BlockCode {
@@ -23,29 +25,25 @@ public class BlockCodeMove extends BlockCode {
 	
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX, float hitY, float hitZ) {
-		TileEntityCodeMove tileEntityCodeMove = (TileEntityCodeMove)worldIn.getTileEntity(pos);
-		
 		if(!worldIn.isRemote) {
+			TileEntityCodeMove tileEntityCodeMove = (TileEntityCodeMove)worldIn.getTileEntity(pos);
+			
 			if(playerIn.inventory.getCurrentItem() == null) {
-				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Move Paramter: Move direction is set to '" + tileEntityCodeMove.getBlockParamter() + "'"));
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Mover Parametro: Mover direcao esta definida para '" + tileEntityCodeMove.getBlockParamter() + "'"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocalFormatted(CBCraft.MODID + ".blockCode.move.paramter.direction", tileEntityCodeMove.getBlockParamterTranslate())));
 			}
 			else if(playerIn.inventory.getCurrentItem().getItem() == Items.itemWrench) {
 				switch(tileEntityCodeMove.getBlockParamter()) {
 					case "front":
 						tileEntityCodeMove.setBlockParamter("up");
-						//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Move Paramter: Move direction has been set to 'up'"));
-						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Mover Parametro: Mover direcao foi definida para 'up'"));
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocal(CBCraft.MODID + ".blockCode.move.paramter.direction.up")));
 						break;
 					case "up":
 						tileEntityCodeMove.setBlockParamter("down");
-						//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Move Paramter: Move direction has been set to 'down'"));
-						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Mover Parametro: Mover direcao foi definida para 'down'"));
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocal(CBCraft.MODID + ".blockCode.move.paramter.direction.down")));
 						break;
 					case "down":
 						tileEntityCodeMove.setBlockParamter("front");
-						//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Move Paramter: Move direction has been set to 'front'"));
-						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Mover Parametro: Mover direcao foi definida para 'front'"));
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocal(CBCraft.MODID + ".blockCode.move.paramter.direction.front")));
 						break;
 				}
 			}

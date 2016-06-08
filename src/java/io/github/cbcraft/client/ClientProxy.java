@@ -17,6 +17,8 @@ public class ClientProxy extends CommonProxy {
 	public void init(FMLInitializationEvent e) {
 		super.init(e);
 		
+		ClientKeyBindings.init();
+		
 		RenderBlocks.init();
 		RenderItems.init();
 	}

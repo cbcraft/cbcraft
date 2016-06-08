@@ -1,6 +1,8 @@
 package io.github.cbcraft.common.tileentity;
 
+import io.github.cbcraft.CBCraft;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.StatCollector;
 
 public class TileEntityCodeBreak extends TileEntityCode {
 	private String blockParamter = "front";
@@ -11,6 +13,19 @@ public class TileEntityCodeBreak extends TileEntityCode {
 	
 	public String getBlockParamter() {
 		return blockParamter;
+	}
+	
+	public String getBlockParamterTranslate() {
+		switch(blockParamter) {
+			case "front":
+				return StatCollector.translateToLocal(CBCraft.MODID + ".paramter.direction.front");
+			case "up":
+				return StatCollector.translateToLocal(CBCraft.MODID + ".paramter.direction.up");
+			case "down":
+				return StatCollector.translateToLocal(CBCraft.MODID + ".paramter.direction.down");
+			default:
+				return blockParamter;
+		}
 	}
 	
 	@Override

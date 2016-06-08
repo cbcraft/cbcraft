@@ -1,6 +1,8 @@
 package io.github.cbcraft.common.block;
 import org.lwjgl.input.Keyboard;
 
+import io.github.cbcraft.CBCraft;
+import io.github.cbcraft.client.ClientKeyBindings;
 import io.github.cbcraft.common.item.Items;
 import io.github.cbcraft.common.tileentity.TileEntityCodeFor;
 import net.minecraft.block.state.IBlockState;
@@ -10,6 +12,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 public class BlockCodeFor extends BlockCode {
@@ -24,40 +27,34 @@ public class BlockCodeFor extends BlockCode {
 	
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX, float hitY, float hitZ) {
-		TileEntityCodeFor tileEntityCodeFor = (TileEntityCodeFor)worldIn.getTileEntity(pos);
-		
 		if(!worldIn.isRemote) {
+			TileEntityCodeFor tileEntityCodeFor = (TileEntityCodeFor)worldIn.getTileEntity(pos);
+			
 			if(playerIn.inventory.getCurrentItem() == null) {
 				if(tileEntityCodeFor.getBlockParamter() == 0) {
-					//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("For Paramter: For loop is set to 'infinite'"));
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Ciclo Parametro: Ciclo esta definido para 'infinite'"));
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocal(CBCraft.MODID + ".blockCode.for.paramter.loop.infinite")));
 				}
 				else {
-					//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("For Paramter: For loop is set to '" + tileEntityCodeFor.getBlockParamter() + "'"));
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Ciclo Parametro: Ciclo esta definido para '" + tileEntityCodeFor.getBlockParamter() + "'"));
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocalFormatted(CBCraft.MODID + ".blockCode.for.paramter.loop", tileEntityCodeFor.getBlockParamter())));
 				}
 			}
 			else if(playerIn.inventory.getCurrentItem().getItem() == Items.itemWrench) {
-				if(Keyboard.isKeyDown(Keyboard.KEY_ADD) || Keyboard.isKeyDown(Keyboard.KEY_EQUALS)) {
+				if(Keyboard.isKeyDown(ClientKeyBindings.add.getKeyCode())) {
 					tileEntityCodeFor.setBlockParamter(tileEntityCodeFor.getBlockParamter() + 1);
-					//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("For Paramter: For loop has been set to '" + tileEntityCodeFor.getBlockParamter() + "'"));
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Ciclo Parametro: Ciclo foi definido para '" + tileEntityCodeFor.getBlockParamter() + "'"));
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocalFormatted(CBCraft.MODID + ".blockCode.for.paramter.loop.set", tileEntityCodeFor.getBlockParamter())));
 				}
-				else if(Keyboard.isKeyDown(Keyboard.KEY_SUBTRACT) || Keyboard.isKeyDown(Keyboard.KEY_MINUS)) {
+				else if(Keyboard.isKeyDown(ClientKeyBindings.subtract.getKeyCode())) {
 					if(tileEntityCodeFor.getBlockParamter() > 1) {
 						tileEntityCodeFor.setBlockParamter(tileEntityCodeFor.getBlockParamter() - 1);
-						//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("For Paramter: For loop has been set to '" + tileEntityCodeFor.getBlockParamter() + "'"));
-						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Ciclo Parametro: Ciclo foi definido para '" + tileEntityCodeFor.getBlockParamter() + "'"));
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocalFormatted(CBCraft.MODID + ".blockCode.for.paramter.loop.set", tileEntityCodeFor.getBlockParamter())));
 					}
 					else {
-						//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("For Paramter: For loop can not be set under '1'"));
-						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Ciclo Parametro: Ciclo nao pode ser definido abaixo de '1'"));
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocal(CBCraft.MODID + ".blockCode.for.paramter.loop.underOne")));
 					}
 				}
 				else {
 					tileEntityCodeFor.setBlockParamter(0);
-					//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("For Paramter: For loop has been set to 'infinite'"));
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Ciclo Parametro: Ciclo foi definido para 'infinite'"));
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocal(CBCraft.MODID + ".blockCode.for.paramter.loop.infinite.set")));
 				}
 			}
 		}

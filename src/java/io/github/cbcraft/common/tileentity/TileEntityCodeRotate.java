@@ -1,6 +1,8 @@
 package io.github.cbcraft.common.tileentity;
 
+import io.github.cbcraft.CBCraft;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.StatCollector;
 
 public class TileEntityCodeRotate extends TileEntityCode {
 	private String blockParamter = "right";
@@ -11,6 +13,17 @@ public class TileEntityCodeRotate extends TileEntityCode {
 	
 	public String getBlockParamter() {
 		return blockParamter;
+	}
+	
+	public String getBlockParamterTranslate() {
+		switch(blockParamter) {
+			case "right":
+				return StatCollector.translateToLocal(CBCraft.MODID + ".paramter.direction.right");
+			case "left":
+				return StatCollector.translateToLocal(CBCraft.MODID + ".paramter.direction.left");
+			default:
+				return blockParamter;
+		}
 	}
 	
 	@Override

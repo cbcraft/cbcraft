@@ -6,6 +6,9 @@ import java.util.List;
 import io.github.cbcraft.common.block.BlockCode;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ITickable;
@@ -240,6 +243,27 @@ public class TileEntityCodeStart extends TileEntity implements ITickable {
 		NBTTagCompound robotPosNBT = compound.getCompoundTag("robotPos");
 		if(robotPosNBT.hasKey("x", NBT_INT_ID) && robotPosNBT.hasKey("y", NBT_INT_ID) && robotPosNBT.hasKey("z", NBT_INT_ID)) {
 			blockRobotPos = new BlockPos(robotPosNBT.getInteger("x"), robotPosNBT.getInteger("y"), robotPosNBT.getInteger("z"));
+		}
+	}
+	
+	@Override
+	public Packet<?> getDescriptionPacket() {
+		NBTTagCompound compound = new NBTTagCompound();
+		compound.setBoolean("syncRun", blockCodeRun);
+		compound.setBoolean("syncLinked", blockLinked);
+		return new S35PacketUpdateTileEntity(this.pos, 1, compound);
+	}
+	
+	@Override
+	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+		NBTTagCompound compound = pkt.getNbtCompound();
+		
+		final int NBT_BOOLEAN_ID = 1; // Values can be found on NBTBase.createNewByType()
+		if(compound.hasKey("syncRun", NBT_BOOLEAN_ID)) {
+			this.blockCodeRun = compound.getBoolean("syncRun");
+		}
+		if(compound.hasKey("syncLinked", NBT_BOOLEAN_ID)) {
+			this.blockLinked = compound.getBoolean("syncLinked");
 		}
 	}
 	

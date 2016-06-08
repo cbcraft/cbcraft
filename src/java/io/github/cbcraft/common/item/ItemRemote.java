@@ -2,6 +2,9 @@ package io.github.cbcraft.common.item;
 
 import java.util.List;
 
+import org.lwjgl.input.Keyboard;
+
+import io.github.cbcraft.CBCraft;
 import io.github.cbcraft.common.block.BlockCode;
 import io.github.cbcraft.common.tileentity.TileEntityCodeStart;
 import net.minecraft.client.Minecraft;
@@ -13,6 +16,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -26,56 +30,53 @@ public class ItemRemote extends Item {
 	
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
-		if(playerIn.isSneaking()) {
-			final int NBT_BOOLEAN_ID = 1; // Values can be found on NBTBase.createNewByType()
-			final int NBT_TAG_ID = 10; // Values can be found on NBTBase.createNewByType()
-			if(itemStackIn.hasTagCompound() && itemStackIn.getTagCompound().hasKey("linked", NBT_BOOLEAN_ID) && itemStackIn.getTagCompound().hasKey("pos", NBT_TAG_ID)) {
-				if(itemStackIn.getTagCompound().getBoolean("linked")) {
-					final int NBT_INT_ID = 3; // Values can be found on NBTBase.createNewByType()
-					NBTTagCompound blockPos = itemStackIn.getTagCompound().getCompoundTag("pos");
-					if(!blockPos.hasKey("x", NBT_INT_ID) || !blockPos.hasKey("y", NBT_INT_ID) || !blockPos.hasKey("z", NBT_INT_ID)) {
-						//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while attempting to execute the code"));
-						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao tentar executar o codigo"));
-						
-						return itemStackIn;
-					}
-					
-					BlockPos blockCodeStartPos = new BlockPos(blockPos.getInteger("x"), blockPos.getInteger("y"), blockPos.getInteger("z"));
-					
-					TileEntityCodeStart tileEntityCodeStart = (TileEntityCodeStart)worldIn.getTileEntity(blockCodeStartPos);
-					if(tileEntityCodeStart != null) {
-						if(tileEntityCodeStart.getBlockCodeRun()) {
-							tileEntityCodeStart.setBlockCodeRun(false);
-							BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
+		if(!worldIn.isRemote) {
+			if(playerIn.isSneaking()) {
+				final int NBT_BOOLEAN_ID = 1; // Values can be found on NBTBase.createNewByType()
+				final int NBT_TAG_ID = 10; // Values can be found on NBTBase.createNewByType()
+				if(itemStackIn.hasTagCompound() && itemStackIn.getTagCompound().hasKey("linked", NBT_BOOLEAN_ID) && itemStackIn.getTagCompound().hasKey("pos", NBT_TAG_ID)) {
+					if(itemStackIn.getTagCompound().getBoolean("linked")) {
+						final int NBT_INT_ID = 3; // Values can be found on NBTBase.createNewByType()
+						NBTTagCompound blockPos = itemStackIn.getTagCompound().getCompoundTag("pos");
+						if(!blockPos.hasKey("x", NBT_INT_ID) || !blockPos.hasKey("y", NBT_INT_ID) || !blockPos.hasKey("z", NBT_INT_ID)) {
+							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocal(CBCraft.MODID + ".error.attemptExecCode")));
 							
-							//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Forced end"));
-							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Finalizacao forcada"));
+							return itemStackIn;
 						}
-						else {
-							if(tileEntityCodeStart.getBlockCodeReady()) {
-								if(tileEntityCodeStart.getBlockLinked()) {
-									BlockCode.setBlockStatusRun(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
-									
-									//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Start"));
-									Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Iniciado"));
-								}
-								else {
-									//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: There is no linked Robot block"));
-									Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Nao esta conetado nenhum bloco de robo"));
+						
+						BlockPos blockCodeStartPos = new BlockPos(blockPos.getInteger("x"), blockPos.getInteger("y"), blockPos.getInteger("z"));
+						
+						TileEntityCodeStart tileEntityCodeStart = (TileEntityCodeStart)worldIn.getTileEntity(blockCodeStartPos);
+						if(tileEntityCodeStart != null) {
+							if(tileEntityCodeStart.getBlockCodeRun()) {
+								tileEntityCodeStart.setBlockCodeRun(false);
+								BlockCode.setBlockStatusReady(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
+								
+								Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocal(CBCraft.MODID + ".exec.forcedEnd")));
+							}
+							else {
+								BlockCode.checkBlockCode(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
+								
+								if(tileEntityCodeStart.getBlockCodeReady()) {
+									if(tileEntityCodeStart.getBlockLinked()) {
+										BlockCode.setBlockStatusRun(worldIn, blockCodeStartPos, worldIn.getBlockState(blockCodeStartPos));
+										
+										Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocal(CBCraft.MODID + ".exec.start")));
+									}
+									else {
+										Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocal(CBCraft.MODID + ".exec.missingLink")));
+									}
 								}
 							}
 						}
-					}
-					else {
-						if(!worldIn.isRemote) {
-							//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: There is no linked Robot block"));
-							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Nao esta conetado nenhum bloco de robo"));
+						else {
+							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocal(CBCraft.MODID + ".exec.missingLink")));
 						}
 					}
 				}
 			}
 		}
-		
+				
 		return itemStackIn;
 	}
 	
@@ -89,8 +90,7 @@ public class ItemRemote extends Item {
 				final int NBT_INT_ID = 3; // Values can be found on NBTBase.createNewByType()
 				NBTTagCompound blockPos = stack.getTagCompound().getCompoundTag("pos");
 				if(!blockPos.hasKey("x", NBT_INT_ID) || !blockPos.hasKey("y", NBT_INT_ID) || !blockPos.hasKey("z", NBT_INT_ID)) {
-					//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Error: An error has occurred while displaying remote info"));
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Erro: Ocorreu um erro ao mostrar informacao do controle remoto"));
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocal(CBCraft.MODID + ".error.remoteTooltip")));
 					
 					return;
 				}
@@ -99,54 +99,46 @@ public class ItemRemote extends Item {
 				
 				TileEntityCodeStart tileEntityCodeStart = (TileEntityCodeStart)playerIn.getEntityWorld().getTileEntity(blockCodeStartPos);
 				if(tileEntityCodeStart == null) {
-					//tooltip.add(EnumChatFormatting.RED + "Unlinked");
-					//tooltip.add(EnumChatFormatting.UNDERLINE + "Right click on Robot block to start link");
-					tooltip.add(EnumChatFormatting.RED + "Desconetado");
-					tooltip.add(EnumChatFormatting.UNDERLINE + "Clique com o botao direito no bloco do Robo para iniciar a conexao");
+					tooltip.add(EnumChatFormatting.RED + StatCollector.translateToLocal(CBCraft.MODID + ".remote.tooltip.unlinked"));
+					tooltip.add(EnumChatFormatting.UNDERLINE + StatCollector.translateToLocal(CBCraft.MODID + ".remote.tooltip.startLinkHelp"));
 					
 					return;
 				}
-				/*else if(!tileEntityCodeStart.getBlockLinked()) {
-					tooltip.add(EnumChatFormatting.RED + "Unlinked");
-					tooltip.add(EnumChatFormatting.UNDERLINE + "Right click on Robot block to start link");
+				
+				if(!tileEntityCodeStart.getBlockLinked()) {
+					tooltip.add(EnumChatFormatting.RED + StatCollector.translateToLocal(CBCraft.MODID + ".remote.tooltip.unlinked"));
+					tooltip.add(EnumChatFormatting.UNDERLINE + StatCollector.translateToLocal(CBCraft.MODID + ".remote.tooltip.startLinkHelp"));
 					
 					return;
-				}*/
+				}
 				
-				//tooltip.add(EnumChatFormatting.GREEN + "Linked");
-				tooltip.add(EnumChatFormatting.GREEN + "Conetado");
+				tooltip.add(EnumChatFormatting.GREEN + StatCollector.translateToLocal(CBCraft.MODID + ".remote.tooltip.linked"));
 				
 				if(GuiScreen.isShiftKeyDown()) {
-					//tooltip.add("Link Coordinates:");
-					tooltip.add("Conexao Coordenadas:");
+					tooltip.add(StatCollector.translateToLocal(CBCraft.MODID + ".remote.tooltip.linkCoordinates"));
 					tooltip.add("  X = " + blockCodeStartPos.getX());
 					tooltip.add("  Y = " + blockCodeStartPos.getY());
 					tooltip.add("  Z = " + blockCodeStartPos.getZ());
 				}
 				else {
-					//tooltip.add(EnumChatFormatting.UNDERLINE + "<<Press SHIFT For Link Coordinates>>");
-					tooltip.add(EnumChatFormatting.UNDERLINE + "<<Pressione SHIFT para ver as coordenadas>>");
+					tooltip.add(EnumChatFormatting.UNDERLINE + StatCollector.translateToLocal(CBCraft.MODID + ".remote.tooltip.linkCoordinatesHelp").replaceAll("%key%", EnumChatFormatting.ITALIC + Keyboard.getKeyName(Minecraft.getMinecraft().gameSettings.keyBindSneak.getKeyCode()) + EnumChatFormatting.UNDERLINE));
 				}
 				
-				/*if(tileEntityCodeStart.getBlockCodeRun()) {
-					tooltip.add(EnumChatFormatting.GREEN + "Running");
+				if(tileEntityCodeStart.getBlockCodeRun()) {
+					tooltip.add(EnumChatFormatting.GREEN + StatCollector.translateToLocal(CBCraft.MODID + ".remote.tooltip.running"));
 				}
 				else {
-					tooltip.add(EnumChatFormatting.RED + "Stopped");
-				}*/
+					tooltip.add(EnumChatFormatting.RED + StatCollector.translateToLocal(CBCraft.MODID + ".remote.tooltip.stopped"));
+				}
 			}
 			else {
-				//tooltip.add(EnumChatFormatting.YELLOW + "Waiting Link");
-				//tooltip.add(EnumChatFormatting.UNDERLINE + "Right click on Code Start block to link");
-				tooltip.add(EnumChatFormatting.YELLOW + "Aguardando Conexao");
-				tooltip.add(EnumChatFormatting.UNDERLINE + "Clique com o botao direito no bloco de codigo de Inicio para conetar");
+				tooltip.add(EnumChatFormatting.YELLOW + StatCollector.translateToLocal(CBCraft.MODID + ".remote.tooltip.waitingLink"));
+				tooltip.add(EnumChatFormatting.UNDERLINE + StatCollector.translateToLocal(CBCraft.MODID + ".remote.tooltip.finishLinkHelp"));
 			}
 		}
 		else {
-			//tooltip.add(EnumChatFormatting.RED + "Unlinked");
-			//tooltip.add(EnumChatFormatting.UNDERLINE + "Right click on Robot block to start link");
-			tooltip.add(EnumChatFormatting.RED + "Desconetado");
-			tooltip.add(EnumChatFormatting.UNDERLINE + "Clique com o botao direito no bloco do Robo para iniciar a conexao");
+			tooltip.add(EnumChatFormatting.RED + StatCollector.translateToLocal(CBCraft.MODID + ".remote.tooltip.unlinked"));
+			tooltip.add(EnumChatFormatting.UNDERLINE + StatCollector.translateToLocal(CBCraft.MODID + ".remote.tooltip.startLinkHelp"));
 		}
 	}
 }

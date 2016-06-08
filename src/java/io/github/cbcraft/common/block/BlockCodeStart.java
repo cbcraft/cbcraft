@@ -1,14 +1,18 @@
 package io.github.cbcraft.common.block;
 
+import io.github.cbcraft.CBCraft;
 import io.github.cbcraft.common.item.Items;
 import io.github.cbcraft.common.tileentity.TileEntityCodeStart;
 import io.github.cbcraft.common.tileentity.TileEntityRobot;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 public class BlockCodeStart extends BlockCode {  
@@ -52,6 +56,10 @@ public class BlockCodeStart extends BlockCode {
 									blockPos.setInteger("y", pos.getY());
 									blockPos.setInteger("z", pos.getZ());
 									nbtTagCompound.setTag("pos", blockPos);
+									
+									if(!worldIn.isRemote) {
+										Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocal(CBCraft.MODID + ".remote.link.complete")));
+									}
 								}
 							}
 						}

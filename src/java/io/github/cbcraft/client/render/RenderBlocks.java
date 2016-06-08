@@ -24,7 +24,7 @@ public class RenderBlocks {
 		register(Blocks.blockCodeEnd);
 	}
 	
-	public static void register (Block block){
+	public static void register(Block block){
 		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(block), 0, new ModelResourceLocation(CBCraft.MODID + ":" + block.getUnlocalizedName().substring(5), "inventory"));
 	}
 }

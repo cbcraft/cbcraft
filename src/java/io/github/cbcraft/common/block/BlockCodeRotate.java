@@ -1,5 +1,6 @@
 package io.github.cbcraft.common.block;
 
+import io.github.cbcraft.CBCraft;
 import io.github.cbcraft.common.item.Items;
 import io.github.cbcraft.common.tileentity.TileEntityCodeRotate;
 import net.minecraft.block.state.IBlockState;
@@ -9,6 +10,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 public class BlockCodeRotate extends BlockCode {
@@ -23,24 +25,21 @@ public class BlockCodeRotate extends BlockCode {
 	
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX, float hitY, float hitZ) {
-		TileEntityCodeRotate tileEntityCodeRotate = (TileEntityCodeRotate)worldIn.getTileEntity(pos);
-		
 		if(!worldIn.isRemote) {
+			TileEntityCodeRotate tileEntityCodeRotate = (TileEntityCodeRotate)worldIn.getTileEntity(pos);
+			
 			if(playerIn.inventory.getCurrentItem() == null) {
-				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Rotate Paramter: Rotate direction is set to '" + tileEntityCodeRotate.getBlockParamter() + "'"));
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Rodar Parametro: Rodar direcao esta definida para '" + tileEntityCodeRotate.getBlockParamter() + "'"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocalFormatted(CBCraft.MODID + ".blockCode.rotate.paramter.direction", tileEntityCodeRotate.getBlockParamterTranslate())));
 			}
 			else if(playerIn.inventory.getCurrentItem().getItem() == Items.itemWrench) {
 				switch(tileEntityCodeRotate.getBlockParamter()) {
 					case "right":
 						tileEntityCodeRotate.setBlockParamter("left");
-						//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Rotate Paramter: Rotate direction has been set to 'left'"));
-						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Rodar Parametro: Rodar direcao foi definida para 'left'"));
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocal(CBCraft.MODID + ".blockCode.rotate.paramter.direction.left")));
 						break;
 					case "left":
 						tileEntityCodeRotate.setBlockParamter("right");
-						//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Rotate Paramter: Rotate direction has been set to 'right'"));
-						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Rodar Parametro: Rodar direcao foi definida para 'right'"));
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocal(CBCraft.MODID + ".blockCode.rotate.paramter.direction.right")));
 						break;
 				}
 			}

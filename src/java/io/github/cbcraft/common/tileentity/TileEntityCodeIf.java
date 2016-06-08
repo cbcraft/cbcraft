@@ -1,7 +1,9 @@
 package io.github.cbcraft.common.tileentity;
 
+import io.github.cbcraft.CBCraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.StatCollector;
 
 public class TileEntityCodeIf extends TileEntityCode {
 	private boolean blockCodeIfElseEnd = false;
@@ -48,6 +50,30 @@ public class TileEntityCodeIf extends TileEntityCode {
 				break;
 		}
 		return stringReturn;
+	}
+	
+	public String getBlockParamterConditionTranslate() {
+		switch(blockParamterCondition) {
+			case "block":
+				return StatCollector.translateToLocal(CBCraft.MODID + ".paramter.condition.block");
+			case "air":
+				return StatCollector.translateToLocal(CBCraft.MODID + ".paramter.condition.air");
+			default:
+				return blockParamterCondition;
+		}
+	}
+	
+	public String getBlockParamterDirectionTranslate() {
+		switch(blockParamterDirection) {
+			case "front":
+				return StatCollector.translateToLocal(CBCraft.MODID + ".paramter.direction.front");
+			case "up":
+				return StatCollector.translateToLocal(CBCraft.MODID + ".paramter.direction.up");
+			case "down":
+				return StatCollector.translateToLocal(CBCraft.MODID + ".paramter.direction.down");
+			default:
+				return blockParamterDirection;
+		}
 	}
 	
 	@Override

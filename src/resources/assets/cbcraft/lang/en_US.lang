@@ -8,10 +8,10 @@ tile.robot.name=Robot
 tile.code_start.name=Code Block - Start
 tile.code_move.name=Code Block - Move
 tile.code_rotate.name=Code Block - Rotate
-tile.code_if.name=Code Block - If
-tile.code_if_else.name=Code Block - If Else
+tile.code_if.name=Code Block - Check
+tile.code_if_else.name=Code Block - Check Else
 tile.code_else.name=Code Block - Else
-tile.code_if_end.name=Code Block - If End
+tile.code_if_end.name=Code Block - Check End
 tile.code_for.name=Code Block - Loop
 tile.code_for_end.name=Code Block - Loop End
 tile.code_place.name=Code Block - Place Block
@@ -27,3 +27,89 @@ item.remote.name=Remote Control
 ##############################
 itemGroup.blocks=CBCraft - Blocks
 itemGroup.items=CBCraft - Items
+
+# Paramters
+##############################
+cbcraft.paramter.direction.front=front
+cbcraft.paramter.direction.up=up
+cbcraft.paramter.direction.down=down
+cbcraft.paramter.direction.right=right
+cbcraft.paramter.direction.left=left
+cbcraft.paramter.condition.block=block
+cbcraft.paramter.condition.air=air
+
+# Chat Messages
+##############################
+cbcraft.blockCode.move.paramter.direction=Move Paramter: Move direction is set to %s
+cbcraft.blockCode.move.paramter.direction.front=Move Paramter: Move direction has been set to front
+cbcraft.blockCode.move.paramter.direction.up=Move Paramter: Move direction has been set to up
+cbcraft.blockCode.move.paramter.direction.down=Move Paramter: Move direction has been set to down
+cbcraft.blockCode.rotate.paramter.direction=Rotate Paramter: Rotate direction is set to %s
+cbcraft.blockCode.rotate.paramter.direction.left=Rotate Paramter: Rotate direction has been set to left
+cbcraft.blockCode.rotate.paramter.direction.right=Rotate Paramter: Rotate direction has been set to right
+cbcraft.blockCode.place.paramter.direction=Place Block Paramter: Place direction is set to %s
+cbcraft.blockCode.place.paramter.direction.front=Place Block Paramter: Place direction has been set to front
+cbcraft.blockCode.place.paramter.direction.up=Place Block Paramter: Place direction has been set to up
+cbcraft.blockCode.place.paramter.direction.down=Place Block Paramter: Place direction has been set to down
+cbcraft.blockCode.place.paramter.block=Place Block Paramter: Place block is set to %s
+cbcraft.blockCode.place.paramter.block.unset=Place Block Paramter: Place block is not set
+cbcraft.blockCode.place.paramter.block.set=Place Block Paramter: Place block has been set to %s
+cbcraft.blockCode.break.paramter.direction=Break Block Paramter: Break direction is set to %s
+cbcraft.blockCode.break.paramter.direction.front=Break Block Paramter: Break direction has been set to front
+cbcraft.blockCode.break.paramter.direction.up=Break Block Paramter: Break direction has been set to up
+cbcraft.blockCode.break.paramter.direction.down=Break Block Paramter: Break direction has been set to down
+cbcraft.blockCode.for.paramter.loop=For Paramter: For loop is set to %s
+cbcraft.blockCode.for.paramter.loop.set=For Paramter: For loop has been set to %s
+cbcraft.blockCode.for.paramter.loop.underOne=For Paramter: For loop can not be set under 1
+cbcraft.blockCode.for.paramter.loop.infinite=For Paramter: For loop is set to infinite
+cbcraft.blockCode.for.paramter.loop.infinite.set=For Paramter: For loop has been set to infinite
+cbcraft.blockCode.if.paramter.direction=Check Paramter: Check direction is set to %s
+cbcraft.blockCode.if.paramter.direction.front=Check Paramter: Check direction has been set to front
+cbcraft.blockCode.if.paramter.direction.up=Check Paramter: Check direction has been set to up
+cbcraft.blockCode.if.paramter.direction.down=Check Paramter: Check direction has been set to down
+cbcraft.blockCode.if.paramter.condition=Check Paramter: Check condition is set to %s
+cbcraft.blockCode.if.paramter.condition.block=Check Paramter: Check condition has been set to block
+cbcraft.blockCode.if.paramter.condition.air=Check Paramter: Check condition has been set to air
+cbcraft.blockCode.ifelse.paramter.direction=Check Else Paramter: Check direction is set to %s
+cbcraft.blockCode.ifelse.paramter.direction.front=Check Else Paramter: Check direction has been set to front
+cbcraft.blockCode.ifelse.paramter.direction.up=Check Else Paramter: Check direction has been set to up
+cbcraft.blockCode.ifelse.paramter.direction.down=Check Else Paramter: Check direction has been set to down
+cbcraft.blockCode.ifelse.paramter.condition=Check Else Paramter: Check condition is set to %s
+cbcraft.blockCode.ifelse.paramter.condition.block=Check Else Paramter: Check condition has been set to block
+cbcraft.blockCode.ifelse.paramter.condition.air=Check Else Paramter: Check condition has been set to air
+cbcraft.exec.start=CBCraft Exec: Start
+cbcraft.exec.end=CBCraft Exec: End
+cbcraft.exec.missingLink=CBCraft Exec: There is no linked Robot block
+cbcraft.exec.forcedEnd=CBCraft Exec: Forced end
+cbcraft.exec.interrupted=CBCraft Exec: Execution interrupted
+cbcraft.exec.move.direction=CBCraft Exec: Move - There is a block on the defined direction (%s)
+cbcraft.exec.break.direction=CBCraft Exec: Break Block - There is no block on the defined direction (%s)
+cbcraft.exec.place.direction=CBCraft Exec: Place Block - There is a block on the defined direction (%s)
+cbcraft.exec.place.block=CBCraft Exec: Place Block - No defined block to place
+cbcraft.error.checkCode=CBCraft Error: An error has occurred while checking the code
+cbcraft.error.statusReady=CBCraft Error: An error has occurred while setting status code to ready
+cbcraft.error.statusRun=CBCraft Error: An error has occurred while setting status code to running
+cbcraft.error.execCode=CBCraft Error: An error has occurred while executing the code
+cbcraft.error.attemptExecCode=CBCraft Error: An error has occurred while attempting to execute the code
+cbcraft.error.remoteTooltip=CBCraft Error: An error has occurred while displaying remote info
+cbcraft.remote.link.ready=CBCraft Remote Control: Right click on Code Start block to link
+cbcraft.remote.link.complete=CBCraft Remote Control: The Robot is now linked
+
+# Remote Tooltip
+##############################
+cbcraft.remote.tooltip.running=Running
+cbcraft.remote.tooltip.stopped=Stopped
+cbcraft.remote.tooltip.linked=Linked
+cbcraft.remote.tooltip.waitingLink=Waiting Link
+cbcraft.remote.tooltip.unlinked=Unlinked
+cbcraft.remote.tooltip.linkCoordinates=Link Coordinates:
+cbcraft.remote.tooltip.startLinkHelp=Right click on Robot block to start link
+cbcraft.remote.tooltip.finishLinkHelp=Right click on Code Start block to link
+cbcraft.remote.tooltip.linkCoordinatesHelp=<<Press %key% For Link Coordinates>>
+
+# Keys
+##############################
+cbcraft.key.categories.cbcraft=CBCraft
+cbcraft.key.add=Add
+cbcraft.key.subtract=Subtract
+cbcraft.key.secondParamter=Second Paramter

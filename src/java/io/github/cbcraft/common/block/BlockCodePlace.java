@@ -1,5 +1,6 @@
 package io.github.cbcraft.common.block;
 
+import io.github.cbcraft.CBCraft;
 import io.github.cbcraft.common.item.Items;
 import io.github.cbcraft.common.tileentity.TileEntityCodePlace;
 import net.minecraft.block.Block;
@@ -11,6 +12,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 public class BlockCodePlace extends BlockCode {
@@ -25,44 +27,37 @@ public class BlockCodePlace extends BlockCode {
 	
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX, float hitY, float hitZ) {
-		TileEntityCodePlace tileEntityCodePlace = (TileEntityCodePlace)worldIn.getTileEntity(pos);
-		
 		if(!worldIn.isRemote) {
+			TileEntityCodePlace tileEntityCodePlace = (TileEntityCodePlace)worldIn.getTileEntity(pos);
+			
 			if(playerIn.inventory.getCurrentItem() == null) {
-				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Place Block Paramter: Place direction is set to '" + tileEntityCodePlace.getBlockParamter("direction") + "'"));
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Colocar Bloco Parametro: Colocar direcao esta definida para '" + tileEntityCodePlace.getBlockParamter("direction") + "'"));
-				if(tileEntityCodePlace.getBlockParamter("block") == "minecraft:air") {
-					//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Place Block Paramter: Place block is not set"));
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Colocar Bloco Parametro: Colocar bloco nao esta definido"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocalFormatted(CBCraft.MODID + ".blockCode.place.paramter.direction", tileEntityCodePlace.getBlockParamterDirectionTranslate())));
+				if(tileEntityCodePlace.getBlockParamter("block").equals("minecraft:air")) {
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocal(CBCraft.MODID + ".blockCode.place.paramter.block.unset")));
 				}
 				else {
-					//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Place Paramter: Place block is set to '" + Block.getBlockFromName(tileEntityCodePlace.getBlockParamter("block")).getLocalizedName() + "'"));
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Colocar Bloco Parametro: Colocar bloco esta definido para '" + Block.getBlockFromName(tileEntityCodePlace.getBlockParamter("block")).getLocalizedName() + "'"));
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocalFormatted(CBCraft.MODID + ".blockCode.place.paramter.block", Block.getBlockFromName(tileEntityCodePlace.getBlockParamter("block")).getLocalizedName())));
 				}
 			}
 			else if(playerIn.inventory.getCurrentItem().getItem() == Items.itemWrench) {
 				switch(tileEntityCodePlace.getBlockParamter("direction")) {
 					case "front":
 						tileEntityCodePlace.setBlockParamter("direction", "up");
-						//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Place Paramter: Place direction has been set to 'up'"));
-						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Colocar Bloco Parametro: Colocar direcao foi definida para 'up'"));
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocal(CBCraft.MODID + ".blockCode.place.paramter.direction.up")));
 						break;
 					case "up":
 						tileEntityCodePlace.setBlockParamter("direction", "down");
-						//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Place Paramter: Place direction has been set to 'down'"));
-						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Colocar Bloco Parametro: Colocar direcao foi definida para 'down'"));
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocal(CBCraft.MODID + ".blockCode.place.paramter.direction.down")));
 						break;
 					case "down":
 						tileEntityCodePlace.setBlockParamter("direction", "front");
-						//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Place Paramter: Place direction has been set to 'front'"));
-						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Colocar Bloco Parametro: Colocar direcao foi definida para 'front'"));
+						Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocal(CBCraft.MODID + ".blockCode.place.paramter.direction.front")));
 						break;
 				}
 			}
 			else if(playerIn.inventory.getCurrentItem().getItem() instanceof ItemBlock) {
 				tileEntityCodePlace.setBlockParamter("block", Block.getBlockFromItem(playerIn.inventory.getCurrentItem().getItem()).getRegistryName());
-				//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Place Paramter: Place block has been set to '" + Block.getBlockFromName(tileEntityCodePlace.getBlockParamter("block")).getLocalizedName() + "'"));
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Colocar Bloco Parametro: Colocar bloco foi definido para '" + Block.getBlockFromName(tileEntityCodePlace.getBlockParamter("block")).getLocalizedName() + "'"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocalFormatted(CBCraft.MODID + ".blockCode.place.paramter.block.set", Block.getBlockFromName(tileEntityCodePlace.getBlockParamter("block")).getLocalizedName())));
 			}
 		}
 		

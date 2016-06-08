@@ -1,5 +1,6 @@
 package io.github.cbcraft.common.block;
 
+import io.github.cbcraft.CBCraft;
 import io.github.cbcraft.common.block.material.MaterialRobot;
 import io.github.cbcraft.common.item.Items;
 import io.github.cbcraft.common.tileentity.TileEntityCodeStart;
@@ -18,6 +19,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -100,26 +102,33 @@ public class BlockRobot extends BlockContainer {
 				blockPos.setInteger("y", pos.getY());
 				blockPos.setInteger("z", pos.getZ());
 				nbtTagCompound.setTag("pos", blockPos);
+				
+				if(!worldIn.isRemote) {
+					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocal(CBCraft.MODID + ".remote.link.ready")));
+				}
 			}
 			else if(playerIn.inventory.getCurrentItem().getItem() == Items.itemWrench) {
-				TileEntityRobot tileEntityRobot = (TileEntityRobot)worldIn.getTileEntity(pos);
-				if(tileEntityRobot != null && tileEntityRobot.hasBlockCodeStartPos()) {
-					TileEntityCodeStart tileEntityCodeStart = (TileEntityCodeStart)worldIn.getTileEntity(tileEntityRobot.getBlockCodeStartPos());
-					if(tileEntityCodeStart != null) {
-						tileEntityCodeStart.setBlockLinked(false);
-						
-						if(tileEntityCodeStart.getBlockCodeRun()) {
-							tileEntityCodeStart.setBlockCodeRun(false);
-							BlockCode.setBlockStatusReady(worldIn, tileEntityRobot.getBlockCodeStartPos(), worldIn.getBlockState(tileEntityRobot.getBlockCodeStartPos()));
+				if(!worldIn.isRemote) {
+					TileEntityRobot tileEntityRobot = (TileEntityRobot)worldIn.getTileEntity(pos);
+					if(tileEntityRobot != null && tileEntityRobot.hasBlockCodeStartPos()) {
+						TileEntityCodeStart tileEntityCodeStart = (TileEntityCodeStart)worldIn.getTileEntity(tileEntityRobot.getBlockCodeStartPos());
+						if(tileEntityCodeStart != null) {
+							tileEntityCodeStart.setBlockLinked(false);
 							
-							//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Execution interrupted"));
-							Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("CBCraft Exec: Execucao interrompida"));
+							if(tileEntityCodeStart.getBlockCodeRun()) {
+								tileEntityCodeStart.setBlockCodeRun(false);
+								BlockCode.setBlockStatusReady(worldIn, tileEntityRobot.getBlockCodeStartPos(), worldIn.getBlockState(tileEntityRobot.getBlockCodeStartPos()));
+								
+								Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocal(CBCraft.MODID + ".exec.interrupted")));
+							}
 						}
+						
+						worldIn.markBlockForUpdate(tileEntityRobot.getBlockCodeStartPos());
 					}
+					
+					this.dropBlockAsItem(worldIn, pos, state, 0);
+					worldIn.setBlockToAir(pos);
 				}
-				
-				this.dropBlockAsItem(worldIn, pos, state, 0);
-				worldIn.setBlockToAir(pos);
 			}
 		}
 		
