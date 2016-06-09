@@ -759,8 +759,12 @@ public class BlockCode extends BlockContainer {
 					return;
 			}
 			
+			TileEntityBackupData.saveData(worldIn, blockRobot, tileEntityCodeStart.getBlockRobotPos(), blockRobotState);
+			
 			IBlockState blockNewRobotState = blockRobot.getDefaultState().withProperty(FACING, enumNewRobotFacing);
 			worldIn.setBlockState(tileEntityCodeStart.getBlockRobotPos(), blockNewRobotState);
+			
+			TileEntityBackupData.loadData(worldIn, blockNewRobotState.getBlock(), tileEntityCodeStart.getBlockRobotPos(), blockNewRobotState);
 		}
 		else if(block.getUnlocalizedName().equals(Blocks.blockCodeBreak.getUnlocalizedName())) {
 			IBlockState blockRobotState = worldIn.getBlockState(tileEntityCodeStart.getBlockRobotPos());

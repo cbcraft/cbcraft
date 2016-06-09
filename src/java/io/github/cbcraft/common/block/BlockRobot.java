@@ -113,17 +113,16 @@ public class BlockRobot extends BlockContainer {
 					if(tileEntityRobot != null && tileEntityRobot.hasBlockCodeStartPos()) {
 						TileEntityCodeStart tileEntityCodeStart = (TileEntityCodeStart)worldIn.getTileEntity(tileEntityRobot.getBlockCodeStartPos());
 						if(tileEntityCodeStart != null) {
+							if(tileEntityCodeStart.getBlockCodeRun()) {
+								Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocal(CBCraft.MODID + ".exec.robotBreak")));
+								
+								return false;
+							}
+							
 							tileEntityCodeStart.setBlockLinked(false);
 							
-							if(tileEntityCodeStart.getBlockCodeRun()) {
-								tileEntityCodeStart.setBlockCodeRun(false);
-								BlockCode.setBlockStatusReady(worldIn, tileEntityRobot.getBlockCodeStartPos(), worldIn.getBlockState(tileEntityRobot.getBlockCodeStartPos()));
-								
-								Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(StatCollector.translateToLocal(CBCraft.MODID + ".exec.interrupted")));
-							}
+							worldIn.markBlockForUpdate(tileEntityRobot.getBlockCodeStartPos());
 						}
-						
-						worldIn.markBlockForUpdate(tileEntityRobot.getBlockCodeStartPos());
 					}
 					
 					this.dropBlockAsItem(worldIn, pos, state, 0);

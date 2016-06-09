@@ -1,0 +1,21 @@
+{
+	"modListVersion": 2,
+	"modList": [{
+		"modid": "cbcraft",
+		"name": "Code Block and Craft",
+		"description": "A block language with the objective to bring some curiosity about programming to young people.",
+		"version": "1.0.0",
+		"mcversion": "1.8.9",
+		"url": "http://cbcraft.github.io/",
+		"updateUrl": "",
+		"authorList": [ "goldspy98", "bernas-antunes97" ],
+		"credits": "Authored by goldspy98 and bernas-antunes97 as part of a course's project",
+		"logoFile": "",
+		"screenshots": [],
+		"parent": "",
+		"requiredMods": [ "Forge" ],
+		"dependencies": [],
+		"dependants": [],
+		"useDependencyInformation": true
+	}]
+}
