@@ -29,6 +29,7 @@ cbcraft.paramter.direction.front=a frente
 cbcraft.paramter.direction.up=cima
 cbcraft.paramter.direction.down=baixo
 cbcraft.paramter.direction.right=a direita
+cbcraft.paramter.direction.left=a esquerda
 cbcraft.paramter.condition.block=bloco
 cbcraft.paramter.condition.air=ar
 
