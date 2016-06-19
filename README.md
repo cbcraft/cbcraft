@@ -9,6 +9,7 @@
 * [License](https://raw.githubusercontent.com/cbcraft/cbcraft/master/LICENSE)
 * [Downloads](https://github.com/cbcraft/cbcraft/releases)
 * [Installation](#installation)
+* [User Guide](https://github.com/cbcraft/cbcraft/wiki)
 * [Issues](#issues)
 * [Building](#building)
 * [Contribution](#contribution)
