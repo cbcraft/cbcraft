@@ -1,9 +1,22 @@
-# Files
+# Exclude Windows Image File Caches
 Thumbs.db
-build.gradle
+ehthumbs.db
 
-# Folders
-.gradle/
-.settings/
-bin/
-build/
+# Exclude All
+/*
+
+# Gradle Files/Folders
+!gradle/
+!gradlew
+!gradlew.bat
+!build.gradle
+
+# Sourcecode Folder
+!src/
+
+# Markdowns Files
+!README.md
+!LICENSE
+
+# GIT Files
+!.gitignore
